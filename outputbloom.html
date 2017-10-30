@@ -9,29 +9,67 @@
 
 <body>
   Revision 8<br><br>
-  <div id="coxcomb" style="width: 600px; height: 600;"></div>
+  <div id="outputbloom" style="width: 600px; height: 600;"></div>
+  
   <script>
-    var output1 = {
-  r: [12, 6, 10, 45, 32, 20, 10, 20],
-  t: ['Mountains', 'Arctic', 'Biodiversity', 'Climate', 'Food Security', 'Coastal Vulnerability', 'Freshwater', 'T2S'],
+    // The number of projects in the CRA
+    var projects = 6;
+    
+    // Columns fixed by table definition; 
+    //Project Abbreviation,
+    //Project Name,
+    //Research Outputs (papers/datasets), 
+    // In Person Engagements (trainings, conference presentations)
+    //Remote/Distributed Engagement (press mentions)
+    var columns = 5;
+    
+    //This array should be populated from BFGO data
+    var outputbloomdata = [
+      ["PROJ1","Project One",15,6,30]
+      ["PROJ2","Project Two",25,12,12]
+      ["PROJ3","Project Three",5,18,36]
+      ["PROJ4","Project Four",20,21,6]
+      ["PROJ5","Project Five",10,9,24]
+      ["PROJ6","Project Six",30,15,18]
+    ];
+    
+  var rdata = [];
+  var tdata = [];
+  for (var i = 0; i < columns; i++){
+    rdata[i] = outputbloomdata[2][i];
+    tdata[i] = outputbloomdata[1][i];
+  }    
+  var research = {
+  r: rdata,
+  t: tdata,
   name: 'Academic Publications and Datasets',
   marker: {color: 'rgb(0,85,104)'},
   type: 'area'
 };
 
-
-var output2 = {
-  r: [6, 10, 8, 10, 4, 11, 37, 55],
-  t: ['Mountains', 'Arctic', 'Biodiversity', 'Climate', 'Food Security', 'Coastal Vulnerability', 'Freshwater', 'T2S'],
+  var rdata = [];
+  var tdata = [];
+  for (var i = 0; i < columns; i++){
+    rdata[i] = outputbloomdata[3][i];
+    tdata[i] = outputbloomdata[1][i];
+  } 
+var inperson = {
+  r: rdata,
+  t: tdata,
   name: 'Presentations and Trainings',
   marker: {color: 'rgb(9,130,144)'},
   type: 'area'
 };
                                                     
-                                                      
-var output3 = {
-  r: [10, 15, 2, 6, 17, 27, 5, 10],
-  t: ['Mountains', 'Arctic', 'Biodiversity', 'Climate', 'Food Security', 'Coastal Vulnerability', 'Freshwater', 'T2S'],
+    var rdata = [];
+  var tdata = [];
+  for (var i = 0; i < columns; i++){
+    rdata[i] = outputbloomdata[4][i];
+    tdata[i] = outputbloomdata[1][i];
+  }                                                     
+var remote = {
+  r: rdata,
+  t: tdata,
   name: 'Website Traffic and External Discussion',
   marker: {color: 'rgb(75,181,197)'},
   type: 'area'
@@ -39,7 +77,7 @@ var output3 = {
                                                     
 
 
-var data = [output1, output2, output3];
+var data = [research, inperson, remote];
 
 var layout = {
   title: 'Output Bloom',
@@ -50,6 +88,6 @@ var layout = {
   orientation: 270
 };
 
-Plotly.newPlot('coxcomb', data, layout);
+Plotly.newPlot('outputbloom', data, layout);
   </script>
 </body>
