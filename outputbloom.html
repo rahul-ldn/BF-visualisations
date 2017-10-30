@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  Revision 9<br><br>
+  Revision 8<br><br>
   <div id="outputbloom" style="width: 600px; height: 600;"></div>
   
   <script>
@@ -36,8 +36,8 @@
   var rdata = [];
   var tdata = [];
   for (var i = 0; i < columns; i++){
-    rdata[i] = outputbloomdata[2][i];
-    tdata[i] = outputbloomdata[1][i];
+    rdata[i] = outputbloomdata[i][2];
+    tdata[i] = outputbloomdata[i][1];
   }    
   var research = {
   r: rdata,
@@ -50,8 +50,8 @@
   var rdata = [];
   var tdata = [];
   for (var i = 0; i < columns; i++){
-    rdata[i] = outputbloomdata[3][i];
-    tdata[i] = outputbloomdata[1][i];
+    rdata[i] = outputbloomdata[i][3];
+    tdata[i] = outputbloomdata[i][1];
   } 
 var inperson = {
   r: rdata,
@@ -64,8 +64,8 @@ var inperson = {
     var rdata = [];
   var tdata = [];
   for (var i = 0; i < columns; i++){
-    rdata[i] = outputbloomdata[4][i];
-    tdata[i] = outputbloomdata[1][i];
+    rdata[i] = outputbloomdata[i][4];
+    tdata[i] = outputbloomdata[i][1];
   }                                                     
 var remote = {
   r: rdata,
@@ -84,7 +84,25 @@ var layout = {
   font: {size: 6},
   legend: {font: {size: 6}},
   barmode: "stack",
-  radialaxis: {visible: "false"},
+  radialaxis: {
+    visible: false, 
+    showgrid: false,
+    showline: false,
+    ticks: ""
+  },
+  angularaxis: {
+    visible: false, 
+    showgrid: false,
+    showline: false,
+    ticks: ""
+  },
+  yaxis: {visible: false},
+  xaxis: {
+    visible: false, 
+    showgrid: false,
+    showline: false,
+    ticks: ""
+  },
   orientation: 270
 };
 
