@@ -3,14 +3,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
   <!-- Plotly.js -->
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <script src="BFGO-visualistions.1.js"></script>
+  
+  <!-- Integrate inline, for copying over to BFGO <script src="BFGO-visualistions.1.js"></script> -->
 </head>
 
 <body>
-  Revision 6<br><br>
+  Revision 8<br><br>
   <div id="coxcomb" style="width: 600px; height: 600;"></div>
   <script>
-    var output1a = {
+    var output1 = {
   r: [12, 6, 10, 45, 32, 20, 10, 20],
   t: ['Mountains', 'Arctic', 'Biodiversity', 'Climate', 'Food Security', 'Coastal Vulnerability', 'Freshwater', 'T2S'],
   name: 'Academic Publications and Datasets',
@@ -18,31 +19,17 @@
   type: 'area'
 };
 
-var output1p = {
-  r: [12, 6, 10, 45, 32, 20, 10, 20],
-  t: ['Mountains', 'Arctic', 'Biodiversity', 'Climate', 'Food Security', 'Coastal Vulnerability', 'Freshwater', 'T2S'],
-  name: 'Academic Publications and Datasets (Planned)',
-  marker: {color: 'rgb(103,174,190)'},
-  type: 'area'
-};
 
-var output2a = {
+var output2 = {
   r: [6, 10, 8, 10, 4, 11, 37, 55],
   t: ['Mountains', 'Arctic', 'Biodiversity', 'Climate', 'Food Security', 'Coastal Vulnerability', 'Freshwater', 'T2S'],
   name: 'Presentations and Trainings',
   marker: {color: 'rgb(9,130,144)'},
   type: 'area'
 };
-
-var output2p = {
-  r: [6, 10, 8, 10, 4, 11, 37, 55],
-  t: ['Mountains', 'Arctic', 'Biodiversity', 'Climate', 'Food Security', 'Coastal Vulnerability', 'Freshwater', 'T2S'],
-  name: 'Presentations and Trainings (Planned)',
-  marker: {color: 'rgb(163,39,108)'},
-  type: 'area'
-};                                                      
+                                                    
                                                       
-var output3a = {
+var output3 = {
   r: [10, 15, 2, 6, 17, 27, 5, 10],
   t: ['Mountains', 'Arctic', 'Biodiversity', 'Climate', 'Food Security', 'Coastal Vulnerability', 'Freshwater', 'T2S'],
   name: 'Website Traffic and External Discussion',
@@ -52,7 +39,7 @@ var output3a = {
                                                     
 
 
-var data = [output1a, output 1p, output2a, output 2p, output3a];
+var data = [output1, output2, output3];
 
 var layout = {
   title: 'Output Bloom',
