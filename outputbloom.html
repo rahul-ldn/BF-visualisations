@@ -13,8 +13,6 @@
   <div id="outputbloom" style="width: 600px; height: 600;"></div>
   
   <script>
-    // The number of projects in the CRA
-    var projects = 6;
     
     // Columns fixed by table definition; 
     //Project Abbreviation,
@@ -38,12 +36,26 @@
       return outputdata;
     }
 
+
   var outputbloomdata = BFGOoutputdata();
+
+
+// The number of projects in the CRA
+  var projects = outputbloomdata.length;
+  if (projects < 4) {
+    for (var i =projects; i <=4; i++){
+      outputbloomdata.push([i, i, 0.1, 0.1, 0.1, 0.1]);
+//      document.write(outputbloomdata.length + " <BR>");
+    }
+    projects = 4;
+  }
+
   var rdata = [];
   var tdata = [];
   for (var i = 0; i < projects; i++){
     rdata[i] = outputbloomdata[i][3];
     tdata[i] = outputbloomdata[i][1];
+//    document.write(projects + " "+rdata[i]+ " "+tdata[i] + "<BR>");
   }    
   var research = {
   r: rdata,
@@ -58,6 +70,7 @@
   for (var i = 0; i < projects; i++){
     rdata[i] = outputbloomdata[i][4];
     tdata[i] = outputbloomdata[i][1];
+//    document.write(projects + " "+rdata[i]+ " "+tdata[i] + "<BR>");
   } 
 var inperson = {
   r: rdata,
@@ -72,6 +85,7 @@ var inperson = {
   for (var i = 0; i < projects; i++){
     rdata[i] = outputbloomdata[i][5];
     tdata[i] = outputbloomdata[i][1];
+//    document.write(projects + " "+rdata[i]+ " "+tdata[i] + "<BR>");
   }                                                     
 var remote = {
   r: rdata,
