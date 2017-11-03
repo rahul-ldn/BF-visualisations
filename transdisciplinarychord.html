@@ -20,10 +20,11 @@ body {
 <script>
 
 var matrix = [
-  [0,  58, 89, 28],
-  [ 19, 0, 50, 61],
-  [ 90, 36, 0, 80],
-  [ 10,  90, 49, 0]
+  [0,  58, 89, 28, 23],
+  [ 19, 0, 50, 61, 45],
+  [ 90, 36, 0, 80, 22],
+  [ 10,  90, 49, 0, 28],
+  [ 40, 60, 70, 80, 0]
 ];
 
 var svg = d3.select("svg"),
@@ -47,7 +48,7 @@ var ribbon = d3.ribbon()
 
 var color = d3.scaleOrdinal()
     .domain(d3.range(4))
-    .range(["#005568", "#2c6733", "#a3276c", "#cbbd2c"]);
+    .range(["#005568", "#2c6733", "#a3276c", "#cbbd2c", "098290"]);
 
 var g = svg.append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
