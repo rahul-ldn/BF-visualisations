@@ -1,56 +1,57 @@
 year,importer1,importer2,flow1,flow2
-2017,Chemistry,Biology,1,1
-2017,Chemistry,Physics,2,2
-2017,Chemistry,Economics,3,3
-2017,Chemistry,Geology,4,4
-2017,Chemistry,Sociology,5,5
-2017,Chemistry,Oceanography,6,6
-2017,Chemistry,Anthropology,7,7
-2017,Chemistry,Public Health,8,8
-2017,Chemistry,Political Science,9,9
-2017,Chemistry,Botany,10,10
-2017,Biology,Physics,1,1
-2017,Biology,Economics,2,2
-2017,Biology,Geology,3,3
-2017,Biology,Sociology,4,4
-2017,Biology,Oceanography,5,5
-2017,Biology,Anthropology,6,6
-2017,Biology,Public Health,7,7
-2017,Biology,Political Science,8,8
-2017,Biology,Botany,9,9
-2017,Physics,Economics,1,1
-2017,Physics,Geology,2,2
-2017,Physics,Sociology,3,3
-2017,Physics,Oceanography,4,4
-2017,Physics,Anthropology,5,5
-2017,Physics,Public Health,6,6
-2017,Physics,Political Science,7,7
-2017,Physics,Botany,8,8
-2017,Economics,Geology,1,1
-2017,Economics,Sociology,2,2
-2017,Economics,Oceanography,3,3
-2017,Economics,Anthropology,4,4
-2017,Economics,Public Health,5,5
-2017,Economics,Political Science,6,6
-2017,Economics,Botany,7,7
-2017,Geology,Sociology,1,1
-2017,Geology,Oceanography,2,2
-2017,Geology,Anthropology,3,3
-2017,Geology,Public Health,4,4
-2017,Geology,Political Science,5,5
-2017,Geology,Botany,6,6
-2017,Sociology,Oceanography,1,1
-2017,Sociology,Anthropology,2,2
-2017,Sociology,Public Health,3,3
-2017,Sociology,Political Science,4,4
-2017,Sociology,Botany,5,5
-2017,Oceanography,Anthropology,1,1
-2017,Oceanography,Public Health,2,2
-2017,Oceanography,Political Science,3,3
-2017,Oceanography,Botany,4,4
-2017,Anthropology,Public Health,1,1
-2017,Anthropology,Political Science,2,2
-2017,Anthropology,Botany,3,3
-2017,Public Health,Political Science,1,1
-2017,Public Health,Botany,2,2
-2017,Political Science,Botany,1,1
+2017,Chemistry,Biology,91,91
+2017,Chemistry,Physics,95,95
+2017,Chemistry,Economics,6,6
+2017,Chemistry,Geology,31,31
+2017,Chemistry,Sociology,93,93
+2017,Chemistry,Oceanography,61,61
+2017,Chemistry,Anthropology,14,14
+2017,Chemistry,Public Health,75,75
+2017,Chemistry,Political Science,63,63
+2017,Chemistry,Botany,79,79
+2017,Biology,Physics,94,94
+2017,Biology,Economics,62,62
+2017,Biology,Geology,89,89
+2017,Biology,Sociology,72,72
+2017,Biology,Oceanography,100,100
+2017,Biology,Anthropology,47,47
+2017,Biology,Public Health,24,24
+2017,Biology,Political Science,39,39
+2017,Biology,Botany,66,66
+2017,Physics,Economics,13,13
+2017,Physics,Geology,83,83
+2017,Physics,Sociology,54,54
+2017,Physics,Oceanography,40,40
+2017,Physics,Anthropology,2,2
+2017,Physics,Public Health,12,12
+2017,Physics,Political Science,1,1
+2017,Physics,Botany,9,9
+2017,Economics,Geology,4,4
+2017,Economics,Sociology,89,89
+2017,Economics,Oceanography,64,64
+2017,Economics,Anthropology,96,96
+2017,Economics,Public Health,24,24
+2017,Economics,Political Science,71,71
+2017,Economics,Botany,42,42
+2017,Geology,Sociology,80,80
+2017,Geology,Oceanography,10,10
+2017,Geology,Anthropology,96,96
+2017,Geology,Public Health,34,34
+2017,Geology,Political Science,66,66
+2017,Geology,Botany,24,24
+2017,Sociology,Oceanography,76,76
+2017,Sociology,Anthropology,72,72
+2017,Sociology,Public Health,68,68
+2017,Sociology,Political Science,41,41
+2017,Sociology,Botany,98,98
+2017,Oceanography,Anthropology,54,54
+2017,Oceanography,Public Health,19,19
+2017,Oceanography,Political Science,7,7
+2017,Oceanography,Botany,80,80
+2017,Anthropology,Public Health,100,100
+2017,Anthropology,Political Science,66,66
+2017,Anthropology,Botany,43,43
+2017,Public Health,Political Science,55,55
+2017,Public Health,Botany,54,54
+2017,Political Science,Botany,94,94
+,,,,16
