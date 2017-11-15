@@ -188,12 +188,12 @@
 
           function chordTip (d) {
             var p = d3.format(".1%"), q = d3.format(",.0f")
-            return q(d.svalue) + " Experts in " + d.tname + " are working on teams with expertise in " + d.sname + " and <BR>" + q(d.tvalue) + " Experts in "+ d.sname + " are working on teams with expertise in " + d.tname;
+            return q(d.svalue) + " Researchers in " + d.tname + " are working on teams with expertise in " + d.sname + " and <BR>" + q(d.tvalue) + " Researchers in "+ d.sname + " are working on teams with expertise in " + d.tname;
           }
 
           function groupTip (d) {
             var p = d3.format(".1%"), q = d3.format(",.0f")
-            return "There are "+ q(d.gvalue) + " Experts with a background in " + d.gname;
+            return "There are "+ q(d.gvalue) + " Researchers with a background in " + d.gname;
           }
 
           function mouseover(d, i) {
