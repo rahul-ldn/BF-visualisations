@@ -41,11 +41,56 @@
     <script src="underscore.js"></script>
     <script src="mapper.js"></script>
     <script>
-      //*******************************************************************
-      //  CREATE MATRIX AND MAP
-      //*******************************************************************
-      d3.csv('data.csv', function (error, data) {
-        var mpr = chordMpr(data);
+      
+    //Replace the below with the database access function
+
+      function BFGOtransdisciplinarydata() {
+        var transdiciplinarydata = [
+        //                #  CH BI PH EC GE SO OC AN PH
+        ["Chemistry",     14, 0, 4,15, 8,10, 2, 8, 6, 0],
+        ["Biology",       26, 5, 0, 7, 6, 3, 8, 2,15, 6],
+        ["Physics",       37,  ,12, 0, 2,10, 0, 0, 6, 4],
+        ["Economics",     12, 6, 9,10, 0, 0, 9,12, 9,10],
+        ["Geology",       29,10, 2, 3, 0,15, 7, 6, 5, 0],
+        ["Sociology",     18, 3, 1, 0, 8, 4, 0, 0, 0,10],
+        ["Oceanography",  34, 4,10, 0, 7,10, 0, 0, 0, 7],
+        ["Anthropology",  17, 9, 5, 6, 3, 6, 0, 0, 0, 3],
+        ["Public Health", 26, 0, 8,10, 2, 0,15,13, 9, 0],
+        ];
+        return transdiciplinarydata;
+      }
+
+
+
+      //serialise the data drawn from BFGO
+
+      function serialisedata(fieldarray) {
+        var chordarray = [];
+        // Rows Count
+        // Columns Count
+        // Iterate through Rows
+        var rowmax = fieldarray.length;
+        var colmax = fieldarray[0].length;
+        for (var R = 0; R <= rowmax; R++){
+
+        // Iterate across Columns
+        for (var C = (R+1); C<= colmax; C++){
+        // Establish each pair
+        var rowname = fieldarray[R, 0];
+        var colname = fieldarray[(C, 0];
+        var rowcol  = fieldarray[R, (C+2)];
+        var colrow  = fieldarray[(C+2), R];
+        chordarray.push([2017,rowname,colname,rowcol,colrow]);
+        };
+        };
+        //
+
+        return chordarray;
+      }
+
+
+    
+        var mpr = chordMpr(serialisedata(BFGOtransdisciplinarydata()));
 
         mpr
           .addValuesToMap('importer1')
@@ -59,10 +104,13 @@
               return recs[0].importer1 === a.name ? +recs[0].flow1 : +recs[0].flow2; 
           });
         drawChords(mpr.getMatrix(), mpr.getMap());
-      });
-      //*******************************************************************
-      //  DRAW THE CHORD DIAGRAM
-      //*******************************************************************
+      
+
+
+
+
+      // Draw the chord!
+
       function drawChords (matrix, mmap) {
         var w = 980, h = 800, r1 = h / 2, r0 = r1 - 110;
 
@@ -107,7 +155,7 @@
             .each(function(d) { d.angle = (d.startAngle + d.endAngle) / 2; })
             .attr("dy", ".35em")
             .style("font-family", "helvetica, arial, sans-serif")
-            .style("font-size", "9px")
+            .style("font-size", "12px")
             .attr("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
             .attr("transform", function(d) {
               return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
