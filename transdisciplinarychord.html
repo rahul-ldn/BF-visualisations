@@ -35,7 +35,7 @@
     </style>
   </head>
   <body>
-    V12<BR><BR>
+    V13<BR><BR>
     <div id="tooltip"></div>
 <script src="https://fastcdn.org/D3.js/3.5.6/d3.min.js"></script>
 
@@ -90,8 +90,9 @@
       }
 
 
-        var data = serialisedata(BFGOtransdisciplinarydata());
-        var mpr = chordMpr(data);
+        var realdata = serialisedata(BFGOtransdisciplinarydata());
+        d3.csv('data.csv', function (error, data) {
+        var mpr = chordMpr(realdata);
 
         mpr
           .addValuesToMap('importer1')
@@ -105,7 +106,7 @@
               return recs[0].importer1 === a.name ? +recs[0].flow1 : +recs[0].flow2; 
           });
         drawChords(mpr.getMatrix(), mpr.getMap());
-      
+       });
 
 
 
