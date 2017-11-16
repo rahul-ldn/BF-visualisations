@@ -41,6 +41,12 @@
 
     <script src="underscore.js"></script>
     <script src="mapper.js"></script>
+    
+  <!--  
+    <script language="javascript" type="text/javascript" src="../skins/bfgo/scripts/underscore.js"></script>
+    <script language="javascript" type="text/javascript" src="../skins/bfgo/scripts/mapper.js"></script>
+  -->  
+
     <script>
       
     //Replace the below with the database access function
@@ -133,7 +139,7 @@
             .innerRadius(r0)
             .outerRadius(r0 + 20);
 
-        var svg = d3.select("body").append("svg:svg")
+        var svg = d3.select("#chord").append("svg:svg")
             .attr("width", w)
             .attr("height", h)
           .append("svg:g")
@@ -211,5 +217,6 @@
           }
       }
     </script>
+    <div id="chord" name="chord"></div>
   </body>
 </html>      
