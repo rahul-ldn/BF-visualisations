@@ -129,7 +129,8 @@ var presentations = {
     var rdata = [];
   var tdata = [];
   for (var i = 0; i < projects; i++){
-    rdata[i] = Math.log(outputbloomdata[i][5]);
+    rdata[i] = Math.log(outputbloomdata[i][2]);
+//    rdata[i] = outputbloomdata[i][5];
     tdata[i] = outputbloomdata[i][1];
 //    document.write(projects + " "+rdata[i]+ " "+tdata[i] + "<BR>");
   }                                                     
