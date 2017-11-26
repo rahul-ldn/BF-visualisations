@@ -8,9 +8,9 @@
 </head>
 
 <body>
-  <!-- Revision 14 updated 26 Nov 17<br><br> -->
+  <!-- Revision 11 updated 31 Oct 17<br><br> -->
   
-  <div id="outputbloom" ></div>
+  <div id="outputbloom" style="pointer-events: none"></div>
   
   <script>
     
@@ -45,6 +45,11 @@
 
 // The number of projects in the CRA
   var projects = outputbloomdata.length;
+
+   var projectlist = []
+  for (var i = 1; i <projects; i++) {
+    projectlist.push(outputbloomdata[i][1]);
+  }
   if (projects < 4) {
     for (var i =projects; i <=4; i++){
       outputbloomdata.push([i, i, 0.1, 0.1, 0.1, 0.1]);
@@ -108,13 +113,13 @@ var data = [publications, presentations, audience];
 
 var layout = {
   title: ' ',
-  font: {size: 6},
+  font: {size: 12},
   legend: {font: {size: 6}},
   width: 800,
   height: 600,
   margin: {
-    l: 1,
-    r: 25,
+    l: 30,
+    r: 50,
     b: 1,
     t: 1,
     pad: 1
@@ -122,6 +127,10 @@ var layout = {
   hoverinfo: 'skip',
    hovermode: false,
   barmode: "stack",
+  hoverlabel: {
+    bgcolor: 'rgb(75,181,197)'
+  },
+  
   legend: { traceorder: 'normal' },
   radialaxis: {
     visible: false, 
@@ -132,12 +141,17 @@ var layout = {
     ticks: ""
   },
   angularaxis: {
-    visible: false, 
-    showgrid: false,
+    type: 'category',
+    visible: true, 
+    showgrid: true,
+    showticklabels: true,
     showline: false,
-    zeroline: false,
-    showspikes: false,
-    ticks: ""
+    zeroline: true,
+    showspikes: true,
+    ticks: "outside",
+    tickmode: 'array',
+    tickvals: projectlist,
+    nticks: 30,
   },
   yaxis: {
     visible: false, 
