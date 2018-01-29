@@ -1,0 +1,134 @@
+<head>
+  
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.0/dist/Chart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+
+</head>
+
+<body>
+  <!-- Revision 11 updated 31 Oct 17<br><br> -->
+  
+  <canvas id="fundingorigins" height="100"></canvas>
+  
+  <script>
+    
+    
+    
+    //This array should be populated from BFGO data
+    function FunderData() {
+      var funderinfo = [
+        ["START",3000000],
+        ["NSF",1000000],
+        ["NRC",250000],
+        ["AllEnvi",800000],
+        ["CSIRO",400000]
+      ];
+      return funderinfo;
+    }
+
+
+  var fundingdata = FunderData();
+
+
+// The number of projects in the CRA
+  var numfunders = fundingdata.length;
+
+   var funderlist = [];
+  for (var i = 1; i <numfunders; i++) {
+    funderlist.push(fundingdata[i][0]);
+  }
+
+  var funders = [];
+  var contributions = [];
+  for (var i = 0; i < numfunders; i++){
+    contributions[i] = fundingdata[i][1];
+    funders[i] = fundingdata[i][0];
+//    document.write(projects + " "+rdata[i]+ " "+tdata[i] + "<BR>");
+  }    
+
+
+    Chart.helpers.merge(Chart.defaults.global, {
+      maintainAspectRatio: false,
+      tooltips: false,
+      layout: {
+        padding: 32
+      },
+      elements: {
+        line: {
+          fill: false
+        },
+        point: {
+          hoverRadius: 7,
+          radius: 5
+        }
+      },
+      plugins: {
+        legend: false,
+    //    title: false
+      }
+    });
+
+var ctx = document.getElementById("fundingorigins");
+var myChart = new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: funders,
+    datasets: [{
+      label: '# of Votes',
+      data: contributions,
+      datalabels: {
+            formatter : function(value, context) {
+                var result = numeral(value).format('($0,0[.]]00 a)');
+                return context.chart.data.labels[context.dataIndex]+'\n'+result;
+
+            },
+            backgroundColor: function(context) {
+              return context.dataset.backgroundColor;
+            },
+            borderColor: 'white',
+            borderRadius: 25,
+            borderWidth: 2,
+            color: 'white',
+            font: {
+              weight: 'bold'
+            }
+       
+          },
+      backgroundColor: [
+        'rgba(  0,    85,   104,  0.4)',
+        'rgba(  44,   103,  51,  0.4)',
+        'rgba(  9,    130,  144,  0.4)',
+        'rgba(  255,  70,   64,  0.4)',
+        'rgba(  163,  39,   108,  0.4)',
+        'rgba(  75,  181, 197,  0.4)',
+        'rgba(  203,  189, 45,  0.4)',
+        'rgba(  0,  255, 161,  0.4)',
+        'rgba(  255,  120, 0,  0.4)'
+      ],
+      borderColor: [
+        'rgba(  0,    85,   104,  1)',
+        'rgba(  44,   103,  51,  1)',
+        'rgba(  9,    130,  144,  1)',
+        'rgba(  255,  70,   64,  1)',
+        'rgba(  163,  39,   108,  1)',
+        'rgba(  75,  181, 197,  1)',
+        'rgba(  203,  189, 45,  1)',
+        'rgba(  0,  255, 161,  1)',
+        'rgba(  255,  120, 0,  1)'
+      ],
+      borderWidth: 1
+  }],
+options: {
+  cutoutPercentage: 55,
+  animateRotate: "true",
+
+}
+}
+}
+);
+  </script>
+</body>
+
