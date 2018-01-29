@@ -4,20 +4,13 @@
 </head>
 
 <body>
-  <!-- Revision 11 updated 31 Oct 17<br><br> -->
+
   
   <canvas id="fundingorigins" height="100"></canvas>
   
   <script>
     
-    // Columns fixed by table definition; 
-    //Project Abbreviation,
-    //Project Name,
-    //People (currently unpopulated/not revealed/unimplemented)
-    //Research Outputs (papers/datasets), 
-    // In Person Engagements (trainings, conference presentations)
-    //Remote/Distributed Engagement (press mentions)
-    var columns = 5;
+    
     
     //This array should be populated from BFGO data
     function FunderData() {
@@ -26,7 +19,7 @@
         ["NSF",100000],
         ["NRC",25000],
         ["AllEnvi",80000],
-  
+        ["CSIRO",40000]
       ];
       return funderinfo;
     }
@@ -82,7 +75,11 @@ var myChart = new Chart(ctx, {
         'rgba(  255,  120, 0,  1)'
       ],
       borderWidth: 1
-  }]
+  }],
+options: [{
+  cutoutPercentage: 55,
+  animateRotate: "true"
+}]
 }
 }
 );
