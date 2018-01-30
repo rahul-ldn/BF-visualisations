@@ -101,12 +101,12 @@ var myChart = new Chart(ctx, {
   data: {
     labels: funders,
     datasets: [{
-      label: '# of Votes',
+      label: 'Transformations to Sustainability—Funding',
       data: contributions,
       datalabels: {
             formatter : function(value, context) {
                 var result = numeral(value).format('($0,0[.]]00 a)');
-                return context.chart.data.labels[context.dataIndex]+'\n'+result;
+                return result;
 
             },
             backgroundColor: function(context) {
