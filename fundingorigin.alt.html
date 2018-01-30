@@ -106,7 +106,7 @@ var myChart = new Chart(ctx, {
       datalabels: {
             formatter : function(value, context) {
                 var result = numeral(value).format('($0,0[.]]00 a)');
-                return result;
+                return context.chart.data.labels[context.dataIndex]+'\n'+result;
 
             },
             backgroundColor: function(context) {
