@@ -1,0 +1,346 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+  <title>Belmont Forum Network Map</title>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
+   integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
+   crossorigin=""/>
+
+
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+
+<!--somewhere in CSS
+#mapid { height: 180px; }
+-->
+
+  <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"
+   integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg=="
+   crossorigin=""></script>
+
+
+<!--- Stamen map tiles
+<script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script> -->
+
+
+  <!-- Makimarkers -->
+<script type="text/javascript" src="https://rahulsindc.github.io/BF-visualisations/Leaflet.MakiMarkers.js"></script>
+  
+  <script src="https://rahulsindc.github.io/BF-visualisations/Leaflet.Geodesic.js"></script>
+
+<style type="text/css">
+
+.leaflet-control-layers-toggle {
+  background-color: #1E4968;
+
+}
+
+.leaflet-touch .leaflet-control-layers-toggle {
+background-color: #1E4968;
+}
+
+.leaflet-control-layers-expanded {
+  color: white;
+  background-color: #1E4968;
+
+}
+
+
+button {
+  display: inline-block;
+  margin: 0 5px 0 0;
+  padding: 5px 5px;
+  font-size: 10px;
+  font-family: "Fira Sans", sans-serif;
+  font-weight: normal;
+  line-height: 1.8;
+  appearance: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+button:focus {
+  outline: none
+}
+button:active {
+  font-weight: bold;
+}
+
+}
+  
+</style>
+</head>
+<body>
+<br>
+
+<BR><BR>
+<script>
+//Revision 4
+
+
+
+function projectlist() {
+
+  var list = ["One", "Two", "Three", "Four", "Five"];
+  return list;
+}
+
+function funderlist(project) {
+  var funders = [];
+
+  //THIS IS THE FUNDER QUERY
+  //IT SHOULD RETURN JUST THE PROJECT'S DATA
+  var dummydata = [
+    ["One","AllEnvi",48.856614,2.3522219,"ANR",48.856614,2.3522219,
+"BMBF",50.73743,7.0982068],
+    ["Two","BMWFW",48.2081743,16.3738189,"CNR-DTA",41.9027835,12.4963655,"CONACYT",19.4326077,-99.133208],
+    ["Three","CSIRO",-35.2809368,149.1300092,"DFG",50.73743,7.0982068,"EC",50.8503463,4.3517211],
+    ["Four","FAPESP",-23.5505199,-46.6333094,"GEO",46.2043907,6.1431577,"IAI",-34.9011127,-56.1645314],
+    ["Five","ICSU",48.856614,2.3522219,"IIASA",48.0688772,16.3554987,"ISSC",48.856614,2.3522219]
+    ];
+var queryresult = [];
+for (var i = 0; i< dummydata.length; i++) {
+  console.log("Funder loop: I = "+i+" dummydata[i][0] = "+dummydata[i][0]);
+  if (project == dummydata[i][0]) {
+    queryresult = dummydata[i];
+
+  }
+}
+
+  //ACTUAL FUNCTION RESUMES
+   for (var i = 1; i <queryresult.length; i++) {
+     funders.push(queryresult[i]);
+  }
+  return funders;
+}
+
+function researcherslist(project) {
+  var researchers = [];
+
+  //THIS IS THE FUNDER QUERY
+  //IT SHOULD RETURN JUST THE PROJECT'S DATA
+  var dummydata = [
+    ["One","University of Cape Town",-33.9248685,18.4240553,
+"Arizona State University",33.4255104,-111.9400054,
+"Embrapa Satellite Monitoring",-22.9098833,-47.0625812],
+    ["Two","World Agroforestry Centre (ICRAF)",-1.2920659,36.8219462,
+"International Land Coalition",41.9027835,12.4963655,
+"ICRISAT",17.385044,78.486671],
+    ["Three","University of Wisconsin - Madison",43.0730517,-89.4012302,
+"ETH Zurich",47.3768866,8.541694,
+"Chinese Academy of Agricultural Sciences",39.9041999,116.4073963],
+    ["Four","University of Minnesota, Institute on the Environment",44.9537029,-93.0899578,
+"Scottish Food Security Alliance, University of Aberdeen",57.149717,-2.094278,
+"CDE, University of Bern",46.9479739,7.4474468],
+    ["Five","CIRAD UMR Tetis",-18.8791902,47.5079055,
+    "University of Cape Town",-33.9248685,18.4240553,
+"PRADAN",21.628933,85.5816847]
+    ];
+var queryresult = [];
+for (var i = 0; i<dummydata.length; i++) {
+  if (project == dummydata[i][0]) {
+    queryresult = dummydata[i];
+  }
+}
+
+  //ACTUAL FUNCTION RESUMES
+   for (var i = 1; i <queryresult.length; i++) {
+     researchers.push(queryresult[i]);
+  }
+  return researchers;
+}
+
+function stakeholderlist(project) {
+  var stakeholders = [];
+
+  //THIS IS THE FUNDER QUERY
+  //IT SHOULD RETURN JUST THE PROJECT'S DATA
+  var dummydata = [
+    ["Two","University of Cape Town",-33.9248685,18.4240553,
+"Arizona State University",33.4255104,-111.9400054,
+"Embrapa Satellite Monitoring",-22.9098833,-47.0625812],
+    ["Three","World Agroforestry Centre (ICRAF)",-1.2920659,36.8219462,
+"International Land Coalition",41.9027835,12.4963655,
+"ICRISAT",17.385044,78.486671],
+    ["Four","University of Wisconsin - Madison",43.0730517,-89.4012302,
+"ETH Zurich",47.3768866,8.541694,
+"Chinese Academy of Agricultural Sciences",39.9041999,116.4073963],
+    ["Five","University of Minnesota, Institute on the Environment",44.9537029,-93.0899578,
+"Scottish Food Security Alliance, University of Aberdeen",57.149717,-2.094278,
+"CDE, University of Bern",46.9479739,7.4474468],
+    ["One","CIRAD UMR Tetis",-18.8791902,47.5079055,
+    "University of Cape Town",-33.9248685,18.4240553,
+"PRADAN",21.628933,85.5816847]
+    ];
+var queryresult = [];
+for (var i = 0; i<dummydata.length; i++) {
+  if (project == dummydata[i][0]) {
+    queryresult = dummydata[i];
+  }
+}
+
+  //ACTUAL FUNCTION RESUMES
+   for (var i = 1; i <queryresult.length; i++) {
+     stakeholders.push(queryresult[i]);
+  }
+  return stakeholders;
+}
+
+
+
+
+</script>
+
+<BR><BR>
+<!-- Create the map -->
+<div id="mapid" style="width: 1000px; height: 500px; z-index: 90; text-align: center;"></div>
+<script>
+var networkmap = L.map('mapid').setView([30.505, 0.09], 2);
+networkmap.scrollWheelZoom.disable();
+networkmap.dragging.disable();
+networkmap.zoomControl.remove();networkmap.touchZoom.disable();
+networkmap.doubleClickZoom.disable();
+networkmap.boxZoom.disable();
+networkmap.keyboard.disable(); 
+
+L.tileLayer('https://api.mapbox.com/styles/v1/rslux/cj21r8qyp00002qmppuj0ivt6/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicnNsdXgiLCJhIjoiY2oyMXFzd25jMDAwdDJ3cWFvYmk3NzYzaCJ9.b0CboYbGfrZTa1xApDdE5Q', {
+    maxZoom: 18,
+    attribution: 'ESRI ArcGIS',
+    id: 'mapbox.streets'
+  }).addTo(networkmap);
+//Notwithstanding ACAO/CORS, this executed
+//CSV Import
+//Drawing Markers
+L.MakiMarkers.accessToken = "pk.eyJ1IjoicnNsdXgiLCJhIjoiY2oyMXFzd25jMDAwdDJ3cWFvYmk3NzYzaCJ9.b0CboYbGfrZTa1xApDdE5Q";
+//**Second** CSV parse—can this be refactored?
+//Drawing Mountains
+
+
+  var labelpoint = new L.LatLng(30, -40);
+
+//Pull list of Projects
+var projects = projectlist();
+
+
+//Pull each project's relevant data
+
+
+var projectlayers = [];
+var projectlayerlist = {};
+for (var currentprojectnumber = 0; currentprojectnumber < projects.length; currentprojectnumber++) {
+  projectlayers[currentprojectnumber] = new L.layerGroup;
+  var currentproject = projects[currentprojectnumber];
+  var funders = funderlist(currentproject);
+  var stakeholders = stakeholderlist(currentproject);
+  var researchers = researcherslist(currentproject);
+  var currentgroup = [];
+  for (var j = 0; j < 3; j++) {
+    if (j === 0) { 
+      currentgroup = funders;
+      var currenticon = L.MakiMarkers.icon({icon: "circle", color: "#cbbd2c", size: "m"})
+      var currentcolour = '#cbbd2c';
+      };
+    if (j === 1) { 
+      currentgroup = stakeholders;
+      var currenticon = L.MakiMarkers.icon({icon: "circle", color: "#00ffA1", size: "m"})
+      var currentcolour = '#00ffA1';
+      };
+    if (j === 2) { 
+      currentgroup = researchers;
+      var currenticon = L.MakiMarkers.icon({icon: "circle", color: "#4bb5c5", size: "m"})
+      var currentcolour = '#4bb5c5';
+      };
+
+    var mname = "";
+    var mlat = "";
+    var mlong = "";
+
+    for (var i = 0; i <currentgroup.length; i++) {
+      console.log("Loop Count: "+i + " Value: "+funders[i]);
+      if (((i + 0) % 3)===0) {mname = currentgroup[i]};
+      if (((i + 2) % 3)===0) {mlat = currentgroup[i]};
+      if (((i +1 ) % 3)===0) {
+        mlong = currentgroup[i];
+        console.log("Name: "+mname+" Lat: "+mlat+" Long: "+mlong)
+        var marker = L.marker([mlat, mlong], {icon: currenticon})
+              .bindPopup('<strong>'+mname+'</strong>');
+        projectlayers[currentprojectnumber].addLayer(marker);
+        var markerpoint = new L.LatLng(mlat, mlong);
+        var markerline = L.geodesic([], {
+          weight: 7,
+          opacity: 1,
+          color: currentcolour,
+          steps: 15
+          });
+        projectlayers[currentprojectnumber].addLayer(markerline);
+        markerline.setLatLngs([[markerpoint, labelpoint]]);
+
+        };
+    }
+
+    
+   
+  }
+  
+var projectlog = {
+    "type": "FeatureCollection",
+    "features": []
+};
+
+var geojson = projectlayers[currentprojectnumber].toGeoJSON();
+        // Push GeoJSON object to collection
+        projectlog.features.push(geojson);
+
+
+console.log(projectlog);
+
+
+  var currentclass = document.createElement('style');
+  currentclass.type = 'text/css';
+  currentclass.innerHTML = ".labelshape{ background : #1E4968;   color : #FFF;     font-weight : bold;   border: 40px solid #1E4968;  font-size : 30px;   line-height : 40px;  line-width : 40px; border-radius: 50%; height: 40px; width: 40px; text-indent:-10px; margin: -50px 0 0 -60px;}";
+  document.getElementsByTagName('head')[0].appendChild(currentclass);
+
+  var labeltext = L.divIcon({
+    html: '<div class="labelshape"> '+projects[currentprojectnumber]+'</div>',
+
+   
+  });
+  var labelmarker = L.marker(labelpoint, {icon: labeltext});
+
+  projectlayers[currentprojectnumber].addLayer(labelmarker);
+
+projectlayerlist[projects[currentprojectnumber]] = projectlayers[currentprojectnumber];
+
+}
+  L.control.layers(projectlayerlist,null,{collapsed:false}).addTo(networkmap);
+  projectlayers[0].addTo(networkmap);
+//  projectlayers[4].addTo(networkmap);
+    // Create an empty GeoJSON collection
+
+
+
+
+    $('#text1').hover(function() {
+            $(this).css("background","red");
+            tamani_label.setStyle({fillOpacity: 1});
+        },function(){
+            $(this).css("background","");
+            tamani_label.setStyle({fillOpacity: 0.5});
+        });
+
+
+
+ 
+
+
+
+</script>
+
+
+</body> </html>
