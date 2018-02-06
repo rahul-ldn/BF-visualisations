@@ -17,6 +17,8 @@
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
 
+
+
 <!--somewhere in CSS
 #mapid { height: 180px; }
 -->
@@ -37,21 +39,49 @@
 
 <style type="text/css">
 
+.info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+
 .leaflet-control-layers-toggle {
   background-color: #1E4968;
+    text-align: left;
+  width: 80px;
 
 }
 
 .leaflet-touch .leaflet-control-layers-toggle {
 background-color: #1E4968;
+  text-align: left;
+  width: 80px;
 }
 
-.leaflet-control-layers-expanded {
+.leaflet-control-layers-expanded { /* actual controlling class */
   color: white;
   background-color: #1E4968;
-
+  text-align: left;
+  width: 80px;
 }
 
+.leaflet-control-layers-base {
+    text-align: left; 
+  width: 80px;
+  }
+
+.leaflet-control-command-interior {
+    text-align: left;
+  width: 80px;
+
+}
 
 button {
   display: inline-block;
@@ -72,7 +102,20 @@ button:active {
   font-weight: bold;
 }
 
+.legend {
+    line-height: 18px;
+    color: #555;
+    text-align: left;
 }
+.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+}
+
+
   
 </style>
 </head>
@@ -227,6 +270,12 @@ L.MakiMarkers.accessToken = "pk.eyJ1IjoicnNsdXgiLCJhIjoiY2oyMXFzd25jMDAwdDJ3cWFv
 //Pull list of Projects
 var projects = projectlist();
 
+var entity_options = [
+//colour, line: weight, steps, dash, marker: z-index
+  ["#cbbd2c",6,25,1,500], //funders
+  ["#4bb5c5",6,25,1,1000], //researchers
+  ["#00ffA1",6,25,1,1500]  //stakeholders
+];
 
 //Pull each project's relevant data
 
@@ -240,21 +289,23 @@ for (var currentprojectnumber = 0; currentprojectnumber < projects.length; curre
   var stakeholders = stakeholderlist(currentproject);
   var researchers = researcherslist(currentproject);
   var currentgroup = [];
-  for (var j = 0; j < 3; j++) {
-    if (j === 0) { 
+  for (var entity = 0; entity < 3; entity++) {
+    if (entity === 0) { 
       currentgroup = funders;
-      var currenticon = L.MakiMarkers.icon({icon: "circle", color: "#cbbd2c", size: "m"})
-      var currentcolour = '#cbbd2c';
+      var currenticon = L.MakiMarkers.icon({icon: "circle", color: "#cbbd2c", size: "l"})
+
       };
-    if (j === 1) { 
-      currentgroup = stakeholders;
-      var currenticon = L.MakiMarkers.icon({icon: "circle", color: "#00ffA1", size: "m"})
-      var currentcolour = '#00ffA1';
-      };
-    if (j === 2) { 
+ 
+    if (entity === 1) { 
       currentgroup = researchers;
       var currenticon = L.MakiMarkers.icon({icon: "circle", color: "#4bb5c5", size: "m"})
-      var currentcolour = '#4bb5c5';
+
+      };
+
+    if (entity === 2) { 
+      currentgroup = stakeholders;
+      var currenticon = L.MakiMarkers.icon({icon: "circle", color: "#00ffA1", size: "s"})
+
       };
 
     var mname = "";
@@ -268,15 +319,19 @@ for (var currentprojectnumber = 0; currentprojectnumber < projects.length; curre
       if (((i +1 ) % 3)===0) {
         mlong = currentgroup[i];
         console.log("Name: "+mname+" Lat: "+mlat+" Long: "+mlong)
-        var marker = L.marker([mlat, mlong], {icon: currenticon})
+        var marker = L.marker([mlat, mlong],{
+          zIndexOffset : entity_options[4],
+          icon: currenticon
+        })
               .bindPopup('<strong>'+mname+'</strong>');
         projectlayers[currentprojectnumber].addLayer(marker);
         var markerpoint = new L.LatLng(mlat, mlong);
         var markerline = L.geodesic([], {
-          weight: 7,
+          weight: entity_options[entity][1],
           opacity: 1,
-          color: currentcolour,
-          steps: 15
+          color: entity_options[entity][0],
+          steps: entity_options[entity][2],
+          dash: entity_options[entity][3],
           });
         projectlayers[currentprojectnumber].addLayer(markerline);
         markerline.setLatLngs([[markerpoint, labelpoint]]);
@@ -318,12 +373,22 @@ console.log(projectlog);
 projectlayerlist[projects[currentprojectnumber]] = projectlayers[currentprojectnumber];
 
 }
-  L.control.layers(projectlayerlist,null,{collapsed:false}).addTo(networkmap);
+  L.control.layers(projectlayerlist,null,{collapsed:false, position: 'topright'}).addTo(networkmap);
   projectlayers[0].addTo(networkmap);
 //  projectlayers[4].addTo(networkmap);
     // Create an empty GeoJSON collection
 
+var networkmaplegend = L.control({position: 'bottomleft'});
 
+networkmaplegend.onAdd = function (networkmap) {
+    var div = L.DomUtil.create('div', 'info legend'),
+    labels = ["Members", "Researchers", "Stakeholders"];
+    for (var entity = 0; entity < labels.length; entity++) {
+      div.innerHTML += '<i style="background:' + entity_options[entity][0] + '"></i>' + labels[entity] + "<BR>";
+    }
+    return div;
+  };
+  networkmaplegend.addTo(networkmap);
 
 
     $('#text1').hover(function() {
