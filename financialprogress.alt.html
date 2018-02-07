@@ -1,0 +1,291 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.0/dist/Chart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+
+ <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+</head>
+
+<body>
+  
+  <div id="financialprogressprojectlist">T2S Projects</div><BR>
+  <canvas id="financialprogress" height="600" width="600"></canvas>
+
+  <script>
+    
+    
+    
+    //This array should be populated from BFGO data
+    function financialprogressinformation() {
+
+      var dummydata = [
+      ["One","First Project","AllEnvi","French Research Alliance for the Environment",400000,230000,"ANR","The French National Research Agency",500000,150000,
+"BMBF","Federal Ministry of Science, Research and Economy",500000,75000],
+      ["Two","Second Project","BMWFW","Federal Ministry of Science, Research and Economy",48000,0,"CNR-DTA","National Research Council",420000,125000,"CONACYT","National Council of Science and Technology",190000,99000],
+      ["Three","Third Project","CSIRO","The Commonwealth Scientific and Industrial Research Organisation",358368,149092,"DFG","German Research Foundation",507743,70982,"EC","European Commission",508500,435172],
+      ["Four","Fourth Project","FAPESP","São Paulo Research Foundation",235505,46633,"GEO","Group on Earth Observations",462043,61431,"IAI","Inter-American Institute for Global Change Research",349011,56164,"ICSU","International Council for Science",488566,235222],
+      ["Five","Fifth Project","ICSU","International Council for Science",488566,235222,"IIASA","International Institute for Applied Systems Analysis",480688,163554,"ISSC","International Social Science Council",488566,235222]
+      ];
+      return dummydata;
+    }
+
+  financialprogresslabels = [];
+  financialprogressundisbursed = [];
+  financialprogressdisbursed = [];
+  financialprogresstotal = [];
+  funderlist = [];
+  console.log("BEGINS");
+  rawfinancialprogressdata = financialprogressinformation();
+  var projectselecting = document.getElementById("financialprogressprojectlist");
+  var selectcontrol = document.createElement("select");
+  selectcontrol.id = "ProjectSelected";
+  projectselecting.appendChild(selectcontrol);
+  
+  // All Projects loop: Here we populate all variables and take all actions that initialise on all projects' data
+
+  for (var currentproject = 0; currentproject < rawfinancialprogressdata.length; currentproject++) {
+    console.log("Project Loop: " + currentproject + " out of "+ rawfinancialprogressdata.length);
+ //array of funderlist per project, 2nd dimension 0 name 1 commitment 2 disbursed
+    financialprogresslabels[currentproject] = [];
+    financialprogressundisbursed[currentproject] = [];
+    financialprogressdisbursed[currentproject] = [];
+    financialprogresstotal[currentproject]=[];
+    funderlist[0]=[];
+    for (var funderdata = 2; funderdata < (rawfinancialprogressdata[currentproject].length); funderdata++) {
+      funderdataoffset = (funderdata -2) % 4;
+      
+      currentfunder = (((funderdata -2) - funderdataoffset)/ 4); //This _should_ correspond to the initial dimension index for funderlist[][]
+      rfpd_pop = rawfinancialprogressdata[currentproject][funderdata];
+      console.log("Loop Count: "+ funderdata + " out of " + rawfinancialprogressdata[currentproject].length +" Funder Data Offset: " + funderdataoffset +" Current Funder: "+currentfunder+" ("+rawfinancialprogressdata[currentproject][2+(currentfunder*4)]+") Current Data: "+ rfpd_pop+ " Raw: "+rawfinancialprogressdata[currentproject]);
+
+  
+      if (funderdataoffset === 0 ) { 
+          financialprogresslabels[currentproject][currentfunder]=rfpd_pop;
+          funderlist[currentfunder][0]=rfpd_pop;
+        };
+      if (funderdataoffset === 1 ) { console.log("We can't use it, so: "+rfpd_pop);};
+      if (funderdataoffset === 2 ) { 
+          financialprogresstotal[currentproject][currentfunder]=rfpd_pop;
+          funderlist[currentfunder][1]=rfpd_pop;
+        };
+      if (funderdataoffset === 3 ) { 
+          financialprogressdisbursed[currentproject][currentfunder]=rfpd_pop;
+      //    financialprogresstotal[currentproject][currentfunder] = "(Total Commitment: "+numeral(financialprogressundisbursed[currentproject][currentfunder]).format('($0,0[.]]00 a)')+")";
+          financialprogressundisbursed[currentproject][currentfunder] = financialprogresstotal[currentproject][currentfunder] - rfpd_pop;
+
+          funderlist[currentfunder][2]=rfpd_pop;
+        console.log("Name: "+funderlist[currentfunder][0]+" Committed: "+funderlist[currentfunder][1]+" Disbursed: "+funderlist[currentfunder][2]);
+
+
+        funderlist[currentfunder+1]=[];
+    }
+    } //funderlist[][] populated for current project, radio buttons constructed
+
+        var option = document.createElement("option");
+        option.setAttribute("value", currentproject);
+        console.log("Creating Select for "+rawfinancialprogressdata[currentproject][0]+" Value: "+currentproject);
+        option.text = rawfinancialprogressdata[currentproject][0];
+        selectcontrol.appendChild(option);
+
+  }//project loop
+  currentproject = 0;
+
+  
+
+
+   /* Chart.helpers.merge(Chart.defaults.global, {
+      maintainAspectRatio: false,
+      tooltips: false,
+      layout: {
+        padding: 32
+      },
+      elements: {
+        line: {
+          fill: false
+        },
+        point: {
+          hoverRadius: 7,
+          radius: 5
+        }
+      },
+      plugins: {
+        legend: false,
+    //    title: false
+      }
+    });
+
+    Chart.pluginService.register({
+  beforeDraw: function(chart) {
+    var width = chart.chart.width,
+        height = chart.chart.height,
+        ctx = chart.chart.ctx;
+
+    ctx.restore();
+    var fontSize = (height / 414).toFixed(2);
+    ctx.font = fontSize + "em sans-serif";
+    ctx.textBaseline = "middle";
+
+    var text = "T2S Total: "+contribtotal,
+        textX = Math.round((width - ctx.measureText(text).width) / 2),
+        textY = height / 2;
+
+    ctx.fillText(text, textX, textY);
+    ctx.save();
+  }
+});
+*/
+console.log("Raw Labels: "+financialprogresslabels);
+console.log("Raw Undisbursed: "+financialprogressundisbursed);
+console.log("Raw Disbursed: "+financialprogressdisbursed);
+
+var ctx = document.getElementById("financialprogress").getContext('2d');
+var config = {
+type: 'bar',
+    data: {
+      labels : financialprogresslabels[0],
+      datasets : [
+       {
+           label : "Released to Project",
+           data: financialprogressdisbursed[0],
+            datalabels: {
+              align: 'end',
+              anchor: 'start',
+              formatter : function(value, context) {
+                var result = numeral(value).format('($0,0[.]0 a)');
+                return context.chart.data.labels[context.dataIndex]+' '+result;
+
+                },
+              backgroundColor: function(context) {
+                return context.dataset.backgroundColor;
+              },
+              borderColor: 'white',
+              borderRadius: 25,
+              borderWidth: 2,
+              color: 'white',
+              font: {
+                weight: 'bold'
+              }
+       
+          
+            },
+           backgroundColor: "#2c6733",
+           hoverBackgroundColor: "#214C26",
+           hoverBorderWidth: 8,
+           borderWidth : 8,
+           borderColor: "#2c6733",
+           hoverBorderColor: "#214C26"
+        },
+        {
+           label : "Undisbursed",
+            data: financialprogressundisbursed[0],
+            datalabels: {
+              align: 'end',
+              anchor: 'start',
+              formatter : function(value, context) {
+                var result = numeral(value).format('($0,0[.]0 a)');
+                return context.chart.data.labels[context.dataIndex]+' '+result;
+
+              },
+              backgroundColor: function(context) {
+                return context.dataset.backgroundColor;
+              },
+              borderColor: '#2c6733',
+              borderRadius: 25,
+              borderWidth: 2,
+              color: '#2c6733',
+              font: {
+                weight: 'bold'
+              }
+       
+          
+            },
+
+           backgroundColor: "white",
+           borderColor: "#2c6733",
+           borderWidth : 8,
+           hoverBackgroundColor: "#D2F2D7",
+           hoverBorderWidth: 8,
+           hoverBorderColor: "#214C26",
+           borderSkipped: false
+        },
+       
+        ]
+    },
+    options: {
+        responsive: false,
+        animation: {
+          duration: 500,
+        },
+        tooltips: {
+          mode: 'label',
+          callbacks: {
+          label: function(tooltipItem, data) { 
+            return data.datasets[tooltipItem.datasetIndex].label + ": " + numeral(tooltipItem.yLabel).format('($0,0[.]]00 a)');
+          }
+          }
+         },
+
+        plugins: {
+          datalabels: {
+            color: 'white',
+            display: function(context) {
+              return context.dataset.data[context.dataIndex] > 15;
+            },
+            font: {
+              weight: 'bold'
+            },
+            formatter: Math.round
+          }
+        },
+        scales: {
+          xAxes: [{ 
+            stacked: true, 
+            gridLines: { display: false },
+          //  barThickness : 140,
+            categoryPercentage: 0.9,
+            barPercentage: 1.0,
+  //          ticks: {
+    //          callback: function(value, index, values) {
+      //          console.log("value "+value+"index "+index+"values "+values);
+        //        var newtick = value+" (Total Committed: "+numeral(financialprogresstotal[index]).format('($0,0[.]]00 a)')+")";
+          //      return newtick; 
+            //  },
+          //  }
+            }],
+          yAxes: [{ 
+            stacked: true, 
+            ticks: {
+              beginAtZero: true,
+              callback: function(value, index, values) { return numeral(value).format('($0,0[.]]00 a)'); },
+            }, 
+            }],
+        }, // scales
+        legend: {
+          display: true,
+          labels: {
+            fontSize: 14,
+            fontStyle: 'bold',
+          }
+        }
+    }
+};
+var financialprogresschart = new Chart(ctx, config);
+$("#financialprogressprojectlist").change(function() {
+    var selectedproject = document.getElementById("ProjectSelected");
+    currentproject = selectedproject.selectedIndex;
+    console.log("Select New Project: "+currentproject);
+    var data = financialprogresschart.config.data;
+    data.datasets[0].data = financialprogressdisbursed[currentproject];
+    data.datasets[1].data = financialprogressundisbursed[currentproject];
+    data.labels = financialprogresslabels[currentproject];
+    financialprogresschart.update();
+});
+
+
+
+  </script>
+</body>
+
