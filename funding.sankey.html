@@ -1,0 +1,205 @@
+<head>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+
+    <style>
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+    <div id="funding-sankey"></div>
+    <script>
+        //This array should be populated from BFGO data
+        function funding_data_query() {
+            var dummydata = [
+                ["One", "First Project", "AllEnvi", "French Research Alliance for the Environment", 400000, 230000, "ANR", "The French National Research Agency", 500000, 150000, "BMBFW", "Federal Ministry of Science, Research and Economy", 500000, 75000],
+                ["Two", "Second Project", "BMWFW", "Federal Ministry of Science, Research and Economy", 48000, 0, "CNR-DTA", "National Research Council", 420000, 125000, "CONACYT", "National Council of Science and Technology", 190000, 99000],
+                ["Three", "Third Project", "CSIRO", "The Commonwealth Scientific and Industrial Research Organisation", 358368, 149092, "DFG", "German Research Foundation", 507743, 70982, "EC", "European Commission", 508500, 435172],
+                ["Four", "Fourth Project", "FAPESP", "São Paulo Research Foundation", 235505, 46633, "GEO", "Group on Earth Observations", 462043, 61431, "IAI", "Inter-American Institute for Global Change Research", 349011, 56164, "ICSU", "International Council for Science", 43566, 35222],
+                ["Five", "Fifth Project", "ICSU", "International Council for Science", 488566, 235222, "IIASA", "International Institute for Applied Systems Analysis", 480688, 163554, "ISSC", "International Social Science Council", 388566,   235222]
+            ];
+            return dummydata;
+        };
+
+        var query_data = funding_data_query();
+        is_new_member = 4;
+        project_total = 0;
+        entities_short = [];
+        entities_long = [];
+        entities_colours = [];
+        
+
+        current_flow = 0;
+        flow_funders = [];
+        flow_projects = [];
+        flow_amounts = [];
+        flow_colours = [];
+        flow_labels = [];
+
+
+
+
+      
+
+
+        console.log("BEGINS");
+
+        for (var current_project = 0; current_project < query_data.length; current_project++) {
+          console.log("Initial Project Loop (Populating Entites): " + current_project + " out of " + query_data.length);
+          entities_short[current_project] = query_data[current_project][0];
+          entities_long[current_project] = query_data[current_project][1];
+          entities_colours[current_project] = "#FFFFFF";
+          project_total = current_project;
+          console.log("Current Project Total: "+project_total);
+        }
+        for (var current_project = 0; current_project < query_data.length; current_project++) {
+          console.log("Secondary Project Loop (Members, Flows: " + current_project + " out of " + query_data.length);
+            //array of funders_list per project, 2nd dimension 0 name 1 commitment 2 disbursed
+            for (var funder_data_loop = 2; funder_data_loop < (query_data[current_project].length); funder_data_loop++) {
+                funder_data_loopoffset = (funder_data_loop - 2) % 4;
+
+                current_funder = (((funder_data_loop - 2) - funder_data_loopoffset) / 4);
+                // check for new member
+                var member_found = 0;
+                for (var find_member = project_total; find_member < entities_short.length; find_member++)
+                  {
+                  if (query_data[current_project][2 + (current_funder * 4)] == entities_short[find_member]) {
+                    member_found = find_member;
+                    console.log("Member "+query_data[current_project][2 + (current_funder * 4)]+" found at "+find_member);
+                    is_new_member--;
+                    console.log("New Member key: "+is_new_member);
+                  } else {
+                    console.log("Current Funder "+query_data[current_project][2 + (current_funder * 4)]+" not found at "+find_member+" out of "+(entities_short.length-1));
+                  };
+                   
+                };
+                //This _should_ correspond to the initial dimension index for funders_list[][]
+                intra_loop_data_element = query_data[current_project][funder_data_loop];
+                console.log("Loop Count: " + funder_data_loop + " out of " + query_data[current_project].length + " Funder Data Offset: " + funder_data_loopoffset + " Current Funder: " + current_funder + " (" + query_data[current_project][2 + (current_funder * 4)] + ") Current Data: " + intra_loop_data_element + " Raw: " + query_data[current_project]);
+                if (funder_data_loopoffset === 0) { 
+                    flow_projects.push(current_project); 
+                    if (member_found > 0) {
+                      if (is_new_member == 4) {
+                        console.log("THIS IS NOT POSSIBLE—MEMBER IS NEW AND YET FOUND!");
+                      } else {
+                        console.log("Not a new member, assigning flow information");
+                        flow_funders.push(member_found);
+                        console.log("Source: "+member_found+" added at index: "+flow_funders.length);
+                      };
+                    console.log("New Member key: "+is_new_member);
+                    };
+                    if ((member_found == 0) && (is_new_member == 4)) {
+                        console.log ("New Member Short Name Added: "+intra_loop_data_element);
+                        entities_short.push(intra_loop_data_element);
+                        flow_funders.push((entities_short.length-1));
+                        console.log("Source: "+(entities_short.length-1)+" added at index: "+(flow_funders.length-1));
+                    };
+                    console.log("New Member key: "+is_new_member);
+
+                };
+                if (funder_data_loopoffset === 1) {  
+                    if (is_new_member == 3) {
+                        console.log("New Member Long Name Added: "+intra_loop_data_element);
+                        entities_long.push(intra_loop_data_element);
+                    };
+                
+                    console.log("New Member key: "+is_new_member);
+
+                };
+                if (funder_data_loopoffset === 2) {  
+                  console.log("New Flow Amount added: "+intra_loop_data_element+" to Flow #"+current_flow);
+                  flow_amounts.push(intra_loop_data_element);
+                  flow_labels.push(intra_loop_data_element);
+                  flow_colours.push("#FFFFFF");
+                  };
+                if (funder_data_loopoffset === 3) {
+                    console.log("We can't use the disbursed amount in this graph");
+                    current_flow++;
+                    console.log("New Member key: "+is_new_member);
+                    is_new_member = 4;
+                };
+            }; 
+
+        } //project loop
+        colour_list = ["#800200", "#803200", "#7f771c", "#2c6733", "#4a7f5a", "#075f69", "#317782", "#005568", "#691945"]; //replace with style library call for members?
+        for (var current_entity = 0; current_entity < entities_short.length; current_entity++) {
+            current_colour = current_entity % 9;
+            entities_colours.push(colour_list[current_colour]);
+            console.log(entities_long[current_entity]+" had colour "+colour_list[current_colour]+ " set at "+current_entity);
+            if (current_entity > (entities_short.length - project_total -2)) {
+                var project_to_colour = entities_short.length - current_entity -1;
+                console.log("adding "+colour_list[current_colour]+ "to "+entities_long[project_to_colour]);
+                entities_colours[project_to_colour]=colour_list[current_colour];
+            }
+        };
+        for (var current_flow = 0; current_flow < flow_amounts.length; current_flow++) {
+            flow_colours[current_flow]=entities_colours[flow_funders[current_flow]];
+            console.log(flow_labels[current_flow]+" had colour "+flow_colours[current_flow]+ " set at "+current_flow);
+        };
+
+        var data = [{
+            'type': "sankey",
+            'domain': {
+                'x': [0, 1],
+                'y': [0, 1]
+            },
+            'orientation': "h",
+            'valueformat': ".0f",
+            'valuesuffix': " (k €)",
+            'node': {
+                'pad': 15,
+                'thickness': 15,
+                'line': {
+                    'color': "black",
+                    'width': 0.5
+                },
+                'label': entities_long,
+                'color': entities_colours
+              },
+                // Array of Labels
+
+                'link': {
+                  'source': flow_funders,
+                // Array of source IDs
+                  'target': flow_projects,
+                // Array of target IDs
+                  'value': flow_amounts,
+                // Array of Values for flows
+                  'color': flow_colours,
+                // Array of colours for each link
+                  'labelsrc': " "
+                }
+              
+        }];
+
+
+        var layout = {
+            'title': "T2S Funder-Project Relationships",
+            'width': 1000,
+            'height': 700,
+            'font': {
+                'size': 10,
+                'color': 'black'
+            },
+            'plot_bgcolor': 'white',
+            'paper_bgcolor': 'white'
+        };
+        console.log(data);
+        console.log(layout);
+        Plotly.plot('funding-sankey', data, layout);
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+</script>
+</body>
