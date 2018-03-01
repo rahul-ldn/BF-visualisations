@@ -55,31 +55,31 @@
 .leaflet-control-layers-toggle {
   background-color: #1E4968;
     text-align: left;
-  width: 80px;
+  width: 100px;
 
 }
 
 .leaflet-touch .leaflet-control-layers-toggle {
 background-color: #1E4968;
   text-align: left;
-  width: 80px;
+  width: 100px;
 }
 
 .leaflet-control-layers-expanded { /* actual controlling class */
   color: white;
   background-color: #1E4968;
   text-align: left;
-  width: 80px;
+  width: 100px;
 }
 
 .leaflet-control-layers-base {
     text-align: left; 
-  width: 80px;
+  width: 100px;
   }
 
 .leaflet-control-command-interior {
     text-align: left;
-  width: 80px;
+  width: 100px;
 
 }
 
@@ -128,42 +128,145 @@ button:active {
 
 
 
-function projectlist() {
 
-  var list = ["One", "Two", "Three", "Four", "Five"];
+
+function BFGOquerydata() {
+  var dummydata = [
+  //Project ID, Short Name, category, long name, country, lat, long
+      [26,"TAMANI","project","Designing an Improved Network of Long-Term Monitoring Sites for Arctic Vertebrates: Towards a Better Involvement of Local Communities through Participatory Science Programs"," "," ","Longitude"], 
+      [27,"ASUS","project","Arctic Sustainability: A Synthesis of Knowledge"," "," ","Longitude"], 
+      [28,"CONNECT","project","Global Connections and Changing Resource Use System in the Arctic"," "," ","Longitude"], 
+      [29,"RACArctic","project","Resilience and Adaptive Capacity of ARCTIC Marine Systems Under a Changing Climate"," "," ","Longitude"], 
+      [31,"ARCTIC-ERA","project","Arctic Climate Change and its Impact on Environment, Infrastructures, and Resource Availability"," "," ","Longitude"], 
+      [32,"BAAMRGP","project","Bio-Economic Analysis for Arctic Marine Resource Governance and Policy"," "," ","Longitude"], 
+      [33,"COPERA","project","C budget of Ecosystems, Cities and Villages on Permafrost in the Eastern Russian Arctic"," "," ","Longitude"], 
+      [34,"HIARC","project","Anthropogenic Heat Islands in the Arctic: Windows to the Future of the Regional Climates, Ecosystems, and Societies"," "," ","Longitude"], 
+      [35,"Pan-Arctic Options","project","Holistic Integration for Arctic Coastal-Marine Sustainability"," "," ","Longitude"], 
+      [32,"BAAMRGP","funder","MINCyT","ARG",-34.61315000,-58.37723000], 
+      [32,"BAAMRGP","funder","CSIRO","AUS",-35.28346000,149.12807000], 
+      [26,"TAMANI","funder","FAPESP","BRA",-15.77972000,-47.92972000], 
+      [29,"RACArctic","funder","NSERC","CAN",45.41117000,-75.69812000], 
+      [26,"TAMANI","funder","NSFC","CHN",39.90750000,116.39723000], 
+      [35,"Pan-Arctic Options","funder","Finland - Academy of Finland","FIN",60.16952000,24.93545000], 
+      [32,"BAAMRGP","funder","MESRI","FRA",48.85341000,2.34880000], 
+      [33,"COPERA","funder","BMBF","DEU",52.52437000,13.41053000], 
+      [27,"ASUS","funder","DLR","DEU",52.52437000,13.41053000], 
+      [28,"CONNECT","funder","DFG","DEU",52.52437000,13.41053000], 
+      [29,"RACArctic","funder","MoES","IND",28.63576000,77.22445000], 
+      [35,"Pan-Arctic Options","funder","CNR","ITA",41.89193000,12.51133000], 
+      [31,"ARCTIC-ERA","funder","MEXT","JPN",35.68950000,139.69171000], 
+      [34,"HIARC","funder","RCN","NOR",59.91273000,10.74609000], 
+      [32,"BAAMRGP","funder","RFBR","RUS",55.75222000,37.61556000], 
+      [26,"TAMANI","funder","MINECO","ESP",40.41650000,-3.70256000], 
+      [31,"ARCTIC-ERA","funder","Formas","SWE",59.33258000,18.06490000], 
+      [31,"ARCTIC-ERA","funder","TUBITAK","TUR",39.91987000,32.85427000], 
+      [32,"BAAMRGP","funder","NERC","GBR",51.50853000,-0.12574000], 
+      [26,"TAMANI","funder","NSF","USA",38.89511000,-77.03637000], 
+      [27,"ASUS","researcher","Petrov, Andrey (University of Northern Iowa)","USA",38.89511000,-77.03637000], 
+      [27,"ASUS","researcher","Espiritu, Aileen (The Barents Institute, University of Tromsø)","NOR",59.91273000,10.74609000], 
+      [27,"ASUS","researcher","Klaus, Georg (Ilisimatusarfik)","GRL",64.18347000,-51.72157000], 
+      [32,"BAAMRGP","researcher","Ross, Bob (PI)","ALB",41.32750000,19.81889000], 
+      [32,"BAAMRGP","researcher","Moor, Alice (University of Costa Rica)","CRI",9.93333000,-84.08333000], 
+      [31,"ARCTIC-ERA","researcher","Zolina, Olga (CNRS Laboratoire de Glaciologie et Géophysique de Environnement (LGGE))","FRA",48.85341000,2.34880000], 
+      [31,"ARCTIC-ERA","researcher","Groisman, Pavel (Hydrology Science and Services, Inc.)","USA",38.89511000,-77.03637000], 
+      [31,"ARCTIC-ERA","researcher","Gulev, Sergey (P.P. Shirshov Institute of Oceanology)","RUS",55.75222000,37.61556000], 
+      [31,"ARCTIC-ERA","researcher","Profiriev, Boris (Institute of Economic Forecasting)","RUS",55.75222000,37.61556000], 
+      [31,"ARCTIC-ERA","researcher","Streletskiy, Dmitry (George Washington University)","USA",38.89511000,-77.03637000], 
+      [31,"ARCTIC-ERA","researcher","Peterman, Nathan (Local High School)","USA",38.89511000,-77.03637000], 
+      [27,"ASUS","researcher","Larsen, Joan Nymand (Stefansson Arctic Institute, University of Akureyri)","ISL",64.13548000,-21.89541000], 
+      [27,"ASUS","researcher","Rasmussen, Rasmus Ole (Nordregio)","SWE",59.33258000,18.06490000], 
+      [27,"ASUS","researcher","Southcott, Chris (Lakehead University)","CAN",45.41117000,-75.69812000], 
+      [27,"ASUS","researcher","Tatiana, Vlasova (Institute of Geography, Russian Academy of Sciences)","RUS",55.75222000,37.61556000], 
+      [32,"BAAMRGP","researcher","Fernandez, Linda (Virginia Commonwealth University)","USA",38.89511000,-77.03637000], 
+      [32,"BAAMRGP","researcher","Kaiser, Brooks (University of Southern Denmark)","DNK",55.67594000,12.56553000], 
+      [32,"BAAMRGP","researcher","Sundet, Jan (Institute of Marine Research)","NOR",59.91273000,10.74609000], 
+      [32,"BAAMRGP","researcher","Vestergaard, Niels (University of Southern Denmark)","DNK",55.67594000,12.56553000], 
+      [26,"TAMANI","researcher","Gremillet, David (Centre d'Ecologie Fonctionnelle et Evolutive)","FRA",48.85341000,2.34880000], 
+      [26,"TAMANI","researcher","Berteaux, Dominique (Université du Québec à Rimouski)","CAN",45.41117000,-75.69812000], 
+      [26,"TAMANI","researcher","Furgal, Chris (Trent University)","CAN",45.41117000,-75.69812000], 
+      [26,"TAMANI","researcher","Parlee, Brenda (University of Alberta)","CAN",45.41117000,-75.69812000], 
+      [26,"TAMANI","researcher","Ana, Rodriguez (Centre: Ecologie Fonctionnelle et Evolutive)","FRA",48.85341000,2.34880000], 
+      [26,"TAMANI","researcher","Yoccoz, Nigel (University of Tromsø)","NOR",59.91273000,10.74609000], 
+      [29,"RACArctic","researcher","Saitoh, Sei-Ichi (Hokkaido University)","JPN",35.68950000,139.69171000], 
+      [29,"RACArctic","researcher","Chierici, Melissa (Institute of Marine Research)","NOR",59.91273000,10.74609000], 
+      [29,"RACArctic","researcher","Drinkwater, Kenneth (Institute of Marine Research)","NOR",59.91273000,10.74609000], 
+      [29,"RACArctic","researcher","EIde, Arne (University of Tromsø)","NOR",59.91273000,10.74609000], 
+      [29,"RACArctic","researcher","Harada, Naomi (Japan Agency for Marine Earth-Science and Technology)","JPN",35.68950000,139.69171000], 
+      [29,"RACArctic","researcher","Haynie, Alan (Resource Ecology and Fisheries Management Division, Alaska Fisheries Science Center, NOAA)","USA",38.89511000,-77.03637000], 
+      [29,"RACArctic","researcher","Hirawake, Toru (Hokkaido University)","JPN",35.68950000,139.69171000], 
+      [29,"RACArctic","researcher","Hoel, Alf Håkon (Institute of Marine Research)","NOR",59.91273000,10.74609000], 
+      [29,"RACArctic","researcher","Hunt, George (University of Washington)","USA",38.89511000,-77.03637000], 
+      [29,"RACArctic","researcher","Huntington, Henry (Huntington Consulting)","USA",38.89511000,-77.03637000], 
+      [29,"RACArctic","researcher","Ingvaldsen, Randy (Institute of Marine Research)","NOR",59.91273000,10.74609000], 
+      [35,"Pan-Arctic Options","researcher","Berkman, Paul (University of California-Santa Barbara,)","USA",38.89511000,-77.03637000], [35,"Pan-Arctic Options","researcher","Brigham, Lawson (University of Alaska-Fairbanks)","USA",38.89511000,-77.03637000], 
+      [35,"Pan-Arctic Options","researcher","Gascard, Jean-Claude (Laboratoire Océanographie et du Climat, Université Pierre et Marie Curie)","FRA",48.85341000,2.34880000], 
+      [35,"Pan-Arctic Options","researcher","Halpern, Ben (University of California-Santa Barbara)","USA",38.89511000,-77.03637000], 
+      [35,"Pan-Arctic Options","researcher","Provost, Christine (Laboratoire; Océanographie et du Climat, Université Pierre et Marie Curie)","FRA",48.85341000,2.34880000], 
+      [35,"Pan-Arctic Options","researcher","Sun, Kai (Ocean University of China)","CHN",39.90750000,116.39723000], 
+      [35,"Pan-Arctic Options","researcher","Taylor, Fraser (Carleton University)","USA",38.89511000,-77.03637000], 
+      [35,"Pan-Arctic Options","researcher","Vylegzhanin, Alexander (MGIMO University)","RUS",55.75222000,37.61556000], 
+      [35,"Pan-Arctic Options","researcher","Winther, Jan-Gunnar (Norwegian Polar Institute)","NOR",59.91273000,10.74609000], 
+      [34,"HIARC","researcher","Doe, John (Nansen Environmental and Remote Sensing Center)","NFK",-29.05459000,167.96628000], 
+      [34,"HIARC","researcher","Doe, Jane (Institute of the Cryosphere, Russian Academy of Sciences Siberian Branch)","RUS",55.75222000,37.61556000], 
+      [33,"COPERA","researcher","Sugimoto, Atsuko (Hokkaido University)","JPN",35.68950000,139.69171000], 
+      [33,"COPERA","researcher","Ohta, Takeshi (Nagoya University)","JPN",35.68950000,139.69171000], 
+      [33,"COPERA","researcher","Prisyazhny, Mikhael (North-Eastern Federal University)","RUS",55.75222000,37.61556000], 
+      [33,"COPERA","researcher","Suzuki, Rikie (Japan Agency for Marine-Earth Science and Technology)","JPN",35.68950000,139.69171000], [33,"COPERA","researcher","Yoshikawa, Kenji (University of Alaska-Fairbanks)","USA",38.89511000,-77.03637000], 
+      [33,"COPERA","researcher","Adams, Derek (Oberlin College)","USA",38.89511000,-77.03637000], 
+      [28,"CONNECT","researcher","Hausner, Vera Helene (University of Tromsø)","NOR",59.91273000,10.74609000], 
+      [28,"CONNECT","researcher","Broderstad, Else Grete (University of Tromsø)","NOR",59.91273000,10.74609000], 
+      [28,"CONNECT","researcher","Clark, Douglas (University of Saskatchewan)","SWE",59.33258000,18.06490000], 
+      [28,"CONNECT","researcher","Ehrich, Dorothée (University of Tromsø)","NOR",59.91273000,10.74609000], 
+      [28,"CONNECT","researcher","Fauchald, Per (University of Tromsø)","NOR",59.91273000,10.74609000], 
+      [28,"CONNECT","researcher","Klokov, Konstantin (EthnoExpert, LLC)","RUS",55.75222000,37.61556000], 
+      [28,"CONNECT","researcher","Schmidt, Jennifer (University of Alaska-Anchorage)","USA",38.89511000,-77.03637000], 
+      [27,"ASUS","stakeholder","Arctic Group","DNK",55.67594000,12.56553000], 
+      [32,"BAAMRGP","stakeholder","Canadian Arctic Council","CAN",45.41117000,-75.69812000], 
+      [28,"CONNECT","stakeholder","Advocates for a Sustainable Arctic","CAN",45.41117000,-75.69812000], 
+      [28,"CONNECT","stakeholder","Advocates for a Sustainable Arctic","RUS",55.75222000,37.61556000], 
+      [28,"CONNECT","stakeholder","Advocates for a Sustainable Arctic","USA",38.89511000,-77.03637000], 
+      [28,"CONNECT","stakeholder","Bering Sea Fisheries","JPN",35.68950000,139.69171000], 
+      [28,"CONNECT","stakeholder","Bering Sea Fisheries","RUS",55.75222000,37.61556000], 
+      [28,"CONNECT","stakeholder","Bering Sea Fisheries","USA",38.89511000,-77.03637000], 
+      [31,"ARCTIC-ERA","stakeholder","Institution for Scandinavia","FIN",60.16952000,24.93545000], 
+      [31,"ARCTIC-ERA","stakeholder","Institution for Scandinavia","NOR",59.91273000,10.74609000], 
+      [31,"ARCTIC-ERA","stakeholder","Institution for Scandinavia","SWE",59.33258000,18.06490000], 
+      [33,"COPERA","stakeholder","Partnership for LowCarbon and Economic Sustatiablity","USA",38.89511000,-77.03637000], 
+      [35,"Pan-Arctic Options","stakeholder","Government/Private Industry Partnership of Norway","NOR",59.91273000,10.74609000], 
+      [29,"RACArctic","stakeholder","RACArctic Alliance","RUS",55.75222000,37.61556000], 
+      [26,"TAMANI","stakeholder","Pan-Arctic Community Association","DNK",55.67594000,12.56553000], 
+      [26,"TAMANI","stakeholder","Pan-Arctic Community Association","GRL",64.18347000,-51.72157000]  
+    ];
+    return dummydata;
+
+}
+
+function projectlist(rawdata) {
+  var list =[];
+  for (var line = 0; line < rawdata.length; line++) {
+    if (rawdata[line][2] == "project") {
+      list.push(rawdata[line][1])
+    }
+  }
   return list;
 }
 
-function funderlist(project) {
-  var funders = [];
 
-  //THIS IS THE FUNDER QUERY
-  //IT SHOULD RETURN JUST THE PROJECT'S DATA
-  var dummydata = [
-    ["One","AllEnvi",48.856614,2.3522219,"ANR",48.856614,2.3522219,
-"BMBF",50.73743,7.0982068],
-    ["Two","BMWFW",48.2081743,16.3738189,"CNR-DTA",41.9027835,12.4963655,"CONACYT",19.4326077,-99.133208],
-    ["Three","CSIRO",-35.2809368,149.1300092,"DFG",50.73743,7.0982068,"EC",50.8503463,4.3517211],
-    ["Four","FAPESP",-23.5505199,-46.6333094,"GEO",46.2043907,6.1431577,"IAI",-34.9011127,-56.1645314],
-    ["Five","ICSU",48.856614,2.3522219,"IIASA",48.0688772,16.3554987,"ISSC",48.856614,2.3522219]
-    ];
-var queryresult = [];
-for (var i = 0; i< dummydata.length; i++) {
-  console.log("Funder loop: I = "+i+" dummydata[i][0] = "+dummydata[i][0]);
-  if (project == dummydata[i][0]) {
-    queryresult = dummydata[i];
-
-  }
+function entitylist(project, rawdata, entitytype) {
+  var entities = [];
+  for (var line = 0; line < rawdata.length; line++) {
+    if (rawdata[line][1] == project) {
+      if (rawdata[line][2] == entitytype) {
+        //32,"BAAMRGP","funder","MINCyT","ARG",-34.61315000,-58.37723000],
+        var entityline = [rawdata[line][3],rawdata[line][5],rawdata[line][6],rawdata[line][4]];
+        entities.push(entityline);
+      };
+    };
+  };
+  return entities;
 }
 
-  //ACTUAL FUNCTION RESUMES
-   for (var i = 1; i <queryresult.length; i++) {
-     funders.push(queryresult[i]);
-  }
-  return funders;
-}
-
-function researcherslist(project) {
+function researcherslist(project, rawdata) {
   var researchers = [];
 
   //THIS IS THE FUNDER QUERY
@@ -199,7 +302,7 @@ for (var i = 0; i<dummydata.length; i++) {
   return researchers;
 }
 
-function stakeholderlist(project) {
+function stakeholderlist(project, rawdata) {
   var stakeholders = [];
 
   //THIS IS THE FUNDER QUERY
@@ -268,7 +371,8 @@ L.MakiMarkers.accessToken = "pk.eyJ1IjoicnNsdXgiLCJhIjoiY2oyMXFzd25jMDAwdDJ3cWFv
   var labelpoint = new L.LatLng(30, -40);
 
 //Pull list of Projects
-var projects = projectlist();
+var querydata = BFGOquerydata();
+var projects = projectlist(querydata);
 
 var entity_options = [
 //colour, line: weight, steps, dash, marker: z-index
@@ -285,9 +389,9 @@ var projectlayerlist = {};
 for (var currentprojectnumber = 0; currentprojectnumber < projects.length; currentprojectnumber++) {
   projectlayers[currentprojectnumber] = new L.layerGroup;
   var currentproject = projects[currentprojectnumber];
-  var funders = funderlist(currentproject);
-  var stakeholders = stakeholderlist(currentproject);
-  var researchers = researcherslist(currentproject);
+  var funders = entitylist(currentproject,querydata,"funder");
+  var stakeholders = entitylist(currentproject,querydata,"stakeholder");
+  var researchers = entitylist(currentproject,querydata,"researcher");
   var currentgroup = [];
   for (var entity = 0; entity < 3; entity++) {
     if (entity === 0) { 
@@ -313,30 +417,28 @@ for (var currentprojectnumber = 0; currentprojectnumber < projects.length; curre
     var mlong = "";
 
     for (var i = 0; i <currentgroup.length; i++) {
-      console.log("Loop Count: "+i + " Value: "+funders[i]);
-      if (((i + 0) % 3)===0) {mname = currentgroup[i]};
-      if (((i + 2) % 3)===0) {mlat = currentgroup[i]};
-      if (((i +1 ) % 3)===0) {
-        mlong = currentgroup[i];
-        console.log("Name: "+mname+" Lat: "+mlat+" Long: "+mlong)
-        var marker = L.marker([mlat, mlong],{
+      console.log("Loop Count: "+i + " Value: "+currentgroup[i]);
+      mname = currentgroup[i][0];
+      mlat = currentgroup[i][1];
+      mlong = currentgroup[i][2];
+      console.log("Name: "+mname+" Lat: "+mlat+" Long: "+mlong);
+      var marker = L.marker([mlat, mlong],{
           zIndexOffset : entity_options[4],
           icon: currenticon
         })
               .bindPopup('<strong>'+mname+'</strong>');
-        projectlayers[currentprojectnumber].addLayer(marker);
-        var markerpoint = new L.LatLng(mlat, mlong);
-        var markerline = L.geodesic([], {
-          weight: entity_options[entity][1],
-          opacity: 1,
-          color: entity_options[entity][0],
-          steps: entity_options[entity][2],
-          dash: entity_options[entity][3],
-          });
+      projectlayers[currentprojectnumber].addLayer(marker);
+      var markerpoint = new L.LatLng(mlat, mlong);
+      var markerline = L.geodesic([], {
+        weight: entity_options[entity][1],
+        opacity: 1,
+        color: entity_options[entity][0],
+        steps: entity_options[entity][2],
+        dash: entity_options[entity][3],
+        });
         projectlayers[currentprojectnumber].addLayer(markerline);
         markerline.setLatLngs([[markerpoint, labelpoint]]);
 
-        };
     }
 
     
@@ -358,7 +460,7 @@ console.log(projectlog);
 
   var currentclass = document.createElement('style');
   currentclass.type = 'text/css';
-  currentclass.innerHTML = ".labelshape{ background : #1E4968;   color : #FFF;     font-weight : bold;   border: 40px solid #1E4968;  font-size : 30px;   line-height : 40px;  line-width : 40px; border-radius: 50%; height: 40px; width: 40px; text-indent:-10px; margin: -50px 0 0 -60px;}";
+  currentclass.innerHTML = ".labelshape{ background : #1E4968;   color : #FFF;     font-weight : bold;   border: 40px solid #1E4968;  font-size : 15px;   line-height : 40px;  line-width : 40px; border-radius: 50%; height: 40px; width: 40px; text-indent:-10px; margin: -50px 0 0 -60px;}";
   document.getElementsByTagName('head')[0].appendChild(currentclass);
 
   var labeltext = L.divIcon({
