@@ -376,9 +376,9 @@ var projects = projectlist(querydata);
 
 var entity_options = [
 //colour, line: weight, steps, dash, marker: z-index
-  ["#cbbd2c",6,25,1,500], //funders
-  ["#4bb5c5",6,25,1,1000], //researchers
-  ["#00ffA1",6,25,1,1500]  //stakeholders
+  ["#cbbd2c",3,50,1,500], //funders
+  ["#4bb5c5",3,50,1,1000], //researchers
+  ["#00ffA1",3,50,1,1500]  //stakeholders
 ];
 
 //Pull each project's relevant data
@@ -428,22 +428,38 @@ for (var currentprojectnumber = 0; currentprojectnumber < projects.length; curre
         })
               .bindPopup('<strong>'+mname+'</strong>');
       projectlayers[currentprojectnumber].addLayer(marker);
-      var markerpoint = new L.LatLng(mlat, mlong);
-      var markerline = L.geodesic([], {
-        weight: entity_options[entity][1],
+      }
+    };
+    for (var fundingstream = 0; fundingstream < funders.length; fundingstream++) {
+      var member_location = new L.LatLng(funders[fundingstream][1],funders[fundingstream][2]);
+      for (var recipient = 0; recipient < researchers.length; recipient++) {
+        var researcher_location = new L.LatLng(researchers[recipient][1],researchers[recipient][2]);
+        var markerline = L.geodesic([], {
+        weight: entity_options[0][1],
         opacity: 1,
-        color: entity_options[entity][0],
-        steps: entity_options[entity][2],
-        dash: entity_options[entity][3],
+        color: entity_options[0][0],
+        steps: entity_options[0][2],
+        dash: entity_options[0][3],
         });
         projectlayers[currentprojectnumber].addLayer(markerline);
-        markerline.setLatLngs([[markerpoint, labelpoint]]);
-
-    }
-
-    
-   
-  }
+        markerline.setLatLngs([[member_location, researcher_location]]);
+      }
+    };
+    for (var engagement = 0; engagement < researchers.length; engagement++) {
+      var researcher_location = new L.LatLng(researchers[engagement][1],researchers[engagement][2]);
+      for (var stakeholder = 0; stakeholder < stakeholders.length; stakeholder++) {
+        var stakeholder_location = new L.LatLng(stakeholders[stakeholder][1],stakeholders[stakeholder][2]);
+        var markerline = L.geodesic([], {
+        weight: entity_options[1][1],
+        opacity: 1,
+        color: entity_options[1][0],
+        steps: entity_options[1][2],
+        dash: entity_options[1][3],
+        });
+        projectlayers[currentprojectnumber].addLayer(markerline);
+        markerline.setLatLngs([[researcher_location, stakeholder_location]]);
+      }
+    };
   
 var projectlog = {
     "type": "FeatureCollection",
@@ -484,7 +500,7 @@ var networkmaplegend = L.control({position: 'bottomleft'});
 
 networkmaplegend.onAdd = function (networkmap) {
     var div = L.DomUtil.create('div', 'info legend'),
-    labels = ["Members", "Researchers", "Stakeholders"];
+    labels = ["Members", "Awardees", "Stakeholders"];
     for (var entity = 0; entity < labels.length; entity++) {
       div.innerHTML += '<i style="background:' + entity_options[entity][0] + '"></i>' + labels[entity] + "<BR>";
     }
