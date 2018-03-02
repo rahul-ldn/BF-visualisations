@@ -1,6 +1,8 @@
 <head>
   
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.0/dist/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.0/dist/Chart.min.js"></script>
 <script src="https://rahulsindc.github.io/BF-visualisations/belmont-forum.style.js"> </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
   
@@ -21,25 +23,25 @@
       var funderinfo = [
         ["BMBF",55],
         ["CNR",146],
-        ["CSIRO",	257],
-        ["DFG",	239],
-        ["EC",	140],
-        ["FAPESP",	175],
+        ["CSIRO", 257],
+        ["DFG", 239],
+        ["EC",  140],
+        ["FAPESP",  175],
         ["Finland - Academy of Finland",50],
-        ["Formas",	50],
-        ["MESRI",	100],
-        ["MEXT",	100],
-        ["MINCyT",	20],
-        ["MINECO",	40],
-        ["MoES",	10],
-        ["NERC",	375],
-        ["NSERC",	299],
-        ["NSF",	374],
-        ["NSFC",	389],
-        ["NWO",	27],
-        ["RCN",	2],
-        ["RFBR",	19],
-        ["TUBITAK",	140]
+        ["Formas",  50],
+        ["MESRI", 100],
+        ["MEXT",  100],
+        ["MINCyT",  20],
+        ["MINECO",  40],
+        ["MoES",  10],
+        ["NERC",  375],
+        ["NSERC", 299],
+        ["NSF", 374],
+        ["NSFC",  389],
+        ["NWO", 27],
+        ["RCN", 2],
+        ["RFBR",  19],
+        ["TUBITAK", 140]
       ];
       return funderinfo;
     }
@@ -69,7 +71,7 @@
     funder_light_colours[i] = BF_member_colour(funders[i],"light");
 //    document.write(projects + " "+rdata[i]+ " "+tdata[i] + "<BR>");
   }    
-contribtotal = numeral(contribtotal).format('(0,0[.]0 a)')+ 'K \u20AC';
+contribtotal = numeral(contribtotal).format('(0,0[.]0 a)')+ ' \u20AC';
     
      Chart.pluginService.register({
   beforeDraw: function(chart) {
@@ -94,6 +96,7 @@ contribtotal = numeral(contribtotal).format('(0,0[.]0 a)')+ 'K \u20AC';
 var ctx = document.getElementById("fundingorigins");
 var myChart = new Chart(ctx, {
   type: 'doughnut',
+
   data: {
     labels: funders,
     datasets: [{
@@ -103,17 +106,21 @@ var myChart = new Chart(ctx, {
       borderColor: funder_dark_colours,
       borderWidth: 1
   }],
-options: [{
+options: {
+    legend: {
+    position: 'right',
+
+  },
   tooltips: {
-          mode: 'label',
-          callbacks: {
-          label: function(tooltipItem, data) { 
-            return data.datasets[tooltipItem.datasetIndex].label + ": " + numeral(tooltipItem.yLabel).format('(0,0[.]]00 a)')+ 'K \u20AC' ;
-          }
-          }},
+    callbacks: {
+      label: function(tooltipItem, data) {
+                    return (data.datasets[tooltipItem.datasetIndex].label + ": " + numeral(tooltipItem.yLabel).format('(0,0[.]]00 a)')+ 'K \u20AC')
+                }
+            }
+        },
   cutoutPercentage: 55,
   animateRotate: "true"
-}]
+}
 }
 }
 );
