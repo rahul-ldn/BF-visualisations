@@ -69,7 +69,7 @@
     funder_light_colours[i] = BF_member_colour(funders[i],"light");
 //    document.write(projects + " "+rdata[i]+ " "+tdata[i] + "<BR>");
   }    
-contribtotal = numeral(value).format('(0,0[.]0 a)')+ 'K \u20AC';
+contribtotal = numeral(contribtotal).format('(0,0[.]0 a)')+ 'K \u20AC';
     
      Chart.pluginService.register({
   beforeDraw: function(chart) {
