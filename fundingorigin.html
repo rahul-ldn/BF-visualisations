@@ -48,8 +48,8 @@
     contributions[i] = fundingdata[i][1];
     contribtotal += contributions[i];
     funders[i] = fundingdata[i][0];
-    funder_dark_colours = BF_member_colour(funders[i],"dark");
-    funder_light_colours = BF_member_colour(funders[i],"light");
+    funder_dark_colours[i] = BF_member_colour(funders[i],"dark");
+    funder_light_colours[i] = BF_member_colour(funders[i],"light");
 //    document.write(projects + " "+rdata[i]+ " "+tdata[i] + "<BR>");
   }    
 contribtotal = numeral(contribtotal).format('($0,0[.]]00 a)');
