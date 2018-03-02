@@ -104,6 +104,13 @@ var myChart = new Chart(ctx, {
       borderWidth: 1
   }],
 options: [{
+  tooltips: {
+          mode: 'label',
+          callbacks: {
+          label: function(tooltipItem, data) { 
+            return data.datasets[tooltipItem.datasetIndex].label + ": " + numeral(tooltipItem.yLabel).format('(0,0[.]]00 a)')+ 'K \u20AC' ;
+          }
+          }},
   cutoutPercentage: 55,
   animateRotate: "true"
 }]
