@@ -2,9 +2,10 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+    <script src="https://rahulsindc.github.io/BF-visualisations/belmont-forum.style.js"> </script>
 
     <style>
-        }
+    
     </style>
 
 </head>
@@ -16,14 +17,20 @@
     <script>
         //This array should be populated from BFGO data
         function funding_data_query() {
+
             var dummydata = [
-                ["One", "First Project", "AllEnvi", "French Research Alliance for the Environment", 400000, 230000, "ANR", "The French National Research Agency", 500000, 150000, "BMBFW", "Federal Ministry of Science, Research and Economy", 500000, 75000],
-                ["Two", "Second Project", "BMWFW", "Federal Ministry of Science, Research and Economy", 48000, 0, "CNR-DTA", "National Research Council", 420000, 125000, "CONACYT", "National Council of Science and Technology", 190000, 99000],
-                ["Three", "Third Project", "CSIRO", "The Commonwealth Scientific and Industrial Research Organisation", 358368, 149092, "DFG", "German Research Foundation", 507743, 70982, "EC", "European Commission", 508500, 435172],
-                ["Four", "Fourth Project", "FAPESP", "São Paulo Research Foundation", 235505, 46633, "GEO", "Group on Earth Observations", 462043, 61431, "IAI", "Inter-American Institute for Global Change Research", 349011, 56164, "ICSU", "International Council for Science", 43566, 35222],
-                ["Five", "Fifth Project", "ICSU", "International Council for Science", 488566, 235222, "IIASA", "International Institute for Applied Systems Analysis", 480688, 163554, "ISSC", "International Social Science Council", 388566,   235222]
-            ];
-            return dummydata;
+            ["TAMANI", "Designing an Improved Network of Long-Term Monitor\u2026ommunities through Participatory Science Programs", "NSFC", "China - National Natural Science Foundation of China (NSFC)", 0, 4, "MINECO", "Spain - Ministry of Economy and Competitiveness (MINECO)", 40, 40, "NWO", "The Netherlands - The Netherlands Organisation for Scientific Research (NWO)", 14, 14, "NSF", "United States - National Science Foundation (NSF)", 44, 44, 98, 102]
+          ,["ASUS", "Arctic Sustainability: A Synthesis of Knowledge", "FAPESP", "Brazil - São Paulo Research Foundation (FAPESP)", 40, 40, "NSFC", "China - National Natural Science Foundation of China (NSFC)", 0, 137, "BMBF", "Germany - Federal Ministry of Education and Research (BMBF)", 0, 43, "NERC", "United Kingdom - Natural Environment Research Council (NERC)", 25, 25, "NSF", "United States - National Science Foundation (NSF)", 50, 50, 115, 295]
+          ,["CONNECT", "Global Connections and Changing Resource Use System in the Arctic", "CSIRO", "Australia - The Commonwealth Scientific and Industrial Research Organisation (CSIRO)", 0, 107, "NSERC", "Canada - The Natural Sciences and Engineering Research Council of Canada (NSERC)", 100, 100, "DFG", "Germany - German Research Foundation (DFG)", 0, 149, "NSF", "United States - National Science Foundation (NSF)", 100, 100, 200, 456]
+          ,["RACArctic", "Resilience and Adaptive Capacity of ARCTIC Marine Systems Under a Changing Climate", "NSERC", "Canada - The Natural Sciences and Engineering Research Council of Canada (NSERC)", 0, 149, "NSFC", "China - National Natural Science Foundation of China (NSFC)", 0, 237, "MoES", "India - Ministry of Earth Sciences (MoES)", 10, 10, "NERC", "United Kingdom - Natural Environment Research Council (NERC)", 200, 200, 210, 596]
+          ,["ARCTIC-ERA", "Arctic Climate Change and its Impact on Environment, Infrastructures, and Resource Availability", "MEXT", "Japan - Ministry of Education, Culture, Sports, Science and Technology (MEXT)", 100, 100, "Formas", "Sweden - The Swedish Research Council (Formas)", 50, 50, "NWO", "The Netherlands - The Netherlands Organisation for Scientific Research (NWO)", 0, 13, "TUBITAK", "Turkey - The Scientific and Technological Research Council of Turkey (TUBITAK)", 100, 100, 250, 263]
+          ,["BAAMRGP", "Bio-Economic Analysis for Arctic Marine Resource Governance and Policy", "MINCyT", "Argentina - Ministry of Science, Technology and Productive Innovation (MINCyT)", 20, 20, "MESRI", "France - Ministry of Higher Education, Research and Innovation (MESRI)", 100, 100, "RFBR", "Russia - Russian Foundation for Basic Research (RFBR)", 0, 7, "NERC", "United Kingdom - Natural Environment Research Council (NERC)", 75, 100, "NSF", "United States - National Science Foundation (NSF)", 100, 100, 295, 327]
+          ,["COPERA", "C budget of Ecosystems, Cities and Villages on Permafrost in the Eastern Russian Arctic", "CSIRO", "Australia - The Commonwealth Scientific and Industrial Research Organisation (CSIRO)", 150, 150, "NSFC", "China - National Natural Science Foundation of China (NSFC)", 0, 11, "BMBF", "Germany - Federal Ministry of Education and Research (BMBF)", 0, 12, "DFG", "Germany - German Research Foundation (DFG)", 40, 40, "NERC", "United Kingdom - Natural Environment Research Council (NERC)", 50, 50, 240, 263]
+          ,["HIARC", "Anthropogenic Heat Islands in the Arctic: Windows \u2026 the Regional Climates, Ecosystems, and Societies", "FAPESP", "Brazil - São Paulo Research Foundation (FAPESP)", 0, 10, "EC", "European Union - European Commission (EC)", 50, 50, "RCN", "Norway - Research Council of Norway (RCN)", 0, 2, "TUBITAK", "Turkey - The Scientific and Technological Research Council of Turkey (TUBITAK)", 40, 40, "NSF", "United States - National Science Foundation (NSF)", 80, 80, 170, 182]
+          ,["Pan-Arctic Options", "Holistic Integration for Arctic Coastal-Marine Sustainability", "FAPESP", "Brazil - São Paulo Research Foundation (FAPESP)", 0, 125, "NSERC", "Canada - The Natural Sciences and Engineering Research Council of Canada (NSERC)", 50, 50, "EC", "European Union - European Commission (EC)", 90, 90, "Finland - Academy of Finland", "Finland - Academy of Finland", 50, 50, "DFG", "Germany - German Research Foundation (DFG)", 0, 50, "CNR", "Italy - National Research Council (CNR)", 0, 146, "RFBR", "Russia - Russian Foundation for Basic Research (RFBR)", 0, 12, 190, 523]
+                ];
+             return dummydata;
+            
         };
 
         var query_data = funding_data_query();
@@ -32,6 +39,7 @@
         entities_short = [];
         entities_long = [];
         entities_colours = [];
+        entity_colour_index = [];
         
 
         current_flow = 0;
@@ -60,12 +68,16 @@
         for (var current_project = 0; current_project < query_data.length; current_project++) {
           console.log("Secondary Project Loop (Members, Flows: " + current_project + " out of " + query_data.length);
             //array of funders_list per project, 2nd dimension 0 name 1 commitment 2 disbursed
-            for (var funder_data_loop = 2; funder_data_loop < (query_data[current_project].length); funder_data_loop++) {
+            for (var funder_data_loop = 2; funder_data_loop < (query_data[current_project].length-2); funder_data_loop++) {
                 funder_data_loopoffset = (funder_data_loop - 2) % 4;
 
                 current_funder = (((funder_data_loop - 2) - funder_data_loopoffset) / 4);
                 // check for new member
                 var member_found = 0;
+                current_funder_name = query_data[current_project][2 + (current_funder * 4)];
+                console.log("Current Funder Name: "+current_funder_name);
+
+                
                 for (var find_member = project_total; find_member < entities_short.length; find_member++)
                   {
                   if (query_data[current_project][2 + (current_funder * 4)] == entities_short[find_member]) {
@@ -74,10 +86,10 @@
                     is_new_member--;
                     console.log("New Member key: "+is_new_member);
                   } else {
-                    console.log("Current Funder "+query_data[current_project][2 + (current_funder * 4)]+" not found at "+find_member+" out of "+(entities_short.length-1));
+                    console.log("Current Funder "+current_funder_name+" not found at "+find_member+" out of "+(entities_short.length-1));
                   };
                    
-                };
+                }; 
                 //This _should_ correspond to the initial dimension index for funders_list[][]
                 intra_loop_data_element = query_data[current_project][funder_data_loop];
                 console.log("Loop Count: " + funder_data_loop + " out of " + query_data[current_project].length + " Funder Data Offset: " + funder_data_loopoffset + " Current Funder: " + current_funder + " (" + query_data[current_project][2 + (current_funder * 4)] + ") Current Data: " + intra_loop_data_element + " Raw: " + query_data[current_project]);
@@ -126,20 +138,30 @@
             }; 
 
         } //project loop
-        colour_list = ["#800200", "#803200", "#7f771c", "#2c6733", "#4a7f5a", "#075f69", "#317782", "#005568", "#691945"]; //replace with style library call for members?
+   /*     dark_colour_list = ["#EF5350", "#EC407A", "#BD10E0", "#7E57C2", "#5C6BC0", "#42A5F5", "#29B6F6", "#26C6DA", "#26A69A", "#66BB6A", "#9CCC65", "#D4E157", "#FFEE58", "#FFCA28", "#FFA726", "#FF7043", "#8D6E63", "#BDBDBD", "#78909C", "#B71C1C", "#880E4F", "#311B92", "#1A237E", "#0D47A1", "#4A90E2"];
+        light_colour_list = ["#EF9A9A", "#F48FB1", "#D770EC", "#B39DDB", "#9FA8DA", "#90CAF9", "#81D4FA", "#80DEEA", "#80CBC4", "#A5D6A7", "#C5E1A5", "#E6EE9C", "#FFF59D", "#FFE082", "#FFCC80", "#FFAB91", "#BCAAA4", "#EEEEEE", "#B0BEC5", "#FF8A80", "#FF80AB", "#B388FF", "#8C9EFF", "#82B1FF", "#92BCEE"];
+
+        console.log("dark_colour_list length: "+dark_colour_list.length+" and data: "+dark_colour_list);
+        console.log("light_colour_list length: "+light_colour_list.length+" and data: "+light_colour_list); */
+         //replace with style library call for members?
         for (var current_entity = 0; current_entity < entities_short.length; current_entity++) {
-            current_colour = current_entity % 9;
-            entities_colours.push(colour_list[current_colour]);
-            console.log(entities_long[current_entity]+" had colour "+colour_list[current_colour]+ " set at "+current_entity);
-            if (current_entity > (entities_short.length - project_total -2)) {
-                var project_to_colour = entities_short.length - current_entity -1;
-                console.log("adding "+colour_list[current_colour]+ "to "+entities_long[project_to_colour]);
-                entities_colours[project_to_colour]=colour_list[current_colour];
-            }
+/*            if (current_entity > (dark_colour_list.length)) {
+                console.log("adding color #"+(current_entity-dark_colour_list.length)+": "+dark_colour_list[current_entity-dark_colour_list.length]+ " to "+entities_long[current_entity]);
+                entities_colours[current_entity]=dark_colour_list[current_entity-dark_colour_list.length];
+                entity_colour_index[current_entity]=current_entity-dark_colour_list.length;
+            } else {;
+            entities_colours[current_entity]=dark_colour_list[current_entity];
+            console.log(entities_long[current_entity]+" had colour "+dark_colour_list[current_entity]+ " set at "+current_entity);
+            entity_colour_index[current_entity]=current_entity;*/
+            entities_colours[current_entity] = BF_entity_colour(entities_short[current_entity], "dark");
+        
+            
         };
         for (var current_flow = 0; current_flow < flow_amounts.length; current_flow++) {
-            flow_colours[current_flow]=entities_colours[flow_funders[current_flow]];
-            console.log(flow_labels[current_flow]+" had colour "+flow_colours[current_flow]+ " set at "+current_flow);
+    /*        flow_colours[current_flow]=light_colour_list[entity_colour_index[flow_funders[current_flow]]];
+            console.log("Flow: "+current_flow+" between "+entities_short[flow_funders[current_flow]]+" and "+ entities_short[flow_projects[current_flow]] +" had  colour "+flow_colours[current_flow]+ " set at "+current_flow);*/
+            flow_colours[current_flow] = BF_member_colour(entities_short[flow_funders[current_flow]], "light");
+            
         };
 
         var data = [{
@@ -152,13 +174,13 @@
             'valueformat': ".0f",
             'valuesuffix': " (k €)",
             'node': {
-                'pad': 15,
-                'thickness': 15,
+                'pad': 10,
+                'thickness': 20,
                 'line': {
                     'color': "black",
-                    'width': 0.5
+                    'width': 1
                 },
-                'label': entities_long,
+                'label': entities_short,
                 'color': entities_colours
               },
                 // Array of Labels
@@ -180,14 +202,14 @@
 
         var layout = {
             'title': "T2S Funder-Project Relationships",
-            'width': 1000,
+            'width': 800,
             'height': 700,
+
             'font': {
                 'size': 10,
                 'color': 'black'
             },
-            'plot_bgcolor': 'white',
-            'paper_bgcolor': 'white'
+
         };
         console.log(data);
         console.log(layout);
@@ -203,3 +225,7 @@
 
 </script>
 </body>
+
+
+
+                                
