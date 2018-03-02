@@ -474,19 +474,6 @@ var geojson = projectlayers[currentprojectnumber].toGeoJSON();
 console.log(projectlog);
 
 
-  var currentclass = document.createElement('style');
-  currentclass.type = 'text/css';
-  currentclass.innerHTML = ".labelshape{ background : #1E4968;   color : #FFF;     font-weight : bold;   border: 40px solid #1E4968;  font-size : 15px;   line-height : 40px;  line-width : 40px; border-radius: 50%; height: 40px; width: 40px; text-indent:-10px; margin: -50px 0 0 -60px;}";
-  document.getElementsByTagName('head')[0].appendChild(currentclass);
-
-  var labeltext = L.divIcon({
-    html: '<div class="labelshape"> '+projects[currentprojectnumber]+'</div>',
-
-   
-  });
-  var labelmarker = L.marker(labelpoint, {icon: labeltext});
-
-  projectlayers[currentprojectnumber].addLayer(labelmarker);
 
 projectlayerlist[projects[currentprojectnumber]] = projectlayers[currentprojectnumber];
 
@@ -509,13 +496,6 @@ networkmaplegend.onAdd = function (networkmap) {
   networkmaplegend.addTo(networkmap);
 
 
-    $('#text1').hover(function() {
-            $(this).css("background","red");
-            tamani_label.setStyle({fillOpacity: 1});
-        },function(){
-            $(this).css("background","");
-            tamani_label.setStyle({fillOpacity: 0.5});
-        });
 
 
 
