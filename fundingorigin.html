@@ -1,7 +1,7 @@
 <head>
   
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.0/dist/Chart.min.js"></script>
-
+<script src="https://rahulsindc.github.io/BF-visualisations/belmont-forum.style.js"> </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 
 </head>
@@ -40,12 +40,16 @@
   }
 
   var funders = [];
+  var funder_light_colours = [];
+  var funder_dark_colours = [];
   var contribtotal = 0;
   var contributions = [];
   for (var i = 0; i < numfunders; i++){
     contributions[i] = fundingdata[i][1];
     contribtotal += contributions[i];
     funders[i] = fundingdata[i][0];
+    funder_dark_colours = BF_member_colour(funders[i],"dark");
+    funder_light_colours = BF_member_colour(funders[i],"light");
 //    document.write(projects + " "+rdata[i]+ " "+tdata[i] + "<BR>");
   }    
 contribtotal = numeral(contribtotal).format('($0,0[.]]00 a)');
@@ -78,28 +82,8 @@ var myChart = new Chart(ctx, {
     datasets: [{
       label: '# of Votes',
       data: contributions,
-      backgroundColor: [
-        'rgba(  0,    85,   104,  0.4)',
-        'rgba(  44,   103,  51,  0.4)',
-        'rgba(  9,    130,  144,  0.4)',
-        'rgba(  255,  70,   64,  0.4)',
-        'rgba(  163,  39,   108,  0.4)',
-        'rgba(  75,  181, 197,  0.4)',
-        'rgba(  203,  189, 45,  0.4)',
-        'rgba(  0,  255, 161,  0.4)',
-        'rgba(  255,  120, 0,  0.4)'
-      ],
-      borderColor: [
-        'rgba(  0,    85,   104,  1)',
-        'rgba(  44,   103,  51,  1)',
-        'rgba(  9,    130,  144,  1)',
-        'rgba(  255,  70,   64,  1)',
-        'rgba(  163,  39,   108,  1)',
-        'rgba(  75,  181, 197,  1)',
-        'rgba(  203,  189, 45,  1)',
-        'rgba(  0,  255, 161,  1)',
-        'rgba(  255,  120, 0,  1)'
-      ],
+      backgroundColor: funder_light_colours,
+      borderColor: funder_dark_colours,
       borderWidth: 1
   }],
 options: [{
