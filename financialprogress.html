@@ -6,12 +6,69 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 
  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+     <script src="https://rahulsindc.github.io/BF-visualisations/belmont-forum.style.js"> </script>
+
+ <style>
+   .financialprogressprojectlist {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 15px;
+    width: 100%;
+}    .financialprogressprojectlist select {
+        font-family: 'Arial';
+        display: inline-block;
+        width: 100%;
+        cursor: pointer;
+        padding: 10px 15px;
+        outline: 0;
+        border: 0px solid #808080;
+        border-radius: 0px;
+        background: #808080;
+        color: #FFFFFF;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+        .financialprogressprojectlist select::-ms-expand {
+            display: none;
+        }
+        .financialprogressprojectlist select:hover,
+        .financialprogressprojectlist select:focus {
+            color: white;
+            background: #808080;
+        }
+        .financialprogressprojectlist select:disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+.financialprogressprojectlist_arrow {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    width: 0;
+    height: 0;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+.financialprogressprojectlist select:hover ~ .financialprogressprojectlist_arrow,
+.financialprogressprojectlist select:focus ~ .sfinancialprogressprojectlist_arrow {
+    border-top-color: #808080;
+}
+.financialprogressprojectlist select:disabled ~ .financialprogressprojectlist_arrow {
+    border-top-color: #808080;
+}
+ </style>
 
 </head>
 
 <body>
-  
-  <div id="financialprogressprojectlist">T2S Projects</div><BR>
+   
+  Member funding per Project <div id="financialprogressprojectlist" class="financialprogressprojectlist" style="width: 300"><div class="financialprogressprojectlist_arrow"></div></div><BR>
+  (Lighter shade represents funding commitments as yet undisbursed)<br><BR><BR>
   <canvas id="financialprogress" height="600" width="600"></canvas>
 
   <script>
@@ -22,17 +79,22 @@
     function financialprogressinformation() {
 
       var dummydata = [
-      ["One","First Project","AllEnvi","French Research Alliance for the Environment",400000,230000,"ANR","The French National Research Agency",500000,150000,
-"BMBF","Federal Ministry of Science, Research and Economy",500000,75000],
-      ["Two","Second Project","BMWFW","Federal Ministry of Science, Research and Economy",48000,0,"CNR-DTA","National Research Council",420000,125000,"CONACYT","National Council of Science and Technology",190000,99000],
-      ["Three","Third Project","CSIRO","The Commonwealth Scientific and Industrial Research Organisation",358368,149092,"DFG","German Research Foundation",507743,70982,"EC","European Commission",508500,435172],
-      ["Four","Fourth Project","FAPESP","São Paulo Research Foundation",235505,46633,"GEO","Group on Earth Observations",462043,61431,"IAI","Inter-American Institute for Global Change Research",349011,56164,"ICSU","International Council for Science",488566,235222],
-      ["Five","Fifth Project","ICSU","International Council for Science",488566,235222,"IIASA","International Institute for Applied Systems Analysis",480688,163554,"ISSC","International Social Science Council",488566,235222]
-      ];
+            ["TAMANI", "Designing an Improved Network of Long-Term Monitor\u2026ommunities through Participatory Science Programs", "NSFC", "China - National Natural Science Foundation of China (NSFC)", 0, 4, "MINECO", "Spain - Ministry of Economy and Competitiveness (MINECO)", 40, 40, "NWO", "The Netherlands - The Netherlands Organisation for Scientific Research (NWO)", 14, 14, "NSF", "United States - National Science Foundation (NSF)", 44, 44, 98, 102]
+          ,["ASUS", "Arctic Sustainability: A Synthesis of Knowledge", "FAPESP", "Brazil - São Paulo Research Foundation (FAPESP)", 40, 40, "NSFC", "China - National Natural Science Foundation of China (NSFC)", 0, 137, "BMBF", "Germany - Federal Ministry of Education and Research (BMBF)", 0, 43, "NERC", "United Kingdom - Natural Environment Research Council (NERC)", 25, 25, "NSF", "United States - National Science Foundation (NSF)", 50, 50, 115, 295]
+          ,["CONNECT", "Global Connections and Changing Resource Use System in the Arctic", "CSIRO", "Australia - The Commonwealth Scientific and Industrial Research Organisation (CSIRO)", 0, 107, "NSERC", "Canada - The Natural Sciences and Engineering Research Council of Canada (NSERC)", 100, 100, "DFG", "Germany - German Research Foundation (DFG)", 0, 149, "NSF", "United States - National Science Foundation (NSF)", 100, 100, 200, 456]
+          ,["RACArctic", "Resilience and Adaptive Capacity of ARCTIC Marine Systems Under a Changing Climate", "NSERC", "Canada - The Natural Sciences and Engineering Research Council of Canada (NSERC)", 0, 149, "NSFC", "China - National Natural Science Foundation of China (NSFC)", 0, 237, "MoES", "India - Ministry of Earth Sciences (MoES)", 10, 10, "NERC", "United Kingdom - Natural Environment Research Council (NERC)", 200, 200, 210, 596]
+          ,["ARCTIC-ERA", "Arctic Climate Change and its Impact on Environment, Infrastructures, and Resource Availability", "MEXT", "Japan - Ministry of Education, Culture, Sports, Science and Technology (MEXT)", 100, 100, "Formas", "Sweden - The Swedish Research Council (Formas)", 50, 50, "NWO", "The Netherlands - The Netherlands Organisation for Scientific Research (NWO)", 0, 13, "TUBITAK", "Turkey - The Scientific and Technological Research Council of Turkey (TUBITAK)", 100, 100, 250, 263]
+          ,["BAAMRGP", "Bio-Economic Analysis for Arctic Marine Resource Governance and Policy", "MINCyT", "Argentina - Ministry of Science, Technology and Productive Innovation (MINCyT)", 20, 20, "MESRI", "France - Ministry of Higher Education, Research and Innovation (MESRI)", 100, 100, "RFBR", "Russia - Russian Foundation for Basic Research (RFBR)", 0, 7, "NERC", "United Kingdom - Natural Environment Research Council (NERC)", 75, 100, "NSF", "United States - National Science Foundation (NSF)", 100, 100, 295, 327]
+          ,["COPERA", "C budget of Ecosystems, Cities and Villages on Permafrost in the Eastern Russian Arctic", "CSIRO", "Australia - The Commonwealth Scientific and Industrial Research Organisation (CSIRO)", 150, 150, "NSFC", "China - National Natural Science Foundation of China (NSFC)", 0, 11, "BMBF", "Germany - Federal Ministry of Education and Research (BMBF)", 0, 12, "DFG", "Germany - German Research Foundation (DFG)", 40, 40, "NERC", "United Kingdom - Natural Environment Research Council (NERC)", 50, 50, 240, 263]
+          ,["HIARC", "Anthropogenic Heat Islands in the Arctic: Windows \u2026 the Regional Climates, Ecosystems, and Societies", "FAPESP", "Brazil - São Paulo Research Foundation (FAPESP)", 0, 10, "EC", "European Union - European Commission (EC)", 50, 50, "RCN", "Norway - Research Council of Norway (RCN)", 0, 2, "TUBITAK", "Turkey - The Scientific and Technological Research Council of Turkey (TUBITAK)", 40, 40, "NSF", "United States - National Science Foundation (NSF)", 80, 80, 170, 182]
+          ,["Pan-Arctic Options", "Holistic Integration for Arctic Coastal-Marine Sustainability", "FAPESP", "Brazil - São Paulo Research Foundation (FAPESP)", 0, 125, "NSERC", "Canada - The Natural Sciences and Engineering Research Council of Canada (NSERC)", 50, 50, "EC", "European Union - European Commission (EC)", 90, 90, "Finland - Academy of Finland", "Finland - Academy of Finland", 50, 50, "DFG", "Germany - German Research Foundation (DFG)", 0, 50, "CNR", "Italy - National Research Council (CNR)", 0, 146, "RFBR", "Russia - Russian Foundation for Basic Research (RFBR)", 0, 12, 190, 523]
+                ];
       return dummydata;
     }
 
   financialprogresslabels = [];
+  lightfinancialprogresscolours = [];
+  darkfinancialprogresscolours = [];
   financialprogressundisbursed = [];
   financialprogressdisbursed = [];
   financialprogresstotal = [];
@@ -46,15 +108,17 @@
   
   // All Projects loop: Here we populate all variables and take all actions that initialise on all projects' data
 
-  for (var currentproject = 0; currentproject < rawfinancialprogressdata.length; currentproject++) {
+  for (var currentproject = 0; currentproject < rawfinancialprogressdata.length; currentproject ++) {
     console.log("Project Loop: " + currentproject + " out of "+ rawfinancialprogressdata.length);
  //array of funderlist per project, 2nd dimension 0 name 1 commitment 2 disbursed
     financialprogresslabels[currentproject] = [];
+    lightfinancialprogresscolours[currentproject] = [];
+    darkfinancialprogresscolours[currentproject] = [];
     financialprogressundisbursed[currentproject] = [];
     financialprogressdisbursed[currentproject] = [];
     financialprogresstotal[currentproject]=[];
     funderlist[0]=[];
-    for (var funderdata = 2; funderdata < (rawfinancialprogressdata[currentproject].length); funderdata++) {
+    for (var funderdata = 2; funderdata < (rawfinancialprogressdata[currentproject].length-2); funderdata++) {
       funderdataoffset = (funderdata -2) % 4;
       
       currentfunder = (((funderdata -2) - funderdataoffset)/ 4); //This _should_ correspond to the initial dimension index for funderlist[][]
@@ -63,7 +127,12 @@
 
   
       if (funderdataoffset === 0 ) { 
+        var lightcolour = BF_member_colour(rfpd_pop, "light");
+        var darkcolour = BF_member_colour(rfpd_pop, "dark");
+        console.log("Colour attempt with "+rfpd_pop+" L: "+lightcolour+" D: "+darkcolour);
           financialprogresslabels[currentproject][currentfunder]=rfpd_pop;
+          lightfinancialprogresscolours[currentproject][currentfunder] = lightcolour;
+          darkfinancialprogresscolours[currentproject][currentfunder] = darkcolour;
           funderlist[currentfunder][0]=rfpd_pop;
         };
       if (funderdataoffset === 1 ) { console.log("We can't use it, so: "+rfpd_pop);};
@@ -74,7 +143,7 @@
       if (funderdataoffset === 3 ) { 
           financialprogressdisbursed[currentproject][currentfunder]=rfpd_pop;
       //    financialprogresstotal[currentproject][currentfunder] = "(Total Commitment: "+numeral(financialprogressundisbursed[currentproject][currentfunder]).format('($0,0[.]]00 a)')+")";
-          financialprogressundisbursed[currentproject][currentfunder] = financialprogresstotal[currentproject][currentfunder] - rfpd_pop;
+          financialprogressundisbursed[currentproject][currentfunder] = rfpd_pop-financialprogresstotal[currentproject][currentfunder];
 
           funderlist[currentfunder][2]=rfpd_pop;
         console.log("Name: "+funderlist[currentfunder][0]+" Committed: "+funderlist[currentfunder][1]+" Disbursed: "+funderlist[currentfunder][2]);
@@ -86,13 +155,11 @@
 
         var option = document.createElement("option");
         option.setAttribute("value", currentproject);
-        console.log("Creating Select for "+rawfinancialprogressdata[currentproject][0]+" Value: "+currentproject);
         option.text = rawfinancialprogressdata[currentproject][0];
         selectcontrol.appendChild(option);
 
   }//project loop
   currentproject = 0;
-
   
 
 
@@ -140,6 +207,8 @@
 console.log("Raw Labels: "+financialprogresslabels);
 console.log("Raw Undisbursed: "+financialprogressundisbursed);
 console.log("Raw Disbursed: "+financialprogressdisbursed);
+console.log("Raw Colours: ");
+console.log(darkfinancialprogresscolours);
 
 var ctx = document.getElementById("financialprogress").getContext('2d');
 var config = {
@@ -151,19 +220,20 @@ type: 'bar',
            label : "Released to Project",
            data: financialprogressdisbursed[0],
             datalabels: {
-              align: 'end',
-              anchor: 'start',
+
+              align: 'center',
+              anchor: 'center',
               formatter : function(value, context) {
                 var result = numeral(value).format('($0,0[.]0 a)');
-                return context.chart.data.labels[context.dataIndex]+' '+result;
+                return result;
 
                 },
               backgroundColor: function(context) {
                 return context.dataset.backgroundColor;
               },
               borderColor: 'white',
-              borderRadius: 25,
-              borderWidth: 2,
+              borderRadius: 15,
+              borderWidth: 1,
               color: 'white',
               font: {
                 weight: 'bold'
@@ -171,31 +241,32 @@ type: 'bar',
        
           
             },
-           backgroundColor: "#2c6733",
-           hoverBackgroundColor: "#214C26",
-           hoverBorderWidth: 8,
-           borderWidth : 8,
-           borderColor: "#2c6733",
-           hoverBorderColor: "#214C26"
+           backgroundColor: darkfinancialprogresscolours[0],
+//           hoverBackgroundColor: "#214C26",
+//           hoverBorderWidth: 8,
+           borderWidth : 4,
+           borderColor: darkfinancialprogresscolours[0],
+ //          hoverBorderColor: "#214C26"
         },
         {
            label : "Undisbursed",
             data: financialprogressundisbursed[0],
             datalabels: {
-              align: 'end',
-              anchor: 'start',
+
+              align: 'center',
+              anchor: 'center',
               formatter : function(value, context) {
                 var result = numeral(value).format('($0,0[.]0 a)');
-                return context.chart.data.labels[context.dataIndex]+' '+result;
+                return result;
 
               },
               backgroundColor: function(context) {
                 return context.dataset.backgroundColor;
               },
-              borderColor: '#2c6733',
-              borderRadius: 25,
-              borderWidth: 2,
-              color: '#2c6733',
+              borderColor: 'white',
+              borderRadius: 15,
+              borderWidth: 1,
+              color: 'white',
               font: {
                 weight: 'bold'
               }
@@ -203,12 +274,12 @@ type: 'bar',
           
             },
 
-           backgroundColor: "white",
-           borderColor: "#2c6733",
-           borderWidth : 8,
-           hoverBackgroundColor: "#D2F2D7",
-           hoverBorderWidth: 8,
-           hoverBorderColor: "#214C26",
+           backgroundColor: lightfinancialprogresscolours[0],
+           borderColor: darkfinancialprogresscolours[0],
+           borderWidth : 4,
+ //          hoverBackgroundColor: "#D2F2D7",
+  //         hoverBorderWidth: 8,
+   //        hoverBorderColor: "#214C26",
            borderSkipped: false
         },
        
@@ -232,7 +303,7 @@ type: 'bar',
           datalabels: {
             color: 'white',
             display: function(context) {
-              return context.dataset.data[context.dataIndex] > 15;
+              return context.dataset.data[context.dataIndex] > 2;
             },
             font: {
               weight: 'bold'
@@ -264,7 +335,7 @@ type: 'bar',
             }],
         }, // scales
         legend: {
-          display: true,
+          display: false,
           labels: {
             fontSize: 14,
             fontStyle: 'bold',
@@ -280,6 +351,10 @@ $("#financialprogressprojectlist").change(function() {
     var data = financialprogresschart.config.data;
     data.datasets[0].data = financialprogressdisbursed[currentproject];
     data.datasets[1].data = financialprogressundisbursed[currentproject];
+    data.datasets[0].backgroundColor = darkfinancialprogresscolours[currentproject];
+    data.datasets[0].borderColor = darkfinancialprogresscolours[currentproject];
+    data.datasets[1].backgroundColor = lightfinancialprogresscolours[currentproject];
+    data.datasets[1].borderColor = darkfinancialprogresscolours[currentproject];
     data.labels = financialprogresslabels[currentproject];
     financialprogresschart.update();
 });
