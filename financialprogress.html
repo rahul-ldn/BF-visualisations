@@ -68,7 +68,7 @@
 <body>
    
   Member funding per Project <div id="financialprogressprojectlist" class="financialprogressprojectlist" style="width: 300"><div class="financialprogressprojectlist_arrow"></div></div><BR>
-  (Areas with a lighter shade represent funding commitments as yet undisbursed)<br><BR><BR>
+  (Lighter shade represents funding commitments as yet undisbursed)<br><BR><BR>
   <canvas id="financialprogress" height="600" width="600"></canvas>
 
   <script>
@@ -224,7 +224,7 @@ type: 'bar',
               align: 'center',
               anchor: 'center',
               formatter : function(value, context) {
-                var result = numeral(value).format('($0,0[.]0 a)');
+                var result = numeral(value).format('(0,0[.]0 a)') + 'K \u20AC';
                 return result;
 
                 },
@@ -256,7 +256,7 @@ type: 'bar',
               align: 'center',
               anchor: 'center',
               formatter : function(value, context) {
-                var result = numeral(value).format('($0,0[.]0 a)');
+                var result = numeral(value).format('(0,0[.]0 a)') + 'K \u20AC';
                 return result;
 
               },
@@ -294,7 +294,7 @@ type: 'bar',
           mode: 'label',
           callbacks: {
           label: function(tooltipItem, data) { 
-            return data.datasets[tooltipItem.datasetIndex].label + ": " + numeral(tooltipItem.yLabel).format('($0,0[.]]00 a)');
+            return data.datasets[tooltipItem.datasetIndex].label + ": " + numeral(tooltipItem.yLabel).format('(0,0[.]]00 a)') + 'K \u20AC';
           }
           }
          },
@@ -330,7 +330,7 @@ type: 'bar',
             stacked: true, 
             ticks: {
               beginAtZero: true,
-              callback: function(value, index, values) { return numeral(value).format('($0,0[.]]00 a)'); },
+              callback: function(value, index, values) { return numeral(value).format('(0,0[.]]00 a)') + 'K \u20AC'; },
             }, 
             }],
         }, // scales
