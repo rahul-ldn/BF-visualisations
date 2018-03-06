@@ -260,7 +260,12 @@ type: 'bar',
           mode: 'label',
           callbacks: {
           label: function(tooltipItem, data) { 
-            return data.datasets[tooltipItem.datasetIndex].label + ": " + numeral(tooltipItem.yLabel).format('(0,0[.]]00 a)')+ 'K \u20AC';
+            var amount = tooltipItem.yLabel;
+            if (amount > 0) {
+            return data.datasets[tooltipItem.datasetIndex].label + ": " + numeral(amount).format('(0,0[.]]00 a)')+ 'K \u20AC';
+            } else {
+              return "";
+            }
           }
           }
          },
