@@ -234,63 +234,6 @@ for (var current_member = 0; current_member < all_funders_list.length; current_m
         };
   all_datasets.push(current_member_undisbursed_dataset);
 }
-//Colors, thus datasets, are 2xmember-funding-projectxproject
-//That's something like 90
-// Loop Project|funder|2 x dataset entries
-/* (within dataset:) fillColor: ["rgba(220,220,220,0.5)", "navy", "red", "orange"],
-            strokeColor: "rgba(220,220,220,0.8)",
-            highlightFill: "rgba(220,220,220,0.75)",
-            highlightStroke: "rgba(220,220,220,1)",*/
-// Loop-assemble array of data sets, assemble the overall structure after
-
-/*new Chart(document.getElementById("MyChart"), {
-  type: 'bar',
-  data: {
-    labels: project_labels,
-    datasets: [{
-      label: "Income - Base",
-      type: "bar",
-      stack: "Base",
-      backgroundColor: "#eece01",
-      data: [30, 31, 32, 33, 34, 35, 36],
-    }, {
-      label: "Tax - Base",
-      type: "bar",
-      stack: "Base",
-      backgroundColor: "#87d84d",
-      data: [-15, -16, -17, -18, -19, -20, -21],
-    }, {
-      label: "Income - Sensitivity",
-      type: "bar",
-      stack: "Sensitivity",
-      backgroundColor: "#f8981f",      
-      data: [20, 21, 22, 23, 24, 25, 26],
-    }, {
-      label: "Tax - Sensitivity",
-      type: "bar",
-      stack: "Sensitivity",
-      backgroundColor: "#00b300",
-      backgroundColorHover: "#3e95cd",
-      data: [-10, -11, -12, -13, -14, -15, -16]
-    }]
-  },
-  options: {
-    scales: {
-      xAxes: [{
-        //stacked: true,
-        stacked: true,
-        ticks: {
-          beginAtZero: true,
-          maxRotation: 0,
-          minRotation: 0
-        }
-      }],
-      yAxes: [{
-        stacked: true,
-      }]
-    },
-  }
-});*/
 
 var ctx = document.getElementById("financialprogress").getContext('2d');
 var config = {
@@ -361,17 +304,7 @@ type: 'bar',
     }
 };
 var financialprogresschart = new Chart(ctx, config);
-/*$("#financialprogressprojectlist").change(function() {
-    var selectedproject = document.getElementById("ProjectSelected");
-    currentproject = selectedproject.selectedIndex;
-    console.log("Select New Project: "+currentproject);
-    var data = financialprogresschart.config.data;
-    data.datasets[0].data = financialprogressdisbursed[currentproject];
-    data.datasets[1].data = financialprogressundisbursed[currentproject];
-    data.labels = financialprogresslabels[currentproject];
-    financialprogresschart.update();
-});
-*/
+
 
 
   </script>
