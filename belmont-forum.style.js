@@ -21,9 +21,9 @@ var BF_members = [
 	"EC",
 	"RCN",
 	"Finland - Academy of Finland",
-	“CNR”,
-	“ESRC”,
-	“Innoviris"
+	"CNR",
+	"ESRC”,
+	"Innoviris"
 	];
 
 var BF_T2S_projects = [
