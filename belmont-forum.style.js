@@ -1,4 +1,5 @@
 
+
 var BF_members = [
 	"NSFC",
 	"MINECO",
@@ -20,7 +21,9 @@ var BF_members = [
 	"EC",
 	"RCN",
 	"Finland - Academy of Finland",
-	"CNR"
+	“CNR”,
+	“ESRC”,
+	“Innoviris"
 	];
 
 var BF_T2S_projects = [
@@ -249,8 +252,6 @@ function BF_T2S_project_colour(acronym,shade) {
 	}
 
 };
-
-
 
 
 
