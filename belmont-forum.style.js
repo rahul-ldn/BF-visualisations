@@ -22,7 +22,7 @@ var BF_members = [
 	"RCN",
 	"Finland - Academy of Finland",
 	"CNR",
-	"ESRC”,
+	"ESRC",
 	"Innoviris"
 	];
 
