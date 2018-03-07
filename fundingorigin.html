@@ -5,14 +5,14 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.0/dist/Chart.min.js"></script>
 <script src="https://rahulsindc.github.io/BF-visualisations/belmont-forum.style.js"> </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
-  
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 
 </head>
 
 <body>
 
   
-  <canvas id="fundingorigins" height="100"></canvas>
+  <canvas id="fundingorigins" height="300"></canvas>
   
   <script>
     
@@ -85,7 +85,7 @@ contribtotal = contribtotal+ ' K \u20AC';
     ctx.textBaseline = "middle";
 
     var text = "T2S Total: "+contribtotal,
-        textX = Math.round((width - ctx.measureText(text).width) / 3),
+        textX = Math.round((width - ctx.measureText(text).width) / 2),
         textY = height / 2;
 
     ctx.fillText(text, textX, textY);
@@ -100,16 +100,35 @@ var myChart = new Chart(ctx, {
   data: {
     labels: funders,
     datasets: [{
-      label: 'Member Funding Commitments',
       data: contributions,
       backgroundColor: funder_light_colours,
       borderColor: funder_dark_colours,
-      borderWidth: 1
+      borderWidth: 1,
+      datalabels: {
+            formatter : function(value, context) {
+                var result = numeral(value).format('($0,0[.]]00 a)');
+                return context.chart.data.labels[context.dataIndex]+'\n'+result;
+
+            },
+            backgroundColor: function(context) {
+              return context.dataset.backgroundColor;
+            },
+            borderColor: 'white',
+            borderRadius: 25,
+            borderWidth: 3,
+            anchor: 'end',
+            color: 'white',
+            font: {
+              weight: 'bold'
+            }
+       
+          },
   }],
 },
+      
 options: {
     legend: {
-    position: 'right',
+    display: false,
 
   },
  /* tooltips: {
