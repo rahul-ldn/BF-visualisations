@@ -23,7 +23,8 @@ var BF_members = [
 	"Finland - Academy of Finland",
 	"CNR",
 	"ESRC",
-	"Innoviris"
+	"Innoviris",
+	"DLR"
 	];
 
 var BF_T2S_projects = [
@@ -38,74 +39,158 @@ var BF_T2S_projects = [
 	"Pan-Arctic Options"
 	];
 
-var BF_dark_colour_list = [
-	"#EF5350",
-	"#EC407A", 
-	"#BD10E0", 
-	"#7E57C2", 
-	"#5C6BC0", 
-	"#42A5F5", 
-	"#29B6F6", 
-	"#26C6DA", 
-	"#26A69A", 
-	"#66BB6A", 
-	"#9CCC65", 
-	"#D4E157", 
-	"#FFEE58", 
-	"#FFCA28", 
-	"#FFA726", 
-	"#FF7043", 
-	"#8D6E63", 
-	"#BDBDBD", 
-	"#78909C", 
-	"#B71C1C", 
-	"#880E4F", 
-	"#311B92", 
-	"#1A237E", 
-	"#0D47A1", 
-	"#4A90E2",
-	"#7D968B",
-	"#9C7984",
-	"#8C8563",
-	"#818D63",
-	"#656C79",
-	"#8B7A9A",
-	"#919191"	//default
-	];
-var BF_light_colour_list = [
-	"#EF9A9A", 
-	"#F48FB1", 
-	"#D770EC", 
-	"#B39DDB", 
-	"#9FA8DA", 
-	"#90CAF9", 
-	"#81D4FA", 
-	"#80DEEA", 
-	"#80CBC4", 
-	"#A5D6A7", 
-	"#C5E1A5", 
-	"#E6EE9C", 
-	"#FFF59D", 
-	"#FFE082", 
-	"#FFCC80", 
-	"#FFAB91", 
-	"#BCAAA4", 
-	"#EEEEEE", 
-	"#B0BEC5", 
-	"#FF8A80", 
-	"#FF80AB", 
-	"#B388FF", 
-	"#8C9EFF", 
-	"#82B1FF", 
-	"#92BCEE",
+var BF_project_colours_light = [
+	"#BCAAA4",
+	"#EEEEEE",
+	"#B0BEC5",
 	"#A7C3B6",
 	"#CEADB8",
 	"#CFC79E",
 	"#B4BD9E",
 	"#9CA6BA",
 	"#C5BCCE",
-	"#C0C0C0"	//default
-	];
+	"#FCF7EA",
+	"#DEE5D5",
+	"#BBD9CB",
+	"#A4CFCC",
+	"#92B09B",
+	"#B59BA6",
+];
+
+var BF_project_colours_medium = [
+	"#8D6E63",
+	"#BDBDBD",
+	"#78909C",
+	"#7D968B",
+	"#9C7984",
+	"#8C8563",
+	"#818D63",
+	"#656C79",
+	"#8B7A9A",
+	"#FAF3DD",
+	"#C8D5B9",
+	"#8FC0A9",
+	"#68B0AB",
+	"#4A7C59",
+	"#84596B",
+];
+
+var BF_project_colours_dark = [
+	"#463631",
+	"#5E5E5E",
+	"#3B474D",
+	"#3E4A45",
+	"#4D3C41",
+	"#454231",
+	"#404631",
+	"#32353B",
+	"#453C4C",
+	"#7C796E",
+	"#636A5C",
+	"#475F54",
+	"#345855",
+	"#243D2C",
+	"#422C35",
+];
+
+var BF_member_colours_light = [
+	"#EF9A9A",
+	"#F48FB1",
+	"#D770EC",
+	"#B39DDB",
+	"#9FA8DA",
+	"#90CAF9",
+	"#81D4FA",
+	"#80DEEA",
+	"#80CBC4",
+	"#A5D6A7",
+	"#C5E1A5",
+	"#E6EE9C",
+	"#FFF59D",
+	"#FFE082",
+	"#FFCC80",
+	"#FFAB91",
+	"#FF8A80",
+	"#FF80AB",
+	"#B388FF",
+	"#8C9EFF",
+	"#82B1FF",
+	"#92BCEE",
+	"#fee4ce",
+	"#ffc4ad",
+	"#ffcfb3",
+	"#e69fa7",
+	"#bd8792",
+	"#964f46",
+	"#a04389",
+	"ff5382",
+];
+
+var BF_member_colours_medium = [
+	"#EF5350",
+	"#EC407A",
+	"#BD10E0",
+	"#7E57C2",
+	"#5C6BC0",
+	"#42A5F5",
+	"#29B6F6",
+	"#26C6DA",
+	"#26A69A",
+	"#66BB6A",
+	"#9CCC65",
+	"#D4E157",
+	"#FFEE58",
+	"#FFCA28",
+	"#FFA726",
+	"#FF7043",
+	"#B71C1C",
+	"#880E4F",
+	"#311B92",
+	"#1A237E",
+	"#0D47A1",
+	"#4A90E2",
+	"#FEC196",
+	"#FFA686",
+	"#D6A184",
+	"#AA767C",
+	"#63474D",
+	"#462521",
+	"#6B2D5C",
+	"#CA2E55",
+];
+
+var BF_member_colours_dark = [
+	"#772927",
+	"#751F3C",
+	"#5E076F",
+	"#3E2B60",
+	"#2D355F",
+	"#20527A",
+	"#145A7A",
+	"#12626C",
+	"#12524C",
+	"#325D34",
+	"#4D6532",
+	"#69702B",
+	"#7F762B",
+	"#7F6413",
+	"#7F5312",
+	"#7F3721",
+	"#5B0D0D",
+	"#430627",
+	"#180D48",
+	"#0C113E",
+	"#062350",
+	"#244770",
+	"#8c6a52",
+	"#a86d58",
+	"#96705c",
+	"#573c3f",
+	"#342528",
+	"#281512",
+	"#3a1831",
+	"#821d36",
+];
 
 function BF_find_index(acronym, BF_entity_array) {
 	var is_found = -1;
@@ -122,137 +207,54 @@ function BF_entity_colour(acronym,shade) {
 	var entity_index = BF_find_index(acronym, BF_members);
 	if (entity_index != -1) {
 		desired_colour = BF_member_colour(acronym,shade);
-		console.log("Entity determined to be a member; colour set to "+desired_colour);
+		console.log(acronym+" determined to be a member; colour set to "+desired_colour);
 	} else {
 		desired_colour = BF_T2S_project_colour(acronym,shade);
-		console.log("Entity determined to be a project; colour set to "+desired_colour);
+		console.log(acronym+" determined to be a project; colour set to "+desired_colour);
 	}
 	return desired_colour;
-}
+};
 
 function BF_member_colour(acronym,shade) {
+	console.log(acronym+" colour seach for "+shade);
 	var BF_member_index = BF_find_index(acronym,BF_members);
-	var BF_colour_array = [];
-	if (shade == "light") {
-		BF_colour_array = BF_light_colour_list;
-	} else { // dark
-		BF_colour_array = BF_dark_colour_list;
-	};
-	switch(BF_member_index) {
-    case 0:
-        return BF_colour_array[0];
-        break;
-    case 1:
-        return BF_colour_array[4];
-        break;
-    case 2:
-        return BF_colour_array[7];
-        break;
-    case 3:
-        return BF_colour_array[19];
-        break;
-    case 4:
-        return BF_colour_array[1];
-        break;
-    case 5:
-        return BF_colour_array[5];
-        break;
-    case 6:
-        return BF_colour_array[8];
-        break; 
-    case 7:
-        return BF_colour_array[20];
-        break;
-    case 8:
-        return BF_colour_array[2];
-        break;
-    case 9:
-        return BF_colour_array[6];
-        break;
-    case 10:
-        return BF_colour_array[9];
-        break;
-    case 11:
-        return BF_colour_array[21];
-        break;
-    case 12:
-        return BF_colour_array[3];
-        break;
-    case 13:
-        return BF_colour_array[10];
-        break;
-    case 14:
-        return BF_colour_array[15];
-        break;
-    case 15:
-        return BF_colour_array[22];
-        break;
-    case 16:
-        return BF_colour_array[11];
-        break;
-    case 17:
-        return BF_colour_array[14];
-        break;
-    case 18:
-        return BF_colour_array[23];
-        break;
-    case 19:
-        return BF_colour_array[12];
-        break;
-    case 20:
-        return BF_colour_array[24];
-        break;
-    case 21: //currently superfluous
-        return BF_colour_array[13];
-        break;
-    default:
-        return BF_colour_array[31];
+	if (BF_member_index == -1) {
+		return "#C0C0C0";
 	}
+	switch (shade) {
+		case "light":
+			return BF_member_colours_light[BF_member_index];
+			break;
+		case "medium":
+			return BF_member_colours_medium[BF_member_index];
+			break;
+		case "dark":
+			return BF_member_colours_dark[BF_member_index];
+			break;
+	}
+
 };
 
 
 function BF_T2S_project_colour(acronym,shade) {
+	console.log(acronym+" colour seach for "+shade);
 	var BF_project_index = BF_find_index(acronym,BF_T2S_projects);
-	var BF_colour_array = [];
-	if (shade == "light") {
-		BF_colour_array = BF_light_colour_list;
-	} else { // dark
-		BF_colour_array = BF_dark_colour_list;
-	};
-	switch(BF_project_index) {
-    case 0:
-        return BF_colour_array[16];
-        break;
-    case 1:
-        return BF_colour_array[17];
-        break;
-    case 2:
-        return BF_colour_array[18];
-        break;
-    case 3:
-        return BF_colour_array[25];
-        break;
-    case 4:
-        return BF_colour_array[26];
-        break;
-    case 5:
-        return BF_colour_array[27];
-        break;
-    case 6:
-        return BF_colour_array[28];
-        break; 
-    case 7:
-        return BF_colour_array[29];
-        break;
-    case 8:
-        return BF_colour_array[30];
-        break;
-    default:
-        return BF_colour_array[31];
+	if (BF_project_index == -1) {
+		return "#C0C0C0";
+	}
+	switch (shade) {
+		case "light":
+			return BF_project_colours_light[BF_project_index];
+			break;
+		case "medium":
+			return BF_project_colours_medium[BF_project_index];
+			break;
+		case "dark":
+			return BF_project_colours_dark[BF_project_index];
+			break;
 	}
 
 };
-
 
 
 
