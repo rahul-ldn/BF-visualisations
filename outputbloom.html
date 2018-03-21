@@ -61,10 +61,17 @@
     publications_data.push(outputbloomdata[current_project][3]);
     presentations_data.push(outputbloomdata[current_project][4]);
     audience_colours.push(BF_T2S_project_colour(projects_short[current_project],"light"));
-    presentations_colours.push(BF_T2S_project_colour(projects_short[current_project],"dark"));
-    publications_colours.push(BF_T2S_project_colour(projects_short[current_project],"light"));
+    presentations_colours.push(BF_T2S_project_colour(projects_short[current_project],"medium"));
+    publications_colours.push(BF_T2S_project_colour(projects_short[current_project],"dark"));
 
   }
+
+console.log("Publications");
+console.log(publications_data);
+console.log("Presentations");
+console.log(presentations_data);
+console.log("Audience Size");
+console.log(audience_data);
                                                     
 var chart = new Chart('outputbloom-chart', {
       type: 'polarArea',
@@ -73,27 +80,46 @@ var chart = new Chart('outputbloom-chart', {
         datasets: [{
           backgroundColor: publications_colours,
           data: publications_data,
+          borderColor : publications_colours,
         }, {
           backgroundColor: presentations_colours,
           data: presentations_data,
+          borderColor : publications_colours,
+
         }, {
           backgroundColor: audience_colours,
           data: audience_data,
+          borderColor : publications_colours,
+
         }]
       },
       options: {
-                legend: {
+        legend: {
           display: true,
           position: 'right',
           labels: {
             fontSize: 14,
             fontStyle: 'bold',
-                      
           },
+        },
+        scales : {
+          xAxes: [{
+            stacked: true,
+//            ticks: [{
+//              beginAtZero:  true,
+//            }],
+          }],
+          yAxes: [{
+            stacked: true,
+ //           ticks: [{
+ //             beginAtZero:  true,
+ //           }],
+          }],
         },
         plugins: {
           datalabels: {
-            anchor: 'center',
+            anchor: 'end',
+            align: 'center',
             backgroundColor: function(context) {
               return context.dataset.backgroundColor;
             },
