@@ -1,16 +1,21 @@
 <head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.0/dist/Chart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+
+ <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+     <script src="https://rahulsindc.github.io/BF-visualisations/belmont-forum.style.js"> </script>
   <!-- Numeric.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
-  <!-- Plotly.js -->
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   
-  <!-- Integrate inline, for copying over to BFGO <script src="BFGO-visualistions.1.js"></script> -->
-</head>
+ </head>
 
 <body>
-  <!-- Revision 11 updated 31 Oct 17<br><br> -->
-  
-  <div id="outputbloom" style="pointer-events: none"></div>
+  <div id="outputbloom">
+    <div class="wrapper"><canvas id="outputbloom-chart"></canvas></div>
+  </div>
   
   <script>
     
@@ -21,7 +26,6 @@
     //Research Outputs (papers/datasets), 
     // In Person Engagements (trainings, conference presentations)
     //Remote/Distributed Engagement (press mentions)
-    var columns = 5;
     
     //This array should be populated from BFGO data
     function BFGOoutputdata() {
@@ -41,137 +45,70 @@
 
 
   var outputbloomdata = BFGOoutputdata();
+  projects_short = [];
+  projects_long = [];
+  audience_data = [];
+  publications_data = [];
+  presentations_data = [];
+  audience_colours = [];
+  publications_colours = [];
+  presentations_colours = [];
 
+  for (var current_project = 0; current_project<outputbloomdata.length; current_project++) {
+    projects_short.push(outputbloomdata[current_project][0]);
+    projects_long.push(outputbloomdata[current_project][1]);
+    audience_data.push(Math.log(outputbloomdata[current_project][2]));
+    publications_data.push(outputbloomdata[current_project][3]);
+    presentations_data.push(outputbloomdata[current_project][4]);
+    audience_colours.push(BF_T2S_project_colour(projects_short[current_project],"light"));
+    presentations_colours.push(BF_T2S_project_colour(projects_short[current_project],"dark"));
+    publications_colours.push(BF_T2S_project_colour(projects_short[current_project],"light"));
 
-// The number of projects in the CRA
-  var projects = outputbloomdata.length;
-
-   var projectlist = []
-  for (var i = 1; i <projects; i++) {
-    projectlist.push(outputbloomdata[i][1]);
   }
-  if (projects < 4) {
-    for (var i =projects; i <=4; i++){
-      outputbloomdata.push([i, i, 0.1, 0.1, 0.1, 0.1]);
-//      document.write(outputbloomdata.length + " <BR>");
-    }
-    projects = 4;
-  }
-
-  var rdata = [];
-  var tdata = [];
-  for (var i = 0; i < projects; i++){
-    rdata[i] = outputbloomdata[i][3];
-    tdata[i] = outputbloomdata[i][1];
-//    document.write(projects + " "+rdata[i]+ " "+tdata[i] + "<BR>");
-  }    
-  var publications = {
-  r: rdata,
-  t: tdata,
-  name: 'Publications and Datasets',
-    hoverinfo: 'skip',
-  marker: {color: 'rgb(0,85,104)'},
-  type: 'area'
-};
-
-  var rdata = [];
-  var tdata = [];
-  for (var i = 0; i < projects; i++){
-    rdata[i] = outputbloomdata[i][4];
-    tdata[i] = outputbloomdata[i][1];
-//    document.write(projects + " "+rdata[i]+ " "+tdata[i] + "<BR>");
-  } 
-var presentations = {
-  r: rdata,
-  t: tdata,
-  name: 'Presentations and Trainings',
-    hoverinfo: 'skip',
-  marker: {color: 'rgb(9,130,144)'},
-  type: 'area'
-};
                                                     
-    var rdata = [];
-  var tdata = [];
-  for (var i = 0; i < projects; i++){
-    rdata[i] = Math.log(outputbloomdata[i][2]);
- //  rdata[i] = outputbloomdata[i][2];
-    tdata[i] = outputbloomdata[i][1];
-//    document.write(projects + " "+rdata[i]+ " "+tdata[i] + "<BR>");
-  }                                                     
-var audience = {
-  r: rdata,
-  t: tdata,
-  name: 'Est. Audience Size (incl. Website)',
-  marker: {color: 'rgb(75,181,197)'},
-    hoverinfo: 'skip',
-  type: 'area'
-};
-                                                    
+var chart = new Chart('outputbloom-chart', {
+      type: 'polarArea',
+      data: {
+        labels: projects_short,
+        datasets: [{
+          backgroundColor: publications_colours,
+          data: publications_data,
+        }, {
+          backgroundColor: presentations_colours,
+          data: presentations_data,
+        }, {
+          backgroundColor: audience_colours,
+          data: audience_data,
+        }]
+      },
+      options: {
+                legend: {
+          display: true,
+          position: 'right',
+          labels: {
+            fontSize: 14,
+            fontStyle: 'bold',
+                      
+          },
+        },
+        plugins: {
+          datalabels: {
+            anchor: 'center',
+            backgroundColor: function(context) {
+              return context.dataset.backgroundColor;
+            },
+            borderColor: 'white',
+            borderRadius: 25,
+            borderWidth: 2,
+            color: 'white',
+            font: {
+              weight: 'bold'
+            },
+            formatter: Math.round
+          }
+        }
+      }
+    });
 
-
-var data = [publications, presentations, audience];
-
-var layout = {
-  title: ' ',
-  font: {size: 12},
-  legend: {font: {size: 6}},
-  width: 800,
-  height: 600,
-  margin: {
-    l: 30,
-    r: 50,
-    b: 1,
-    t: 1,
-    pad: 1
-  },
-  hoverinfo: 'skip',
-   hovermode: false,
-  barmode: "stack",
-  hoverlabel: {
-    bgcolor: 'rgb(75,181,197)'
-  },
-  
-  legend: { traceorder: 'normal' },
-  radialaxis: {
-    visible: false, 
-    showgrid: false,
-    showline: false,
-    zeroline: false,
-    showspikes: false,
-    ticks: ""
-  },
-  angularaxis: {
-    type: 'category',
-    visible: true, 
-    showgrid: true,
-    showticklabels: true,
-    showline: false,
-    zeroline: true,
-    showspikes: true,
-    ticks: "outside",
-    tickmode: 'array',
-    tickvals: projectlist,
-    nticks: 30,
-  },
-  yaxis: {
-    visible: false, 
-    showgrid: false,
-    showline: false,
-    zeroline: false,
-    showspikes: false,
-    ticks: ""
-  },
-  xaxis: {
-    visible: false, 
-    showgrid: false,
-    showline: false,
-    zeroline: false,
-    showspikes: false,
-    ticks: ""
-  },
-  orientation: 270
-};
-
-Plotly.newPlot('outputbloom', data, layout);
   </script>
 </body>
