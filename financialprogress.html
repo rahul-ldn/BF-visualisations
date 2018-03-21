@@ -6,7 +6,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 
  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-     <script src="https://rahulsindc.github.io/BF-visualisations/belmont-forum.style.js"> </script>
+     <script src="belmont-forum.style.js"> </script>
 
  <style>
    .financialprogressprojectlist {
@@ -189,6 +189,7 @@
   member_undisbursed = [];
   member_excess = [];
   members_colour_dark = [];
+  members_colour_medium = [];
   members_colour_light = [];
 
   
@@ -212,6 +213,7 @@ while (query_data[project_total][0] != -1) {
     member_undisbursed[project_total] = [];
     member_excess[project_total] = [];
     members_colour_dark[project_total] = [];
+    members_colour_medium[project_total] = [];
     members_colour_light[project_total] = [];
     project_total++;
  }
@@ -227,8 +229,9 @@ for (var current_data_line = (project_total +1); //skip the break line
   members_long[current_project].push(query_data[current_data_line][2]);
   member_commitments[current_project].push(query_data[current_data_line][3]);
   member_disbursals[current_project].push(query_data[current_data_line][4]);
-  members_colour_dark[current_project].push(BF_member_colour(members_short[current_project][(members_short[current_project].length - 1)],"dark"))
-  members_colour_light[current_project].push(BF_member_colour(members_short[current_project][(members_short[current_project].length - 1)],"light"))
+  members_colour_medium[current_project].push(BF_member_colour(members_short[current_project][(members_short[current_project].length - 1)],"medium"));
+  members_colour_dark[current_project].push(BF_member_colour(members_short[current_project][(members_short[current_project].length - 1)],"dark"));
+  members_colour_light[current_project].push(BF_member_colour(members_short[current_project][(members_short[current_project].length - 1)],"light"));
   var undisbursed = (member_commitments[current_project][ (member_commitments[current_project].length - 1)] - member_disbursals[current_project][ (member_disbursals[current_project].length - 1)]);
   console.log("At CDL "+current_data_line+" on project "+current_project+" calculated undisbursed value is "+undisbursed);
   if (undisbursed < 0 ) {
@@ -255,7 +258,7 @@ console.log(member_undisbursed)
 console.log("Raw Disbursed: ");
 console.log(member_disbursals);
 console.log("Raw Colours: ");
-console.log(members_colour_dark);
+console.log(members_colour_medium);
 
 var ctx = document.getElementById("financialprogress").getContext('2d');
 var config = {
@@ -285,11 +288,11 @@ type: 'bar',
               weight: 'bold'
             }         
           },
-          backgroundColor: members_colour_dark[0],
+          backgroundColor: members_colour_medium[0],
 //           hoverBackgroundColor: "#214C26",
 //           hoverBorderWidth: 8,
           borderWidth : 4,
-          borderColor: members_colour_dark[0],
+          borderColor: members_colour_medium[0],
  //          hoverBorderColor: "#214C26"
         },
         {
@@ -316,7 +319,7 @@ type: 'bar',
         
           },
           backgroundColor: members_colour_light[0],
-          borderColor: members_colour_dark[0],
+          borderColor: members_colour_medium[0],
           borderWidth : 4,
 //         hoverBackgroundColor: "#D2F2D7",
  //        hoverBorderWidth: 8,
@@ -349,7 +352,7 @@ type: 'bar',
 //           hoverBackgroundColor: "#214C26",
 //           hoverBorderWidth: 8,
           borderWidth : 4,
-          borderColor: members_colour_dark[0],
+          borderColor: members_colour_medium[0],
  //          hoverBorderColor: "#214C26"
         },
        
@@ -422,12 +425,12 @@ $("#financialprogressprojectlist").change(function() {
     data.datasets[0].data = member_disbursals[current_project];
     data.datasets[1].data = member_undisbursed[current_project];
     data.datasets[2].data = member_excess[current_project];
-    data.datasets[0].backgroundColor = members_colour_dark[current_project];
-    data.datasets[0].borderColor = members_colour_dark[current_project];
+    data.datasets[0].backgroundColor = members_colour_medium[current_project];
+    data.datasets[0].borderColor = members_colour_medium[current_project];
     data.datasets[1].backgroundColor = members_colour_light[current_project];
-    data.datasets[1].borderColor = members_colour_dark[current_project];
-    data.datasets[2].backgroundColor = members_colour_light[current_project];
-    data.datasets[2].borderColor = members_colour_dark[current_project];
+    data.datasets[1].borderColor = members_colour_medium[current_project];
+    data.datasets[2].backgroundColor = members_colour_dark[current_project];
+    data.datasets[2].borderColor = members_colour_medium[current_project];
     data.labels = members_short[current_project];
     financialprogresschart.update();
 });
