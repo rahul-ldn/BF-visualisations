@@ -1,11 +1,11 @@
 <head>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.0/dist/Chart.min.js"></script>
+<script src="Chart.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+<script src="chartjs-plugin-datalabels"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+<script src="numeral.min.js"></script>
 
- <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+ <script src="jquery-2.1.1.min.js"></script>
      <script src="belmont-forum.style.js"> </script>
 
  <style>
@@ -67,9 +67,10 @@
 
 <body>
    
-  Member funding per Project <div id="financialprogressprojectlist" class="financialprogressprojectlist" style="width: 300"><div class="financialprogressprojectlist_arrow"></div></div><BR>
+  Member funding per Institution<BR>
+  <div id="financialprogressprojectlist" class="financialprogressprojectlist" style="width: 300"><div class="financialprogressprojectlist_arrow"></div></div><BR>
   (Lighter shade represents funding commitments as yet undisbursed)<br><BR><BR>
-  <canvas id="financialprogress" height="600" width="600"></canvas>
+  <canvas id="financialprogress" height="600" width="700"></canvas>
 
   <script>
     
@@ -78,72 +79,69 @@
     //This array should be populated from BFGO data
     function financialprogressinformation() {
 
-      var sourceData = [
-        [26,"TAMANI","Designing an Improved Network of Long-Term Monitoring Sites for Arctic Vertebrates: Towards a Better Involvement of Local Communities through Participatory Science Programs",150.0,130.0],
-        [27,"ASUS","Arctic Sustainability: A Synthesis of Knowledge",295.0,227.0],
-        [28,"CONNECT","Global Connections and Changing Resource Use System in the Arctic",456.0,311.0],
-        [29,"RACArctic","Resilience and Adaptive Capacity of ARCTIC Marine Systems Under a Changing Climate",596.0,410.0],
-        [30,"AFV","Arctic Fog Variability in a Warming Arctic and its Impact on Maritime Human Activities",391.0,309.0],
-        [31,"ARCTIC-ERA","Arctic Climate Change and its Impact on Environment, Infrastructures, and Resource Availability",263.0,234.0],
-        [32,"BAAMRGP","Bio-Economic Analysis for Arctic Marine Resource Governance and Policy",347.0,313.0],
-        [33,"COPERA","C budget of Ecosystems, Cities and Villages on Permafrost in the Eastern Russian Arctic",263.0,230.0],
-        [34,"HIARC","Anthropogenic Heat Islands in the Arctic: Windows to the Future of the Regional Climates, Ecosystems, and Societies",182.0,167.0],
-        [35,"Pan-Arctic Options","Holistic Integration for Arctic Coastal-Marine Sustainability",523.0,267.0],
-        [-1," "," ",-1,-1],
-        [26,"FAPESP","São Paulo Research Foundation",48.0,29.0],
-        [26,"MINECO","Ministry of Economy and Competitiveness",40.0,40.0],
-        [26,"NSF","National Science Foundation",44.0,44.0],
-        [26,"NSFC","National Natural Science Foundation of China",4.0,3.0],
-        [26,"NWO","The Netherlands Organisation for Scientific Research",14.0,14.0],
-        [27,"DLR","German Aerospace Center"," ",14.0],
-        [27,"FAPESP","São Paulo Research Foundation",40.0,22.0],
-        [27,"NERC","Natural Environment Research Council",25.0,25.0],
-        [27,"NSF","National Science Foundation",50.0,50.0],
-        [27,"NSFC","National Natural Science Foundation of China",137.0,116.0],
-        [28,"DFG","German Research Foundation",149.0,111.0],
-        [28,"NSERC","The Natural Sciences and Engineering Research Council of Canada",100.0,100.0],
-        [28,"NSF","National Science Foundation",100.0,100.0],
-        [29,"MoES","Ministry of Earth Sciences",10.0,10.0],
-        [29,"NERC","Natural Environment Research Council",200.0,200.0],
-        [29,"NSERC","The Natural Sciences and Engineering Research Council of Canada",149.0,100.0],
-        [29,"NSFC","National Natural Science Foundation of China",237.0,100.0],
-        [30,"BMBF","Federal Ministry of Education and Research",11.0,9.0],
-        [30,"ESRC","Economic and Social Research Council",130.0,50.0],
-        [30,"Innoviris","Innoviris",40.0,40.0],
-        [30,"MoES","Ministry of Earth Sciences",10.0,10.0],
-        [30,"NERC","Natural Environment Research Council",200.0,200.0],
-        [31,"Formas","The Swedish Research Council",50.0,22.0],
-        [31,"MEXT","Ministry of Education, Culture, Sports, Science and Technology",100.0,100.0],
-        [31,"NWO","The Netherlands Organisation for Scientific Research",13.0,12.0],
-        [31,"TUBITAK","The Scientific and Technological Research Council of Turkey",100.0,100.0],
-        [32,"CSIRO","The Commonwealth Scientific and Industrial Research Organisation",20.0,15.0],
-        [32,"MESRI","Ministry of Higher Education, Research and Innovation",100.0,100.0],
-        [32,"MINCyT","Ministry of Science, Technology and Productive Innovation",20.0,20.0],
-        [32,"NERC","Natural Environment Research Council",100.0,75.0],
-        [32,"NSF","National Science Foundation",100.0,100.0],
-        [32,"RFBR","Russian Foundation for Basic Research",7.0,3.0],
-        [33,"CSIRO","The Commonwealth Scientific and Industrial Research Organisation",150.0,129.0],
-        [33,"DFG","German Research Foundation",40.0,40.0],
-        [33,"NERC","Natural Environment Research Council",50.0,50.0],
-        [33,"NSFC","National Natural Science Foundation of China",11.0,11.0],
-        [34,"EC","European Commission",50.0,45.0],
-        [34,"NSF","National Science Foundation",80.0,80.0],
-        [34,"RCN","Research Council of Norway",2.0,2.0],
-        [34,"TUBITAK","The Scientific and Technological Research Council of Turkey",40.0,40.0],
-        [35,"Academy of Finland","Academy of Finland",50.0,50.0],
-        [35,"DFG","German Research Foundation",50.0,27.0],
-        [35,"EC","European Commission",90.0,90.0],
-        [35,"FAPESP","São Paulo Research Foundation",125.0,50.0],
-        [35,"NSERC","The Natural Sciences and Engineering Research Council of Canada",50.0,50.0]
-      ];
-      return sourceData;
+ var sourceData = [
+      [26,"TAMANI","Designing an Improved Network of Long-Term Monitoring Sites for Arctic Vertebrates: Towards a Better Involvement of Local Communities through Participatory Science Programs",107.0,92.0," "],
+[27,"ASUS","Arctic Sustainability: A Synthesis of Knowledge",122.0,109.0," "],
+[28,"CONNECT","Global Connections and Changing Resource Use System in the Arctic",119.0,104.0," "],
+[29,"RACArctic","Resilience and Adaptive Capacity of ARCTIC Marine Systems Under a Changing Climate",375.0,280.0," "],
+[30,"AFV","Arctic Fog Variability in a Warming Arctic and its Impact on Maritime Human Activities",151.0,121.0," "],
+[31,"ARCTIC-ERA","Arctic Climate Change and its Impact on Environment, Infrastructures, and Resource Availability",200.0,180.0," "],
+[32,"BAAMRGP","Bio-Economic Analysis for Arctic Marine Resource Governance and Policy",85.0,81.0," "],
+[33,"COPERA","C budget of Ecosystems, Cities and Villages on Permafrost in the Eastern Russian Arctic",188.0,142.0," "],
+[34,"HIARC","Anthropogenic Heat Islands in the Arctic: Windows to the Future of the Regional Climates, Ecosystems, and Societies",134.0,113.0," "],
+[35,"Pan-Arctic Options","Holistic Integration for Arctic Coastal-Marine Sustainability",300.0,265.0," "],
+[-1," "," ",-1,-1,"Receiver"],
+[26,"AllEnvi","National Research Alliance for the Environment",50.0,43.0,"Centre d'Ecologie Fonctionnelle et Evolutive"],
+[26,"RCN","Research Council of Norway",40.0,32.0,"University of Tromsø"],
+[26,"NSERC","The Natural Sciences and Engineering Research Council of Canada",17.0,17.0,"University of Alberta"],
+[27,"NSF","National Science Foundation",50.0,40.0,"University of Northern Iowa"],
+[27,"RCN","Research Council of Norway",28.0,25.0,"University of Tromsø"],
+[27,"Formas","The Swedish Research Council",44.0,40.0,"Nodreigo"],
+[27,"Formas","The Swedish Research Council",44.0,44.0,"Nordregio"],
+[28,"RCN","Research Council of Norway",44.0,44.0,"University of Tromsø"],
+[28,"RFBR","Russian Foundation for Basic Research",50.0,35.0,"EthnoExpert, LLC"],
+[28,"NSERC","The Natural Sciences and Engineering Research Council of Canada",25.0,25.0,"University of Saskatchewan"],
+[29,"JST","Japan Science and Technology Agency",100.0,75.0,"Hokkaido University"],
+[29,"MEXT","Ministry of Education, Culture, Sports, Science and Technology",100.0,80.0,"Japan Agency for Marine-Earth Science and Technology"],
+[29,"RCL","Research Council of Lithuania",100.0,50.0,"Japan Agency for Marine Earth-Science and Technology"],
+[29,"RCN","Research Council of Norway",75.0,75.0,"Institute for Marine Research"],
+[29,"RCN","Research Council of Norway",75.0,50.0,"Institute of Marine Research"],
+[29,"RCN","Research Council of Norway",50.0,50.0,"University of Tromsø"],
+[30,"NSFC","National Natural Science Foundation of China",56.0,40.0,"Ocean University of China"],
+[30,"CNR","National Research Council",15.0,15.0,"Institute of Atmospheric Science and Climate"],
+[30,"FRQ","Research Fund of Quebec",20.0,16.0,"Bedford Institute of Oceanography"],
+[30,"NSERC","The Natural Sciences and Engineering Research Council of Canada",60.0,50.0,"University of Victoria"],
+[31,"MESRI","Ministry of Higher Education, Research and Innovation",50.0,30.0,"Laboratoire de Glaciologie et Géophysique de l'Environnement"],
+[31,"NSF","National Science Foundation",100.0,75.0,"George Washington University"],
+[31,"NSF","National Science Foundation",100.0,100.0,"Hydrology Science and Services, Inc."],
+[31,"RFBR","Russian Foundation for Basic Research",50.0,50.0,"Russian Academy of Sciences"],
+[32,"NSF","National Science Foundation",35.0,31.0,"Virginia Commonwealth University"],
+[32,"RCN","Research Council of Norway",50.0,40.0,"Institue of Marine Research"],
+[32,"RCN","Research Council of Norway",50.0,27.0,"Institute of Marine Research"],
+[32,"RCN","Research Council of Norway",50.0,50.0,"University of Tromsø"],
+[33,"JST","Japan Science and Technology Agency",44.0,30.0,"Hokkaido University"],
+[33,"JSPS","Japan Society for the Promotion of Science",44.0,15.0,"Nagoya  University"],
+[33,"JSPS","Japan Society for the Promotion of Science",44.0,1.0,"Nagoya University"],
+[33,"MEXT","Ministry of Education, Culture, Sports, Science and Technology",55.0,55.0,"Japan Agency for Marine-Earth Science and Technology"],
+[33,"NSF","National Science Foundation",15.0,12.0,"University of Alaska-Fairbanks"],
+[33,"RFBR","Russian Foundation for Basic Research",30.0,30.0,"North-Eastern Federal University"],
+[34,"NSF","National Science Foundation",50.0,40.0,"George Washington University"],
+[34,"NSF","National Science Foundation",20.0,20.0,"University of Colorado"],
+[34,"RCN","Research Council of Norway",44.0,33.0,"Nansen Environmental and Remote Sensing Center"],
+[34,"RFBR","Russian Foundation for Basic Research",40.0,40.0,"Russian Academy of Sciences"],
+[35,"NSFC","National Natural Science Foundation of China",100.0,80.0,"Ocean University of China"],
+[35,"AllEnvi","National Research Alliance for the Environment",100.0,100.0,"Université Pierre et Marie Curie"],
+[35,"NSF","National Science Foundation",45.0,45.0,"University of Alaska-Fairbanks"],
+[35,"NSF","National Science Foundation",100.0,85.0,"University of California-Santa Barbara"]
+];
+return sourceData;
 
     };
 
 
     var query_data = financialprogressinformation();
 
-
+/*
     function member_exists (memberlist, member_short) {
  //         console.log("Checking "+member_short);
  //         console.log(memberlist);
@@ -157,7 +155,55 @@
      };
      console.log(member_short+" Doesn't Exist!");
      return 0;
-   }
+   } */
+
+label_length_max = 20;
+
+function formatLabel(str, maxwidth){
+    var sections = [];
+    var words = str.split(" ");
+    var temp = "";
+
+    words.forEach(function(item, index){
+        if(temp.length > 0)
+        {
+            var concat = temp + ' ' + item;
+
+            if(concat.length > maxwidth){
+                sections.push(temp);
+                temp = "";
+            }
+            else{
+                if(index == (words.length-1))
+                {
+                    sections.push(concat);
+                    return;
+                }
+                else{
+                    temp = concat;
+                    return;
+                }
+            }
+        }
+
+        if(index == (words.length-1))
+        {
+            sections.push(item);
+            return;
+        }
+
+        if(item.length < maxwidth) {
+            temp = item;
+        }
+        else {
+            sections.push(item);
+        }
+
+    });
+
+    return sections;
+};
+
    function member_lookup (memberlist, member_short) {
      for (var current_member = 0; current_member < memberlist.length; current_member++) {
        if (memberlist[current_member][0] == member_short) {
@@ -184,6 +230,12 @@
   projects_long = [];
   members_short = [];
   members_long = [];
+  institutions_long = [];
+  institutional_commitments = [];
+  institutional_disbursals = [];
+  institutional_undisbursed = [];
+  institutional_excess = [];
+  institutional_member_origin = [];
   member_commitments = [];
   member_disbursals = [];
   member_undisbursed = [];
@@ -208,6 +260,12 @@ while (query_data[project_total][0] != -1) {
     console.log("Current Project Total: "+project_total);
     members_short[project_total] = [];
     members_long[project_total] = [];
+    institutions_long[project_total] = [];
+    institutional_commitments[project_total] = [];
+    institutional_disbursals[project_total] = [];
+    institutional_undisbursed[project_total] = [];
+    institutional_excess[project_total] = [];
+    institutional_member_origin[project_total] = [];
     member_commitments[project_total] = [];
     member_disbursals[project_total] = [];
     member_undisbursed[project_total] = [];
@@ -229,6 +287,8 @@ for (var current_data_line = (project_total +1); //skip the break line
   members_long[current_project].push(query_data[current_data_line][2]);
   member_commitments[current_project].push(query_data[current_data_line][3]);
   member_disbursals[current_project].push(query_data[current_data_line][4]);
+  var institutions_label = query_data[current_data_line][1] + " for " +query_data[current_data_line][5];
+  institutions_long[current_project].push(formatLabel(institutions_label,label_length_max));
   members_colour_medium[current_project].push(BF_member_colour(members_short[current_project][(members_short[current_project].length - 1)],"medium"));
   members_colour_dark[current_project].push(BF_member_colour(members_short[current_project][(members_short[current_project].length - 1)],"dark"));
   members_colour_light[current_project].push(BF_member_colour(members_short[current_project][(members_short[current_project].length - 1)],"light"));
@@ -264,16 +324,18 @@ var ctx = document.getElementById("financialprogress").getContext('2d');
 var config = {
 type: 'bar',
     data: {
-      labels : members_short[0],
+      labels : institutions_long[0],
       datasets : [
+
+
        {
-          label : "Released to Project",
+          label : "Incoming Funds",
           data: member_disbursals[0],
           datalabels: {
             align: 'center',
             anchor: 'center',
             formatter : function(value, context) {
-              var result = numeral(value).format('(0,0[.]0 a)') + 'K \u20AC';
+              var result = numeral(value).format('(0,0[.]0 a)') + k_euro;
               return result;
 
             },
@@ -282,7 +344,7 @@ type: 'bar',
             },
             borderColor: 'white',
             borderRadius: 15,
-            borderWidth: 1,
+            borderWidth: 0,
             color: 'white',
             font: {
               weight: 'bold'
@@ -296,13 +358,13 @@ type: 'bar',
  //          hoverBorderColor: "#214C26"
         },
         {
-          label : "Undisbursed",
+          label : "Undisbursed from Commitment",
           data: member_undisbursed[0],
           datalabels: {
             align: 'center',
             anchor: 'center',
             formatter : function(value, context) {
-              var result = numeral(value).format('(0,0[.]0 a)') + 'K \u20AC';
+              var result = numeral(value).format('(0,0[.]0 a)') + k_euro;
               return result;
             },
             backgroundColor: function(context) {
@@ -310,7 +372,7 @@ type: 'bar',
             },
             borderColor: 'white',
             borderRadius: 15,
-            borderWidth: 1,
+            borderWidth: 0,
             color: 'white',
             font: {
               weight: 'bold'
@@ -333,7 +395,7 @@ type: 'bar',
             align: 'center',
             anchor: 'center',
             formatter : function(value, context) {
-              var result = numeral(value).format('(0,0[.]0 a)') + 'K \u20AC';
+              var result = numeral(value).format('(0,0[.]0 a)') + k_euro;
               return result;
 
             },
@@ -342,7 +404,7 @@ type: 'bar',
             },
             borderColor: 'white',
             borderRadius: 15,
-            borderWidth: 1,
+            borderWidth: 0,
             color: 'white',
             font: {
               weight: 'bold'
@@ -368,8 +430,16 @@ type: 'bar',
           callbacks: {
           label: function(tooltipItem, data) { 
             return data.datasets[tooltipItem.datasetIndex].label + ": " + numeral(tooltipItem.yLabel).format('(0,0[.]]00 a)') + 'K \u20AC';
-          }
-          }
+          },
+          footer: function(tooltipItems, data) {
+              var sum = 0;
+              tooltipItems.forEach(function(tooltipItem) {
+                sum += data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+              });
+              return 'Total: ' + numeral(sum).format('(0,0[.]]00 a)') + k_euro;
+            },
+          },
+
          },
 
         plugins: {
@@ -387,8 +457,13 @@ type: 'bar',
         scales: {
           xAxes: [{ 
             stacked: true, 
+            ticks : {
+              autoSkip: false,
+              maxRotation : 90,
+              minRotation : 0,
+            },
+            fontSize : 6,
             gridLines: { display: false },
-          //  barThickness : 140,
             categoryPercentage: 0.9,
             barPercentage: 1.0,
   //          ticks: {
@@ -403,12 +478,12 @@ type: 'bar',
             stacked: true, 
             ticks: {
               beginAtZero: true,
-              callback: function(value, index, values) { return numeral(value).format('(0,0[.]]00 a)') + 'K \u20AC'; },
+              callback: function(value, index, values) { return numeral(value).format('(0,0[.]]00 a)') + k_euro; },
             }, 
             }],
         }, // scales
         legend: {
-          display: true,
+
           labels: {
             fontSize: 14,
             fontStyle: 'bold',
@@ -431,7 +506,8 @@ $("#financialprogressprojectlist").change(function() {
     data.datasets[1].borderColor = members_colour_medium[current_project];
     data.datasets[2].backgroundColor = members_colour_dark[current_project];
     data.datasets[2].borderColor = members_colour_medium[current_project];
-    data.labels = members_short[current_project];
+    data.labels = institutions_long[current_project];
+    //institutions_long[current_project].push(formatLabel(query_data[current_data_line][5],label_length_max);
     financialprogresschart.update();
 });
 
