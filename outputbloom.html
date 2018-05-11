@@ -1,44 +1,44 @@
 <head>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.0/dist/Chart.min.js"></script>
+<script src="Chart.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+<script src="chartjs-plugin-datalabels"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+<script src="numeral.min.js"></script>
 
- <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-     <script src="https://rahulsindc.github.io/BF-visualisations/belmont-forum.style.js"> </script>
+ <script src="jquery-2.1.1.min.js"></script>
+     <script src="belmont-forum.style.js"> </script>
   <!-- Numeric.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
-  
+  <script src="numeric.min.js"></script>
+  <style>
+   .initial-legend {
+    text-align: center;
+
+  }
+  </style>
  </head>
 
 <body>
-  <div id="outputbloom">
+  <div id="outputbloom"><div class="initial-legend">
+    Inner Ring: Publications<BR>
+    Middle Ring: Presentations<BR>
+    Outer Ring: Other Outputs<BR></div><BR>
     <div class="wrapper"><canvas id="outputbloom-chart"></canvas></div>
   </div>
   
   <script>
     
-    // Columns fixed by table definition; 
-    //Project Abbreviation,
-    //Project Name,
-    //People (currently unpopulated/not revealed/unimplemented)
-    //Research Outputs (papers/datasets), 
-    // In Person Engagements (trainings, conference presentations)
-    //Remote/Distributed Engagement (press mentions)
-    
-    //This array should be populated from BFGO data
     function BFGOoutputdata() {
-      var outputdata = [
-        ["TAMANI","TAMANI",530,4,5,0],
-        ["ASUS","ASUS",1001210,4,2,0],
-        ["CONNECT","CONNECT",0,0,1,0],
-        ["RACArctic","RACArctic",310,2,3,0],
-        ["ARCTIC-ERA","ARCTIC-ERA",130,2,1,0],
-        ["BAAMRGP","BAAMRGP",630,5,4,0],
-        ["COPERA","COPERA",1140,5,3,0],
-        ["HIARC","HIARC",1230,3,3,0],
-        ["Pan-Arctic Options","Pan-Arctic Options",1230,5,3,0]
+            var outputdata = [
+      ["TAMANI",4,5,0,"presentations",4],
+["ASUS",4,2,0,"presentations",4],
+["CONNECT",0,1,0,"presentations",4],
+["RACArctic",2,3,0,"presentations",4],
+["AFV",2,2,1,"presentations",4],
+["ARCTIC-ERA",2,1,2,"presentations",4],
+["BAAMRGP",5,4,0,"presentations",4],
+["COPERA",5,3,0,"presentations",4],
+["HIARC",1,0,0,"presentations",4],
+["Pan-Arctic Options",5,3,1,"presentations",4]
       ];
       return outputdata;
     }
@@ -50,19 +50,23 @@
   audience_data = [];
   publications_data = [];
   presentations_data = [];
+  presentations_labels = [];
   audience_colours = [];
+  audience_labels = [];
   publications_colours = [];
   presentations_colours = [];
 
   for (var current_project = 0; current_project<outputbloomdata.length; current_project++) {
     projects_short.push(outputbloomdata[current_project][0]);
-    projects_long.push(outputbloomdata[current_project][1]);
-    audience_data.push(Math.log(outputbloomdata[current_project][2]));
-    publications_data.push(outputbloomdata[current_project][3]);
-    presentations_data.push(outputbloomdata[current_project][4]);
-    audience_colours.push(BF_T2S_project_colour(projects_short[current_project],"light"));
-    presentations_colours.push(BF_T2S_project_colour(projects_short[current_project],"medium"));
-    publications_colours.push(BF_T2S_project_colour(projects_short[current_project],"dark"));
+//    projects_long.push(outputbloomdata[current_project][1]);
+    audience_labels.push(outputbloomdata[current_project][3]); 
+    publications_data.push(outputbloomdata[current_project][1]);
+    presentations_labels.push(outputbloomdata[current_project][2]);
+    presentations_data.push((presentations_labels[(presentations_labels.length - 1)]+publications_data[(publications_data.length-1)]));
+    audience_data.push((audience_labels[(audience_labels.length - 1)]+presentations_data[(presentations_data.length-1)]));
+    audience_colours.push(BF_project_colour("T2S",projects_short[current_project],"light"));
+    presentations_colours.push(BF_project_colour("T2S",projects_short[current_project],"dark"));
+    publications_colours.push(BF_project_colour("T2S",projects_short[current_project],"medium"));
 
   }
 
@@ -70,7 +74,7 @@ console.log("Publications");
 console.log(publications_data);
 console.log("Presentations");
 console.log(presentations_data);
-console.log("Audience Size");
+console.log("Other Outputs");
 console.log(audience_data);
                                                     
 var chart = new Chart('outputbloom-chart', {
@@ -81,19 +85,39 @@ var chart = new Chart('outputbloom-chart', {
           backgroundColor: publications_colours,
           data: publications_data,
           borderColor : publications_colours,
+
+
         }, {
           backgroundColor: presentations_colours,
           data: presentations_data,
           borderColor : publications_colours,
+          datalabels : {
+            formatter : function(value, context) {
+              var result = numeral(presentations_labels[context.dataIndex]).format('(0,0[.]]00 a)');
+              return result;
 
+            },
+
+          },
         }, {
           backgroundColor: audience_colours,
           data: audience_data,
           borderColor : publications_colours,
+          datalabels : {
+            formatter : function(value, context) {
+              var result = numeral(audience_labels[context.dataIndex]).format('(0,0 a)');
+              return result;
 
+            },
+
+          },
         }]
       },
       options: {
+
+        tooltips: {
+          enabled: false
+        },
         legend: {
           display: true,
           position: 'right',
@@ -102,30 +126,21 @@ var chart = new Chart('outputbloom-chart', {
             fontStyle: 'bold',
           },
         },
-        scales : {
-          xAxes: [{
-            stacked: true,
-//            ticks: [{
-//              beginAtZero:  true,
-//            }],
-          }],
-          yAxes: [{
-            stacked: true,
- //           ticks: [{
- //             beginAtZero:  true,
- //           }],
-          }],
-        },
+
         plugins: {
           datalabels: {
+            display: function(context) {
+              return context.dataset.data[context.dataIndex] > 1;
+            },
             anchor: 'end',
-            align: 'center',
+            align: 'start',
+
             backgroundColor: function(context) {
               return context.dataset.backgroundColor;
             },
             borderColor: 'white',
             borderRadius: 25,
-            borderWidth: 2,
+            borderWidth: 0,
             color: 'white',
             font: {
               weight: 'bold'
