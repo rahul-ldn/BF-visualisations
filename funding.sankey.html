@@ -1,7 +1,7 @@
 <head>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="plotly-latest.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+    <script src="numeral.min.js"></script>
     <script src="belmont-forum.style.js"> </script>
 
     <style>
@@ -81,7 +81,6 @@
         };
 
         var query_data = funding_data_query();
-        is_new_member = 4;
         project_total = 0;
         entities_short = [];
         entities_long = [];
@@ -144,7 +143,7 @@
           project_table[project_total]= [query_data[project_total][0],project_total];
           entities_short[project_total] = query_data[project_total][1];
           entities_long[project_total] = query_data[project_total][2];
-          entities_colours[project_total] = BF_entity_colour(query_data[project_total][1], "dark");
+          entities_colours[project_total] = BF_entity_colour(query_data[project_total][1], "medium");
           project_total++;
           console.log("Current Project Total: "+project_total);
         }
@@ -156,7 +155,7 @@
           if (!(member_exists(all_members, query_data[current_flow][1]))) {
             entities_short.push(query_data[current_flow][1]);
             entities_long.push(query_data[current_flow][2]);
-            entities_colours.push(BF_entity_colour((query_data[current_flow][1]), "dark"));
+            entities_colours.push(BF_entity_colour((query_data[current_flow][1]), "medium"));
             all_members.push([query_data[current_flow][1], (entities_short.length-1)]);
             console.log(query_data[current_flow][1]+" is new, being added! "+(entities_short.length-1));
 
@@ -183,8 +182,11 @@
             },
             'orientation': "h",
             'valueformat': ".0f",
-            'valuesuffix': " (k €)",
+            'valuesuffix': " (k \u20AC)",
             'arrangement': "fixed",
+            'textfont'   : {
+              'size': 12,
+            },
             'node': {
                 'pad': 5,
                 'thickness': 40,
