@@ -83,6 +83,14 @@ background-color: #1E4968;
 
 }
 
+label {
+  color: #444;
+}
+
+.leaflet-control-layers-base label {
+  color: white !important;
+}
+
 button {
   display: inline-block;
   margin: 0 5px 0 0;
@@ -131,112 +139,345 @@ button:active {
 
 
 function BFGOquerydata() {
-  var dummydata = [
+var dummydata = [
   //Project ID, Short Name, category, long name, country, lat, long
-      [26,"TAMANI","project","Designing an Improved Network of Long-Term Monitoring Sites for Arctic Vertebrates: Towards a Better Involvement of Local Communities through Participatory Science Programs"," "," ","Longitude"], 
-      [27,"ASUS","project","Arctic Sustainability: A Synthesis of Knowledge"," "," ","Longitude"], 
-      [28,"CONNECT","project","Global Connections and Changing Resource Use System in the Arctic"," "," ","Longitude"], 
-      [29,"RACArctic","project","Resilience and Adaptive Capacity of ARCTIC Marine Systems Under a Changing Climate"," "," ","Longitude"], 
-      [31,"ARCTIC-ERA","project","Arctic Climate Change and its Impact on Environment, Infrastructures, and Resource Availability"," "," ","Longitude"], 
-      [32,"BAAMRGP","project","Bio-Economic Analysis for Arctic Marine Resource Governance and Policy"," "," ","Longitude"], 
-      [33,"COPERA","project","C budget of Ecosystems, Cities and Villages on Permafrost in the Eastern Russian Arctic"," "," ","Longitude"], 
-      [34,"HIARC","project","Anthropogenic Heat Islands in the Arctic: Windows to the Future of the Regional Climates, Ecosystems, and Societies"," "," ","Longitude"], 
-      [35,"Pan-Arctic Options","project","Holistic Integration for Arctic Coastal-Marine Sustainability"," "," ","Longitude"], 
-      [32,"BAAMRGP","funder","MINCyT","ARG",-34.61315000,-58.37723000], 
-      [32,"BAAMRGP","funder","CSIRO","AUS",-35.28346000,149.12807000], 
-      [26,"TAMANI","funder","FAPESP","BRA",-15.77972000,-47.92972000], 
-      [29,"RACArctic","funder","NSERC","CAN",45.41117000,-75.69812000], 
-      [26,"TAMANI","funder","NSFC","CHN",39.90750000,116.39723000], 
-      [35,"Pan-Arctic Options","funder","Finland - Academy of Finland","FIN",60.16952000,24.93545000], 
-      [32,"BAAMRGP","funder","MESRI","FRA",48.85341000,2.34880000], 
-      [33,"COPERA","funder","BMBF","DEU",52.52437000,13.41053000], 
-      [27,"ASUS","funder","DLR","DEU",52.52437000,13.41053000], 
-      [28,"CONNECT","funder","DFG","DEU",52.52437000,13.41053000], 
-      [29,"RACArctic","funder","MoES","IND",28.63576000,77.22445000], 
-      [35,"Pan-Arctic Options","funder","CNR","ITA",41.89193000,12.51133000], 
-      [31,"ARCTIC-ERA","funder","MEXT","JPN",35.68950000,139.69171000], 
-      [34,"HIARC","funder","RCN","NOR",59.91273000,10.74609000], 
-      [32,"BAAMRGP","funder","RFBR","RUS",55.75222000,37.61556000], 
-      [26,"TAMANI","funder","MINECO","ESP",40.41650000,-3.70256000], 
-      [31,"ARCTIC-ERA","funder","Formas","SWE",59.33258000,18.06490000], 
-      [31,"ARCTIC-ERA","funder","TUBITAK","TUR",39.91987000,32.85427000], 
-      [32,"BAAMRGP","funder","NERC","GBR",51.50853000,-0.12574000], 
-      [26,"TAMANI","funder","NSF","USA",38.89511000,-77.03637000], 
-      [27,"ASUS","researcher","Petrov, Andrey (University of Northern Iowa)","USA",38.89511000,-77.03637000], 
-      [27,"ASUS","researcher","Espiritu, Aileen (The Barents Institute, University of Tromsø)","NOR",59.91273000,10.74609000], 
-      [27,"ASUS","researcher","Klaus, Georg (Ilisimatusarfik)","GRL",64.18347000,-51.72157000], 
-      [32,"BAAMRGP","researcher","Ross, Bob (PI)","ALB",41.32750000,19.81889000], 
-      [32,"BAAMRGP","researcher","Moor, Alice (University of Costa Rica)","CRI",9.93333000,-84.08333000], 
-      [31,"ARCTIC-ERA","researcher","Zolina, Olga (CNRS Laboratoire de Glaciologie et Géophysique de Environnement (LGGE))","FRA",48.85341000,2.34880000], 
-      [31,"ARCTIC-ERA","researcher","Groisman, Pavel (Hydrology Science and Services, Inc.)","USA",38.89511000,-77.03637000], 
-      [31,"ARCTIC-ERA","researcher","Gulev, Sergey (P.P. Shirshov Institute of Oceanology)","RUS",55.75222000,37.61556000], 
-      [31,"ARCTIC-ERA","researcher","Profiriev, Boris (Institute of Economic Forecasting)","RUS",55.75222000,37.61556000], 
-      [31,"ARCTIC-ERA","researcher","Streletskiy, Dmitry (George Washington University)","USA",38.89511000,-77.03637000], 
-      [31,"ARCTIC-ERA","researcher","Peterman, Nathan (Local High School)","USA",38.89511000,-77.03637000], 
-      [27,"ASUS","researcher","Larsen, Joan Nymand (Stefansson Arctic Institute, University of Akureyri)","ISL",64.13548000,-21.89541000], 
-      [27,"ASUS","researcher","Rasmussen, Rasmus Ole (Nordregio)","SWE",59.33258000,18.06490000], 
-      [27,"ASUS","researcher","Southcott, Chris (Lakehead University)","CAN",45.41117000,-75.69812000], 
-      [27,"ASUS","researcher","Tatiana, Vlasova (Institute of Geography, Russian Academy of Sciences)","RUS",55.75222000,37.61556000], 
-      [32,"BAAMRGP","researcher","Fernandez, Linda (Virginia Commonwealth University)","USA",38.89511000,-77.03637000], 
-      [32,"BAAMRGP","researcher","Kaiser, Brooks (University of Southern Denmark)","DNK",55.67594000,12.56553000], 
-      [32,"BAAMRGP","researcher","Sundet, Jan (Institute of Marine Research)","NOR",59.91273000,10.74609000], 
-      [32,"BAAMRGP","researcher","Vestergaard, Niels (University of Southern Denmark)","DNK",55.67594000,12.56553000], 
-      [26,"TAMANI","researcher","Gremillet, David (Centre d'Ecologie Fonctionnelle et Evolutive)","FRA",48.85341000,2.34880000], 
-      [26,"TAMANI","researcher","Berteaux, Dominique (Université du Québec à Rimouski)","CAN",45.41117000,-75.69812000], 
-      [26,"TAMANI","researcher","Furgal, Chris (Trent University)","CAN",45.41117000,-75.69812000], 
-      [26,"TAMANI","researcher","Parlee, Brenda (University of Alberta)","CAN",45.41117000,-75.69812000], 
-      [26,"TAMANI","researcher","Ana, Rodriguez (Centre: Ecologie Fonctionnelle et Evolutive)","FRA",48.85341000,2.34880000], 
-      [26,"TAMANI","researcher","Yoccoz, Nigel (University of Tromsø)","NOR",59.91273000,10.74609000], 
-      [29,"RACArctic","researcher","Saitoh, Sei-Ichi (Hokkaido University)","JPN",35.68950000,139.69171000], 
-      [29,"RACArctic","researcher","Chierici, Melissa (Institute of Marine Research)","NOR",59.91273000,10.74609000], 
-      [29,"RACArctic","researcher","Drinkwater, Kenneth (Institute of Marine Research)","NOR",59.91273000,10.74609000], 
-      [29,"RACArctic","researcher","EIde, Arne (University of Tromsø)","NOR",59.91273000,10.74609000], 
-      [29,"RACArctic","researcher","Harada, Naomi (Japan Agency for Marine Earth-Science and Technology)","JPN",35.68950000,139.69171000], 
-      [29,"RACArctic","researcher","Haynie, Alan (Resource Ecology and Fisheries Management Division, Alaska Fisheries Science Center, NOAA)","USA",38.89511000,-77.03637000], 
-      [29,"RACArctic","researcher","Hirawake, Toru (Hokkaido University)","JPN",35.68950000,139.69171000], 
-      [29,"RACArctic","researcher","Hoel, Alf Håkon (Institute of Marine Research)","NOR",59.91273000,10.74609000], 
-      [29,"RACArctic","researcher","Hunt, George (University of Washington)","USA",38.89511000,-77.03637000], 
-      [29,"RACArctic","researcher","Huntington, Henry (Huntington Consulting)","USA",38.89511000,-77.03637000], 
-      [29,"RACArctic","researcher","Ingvaldsen, Randy (Institute of Marine Research)","NOR",59.91273000,10.74609000], 
-      [35,"Pan-Arctic Options","researcher","Berkman, Paul (University of California-Santa Barbara,)","USA",38.89511000,-77.03637000], [35,"Pan-Arctic Options","researcher","Brigham, Lawson (University of Alaska-Fairbanks)","USA",38.89511000,-77.03637000], 
-      [35,"Pan-Arctic Options","researcher","Gascard, Jean-Claude (Laboratoire Océanographie et du Climat, Université Pierre et Marie Curie)","FRA",48.85341000,2.34880000], 
-      [35,"Pan-Arctic Options","researcher","Halpern, Ben (University of California-Santa Barbara)","USA",38.89511000,-77.03637000], 
-      [35,"Pan-Arctic Options","researcher","Provost, Christine (Laboratoire; Océanographie et du Climat, Université Pierre et Marie Curie)","FRA",48.85341000,2.34880000], 
-      [35,"Pan-Arctic Options","researcher","Sun, Kai (Ocean University of China)","CHN",39.90750000,116.39723000], 
-      [35,"Pan-Arctic Options","researcher","Taylor, Fraser (Carleton University)","USA",38.89511000,-77.03637000], 
-      [35,"Pan-Arctic Options","researcher","Vylegzhanin, Alexander (MGIMO University)","RUS",55.75222000,37.61556000], 
-      [35,"Pan-Arctic Options","researcher","Winther, Jan-Gunnar (Norwegian Polar Institute)","NOR",59.91273000,10.74609000], 
-      [34,"HIARC","researcher","Doe, John (Nansen Environmental and Remote Sensing Center)","NFK",-29.05459000,167.96628000], 
-      [34,"HIARC","researcher","Doe, Jane (Institute of the Cryosphere, Russian Academy of Sciences Siberian Branch)","RUS",55.75222000,37.61556000], 
-      [33,"COPERA","researcher","Sugimoto, Atsuko (Hokkaido University)","JPN",35.68950000,139.69171000], 
-      [33,"COPERA","researcher","Ohta, Takeshi (Nagoya University)","JPN",35.68950000,139.69171000], 
-      [33,"COPERA","researcher","Prisyazhny, Mikhael (North-Eastern Federal University)","RUS",55.75222000,37.61556000], 
-      [33,"COPERA","researcher","Suzuki, Rikie (Japan Agency for Marine-Earth Science and Technology)","JPN",35.68950000,139.69171000], [33,"COPERA","researcher","Yoshikawa, Kenji (University of Alaska-Fairbanks)","USA",38.89511000,-77.03637000], 
-      [33,"COPERA","researcher","Adams, Derek (Oberlin College)","USA",38.89511000,-77.03637000], 
-      [28,"CONNECT","researcher","Hausner, Vera Helene (University of Tromsø)","NOR",59.91273000,10.74609000], 
-      [28,"CONNECT","researcher","Broderstad, Else Grete (University of Tromsø)","NOR",59.91273000,10.74609000], 
-      [28,"CONNECT","researcher","Clark, Douglas (University of Saskatchewan)","SWE",59.33258000,18.06490000], 
-      [28,"CONNECT","researcher","Ehrich, Dorothée (University of Tromsø)","NOR",59.91273000,10.74609000], 
-      [28,"CONNECT","researcher","Fauchald, Per (University of Tromsø)","NOR",59.91273000,10.74609000], 
-      [28,"CONNECT","researcher","Klokov, Konstantin (EthnoExpert, LLC)","RUS",55.75222000,37.61556000], 
-      [28,"CONNECT","researcher","Schmidt, Jennifer (University of Alaska-Anchorage)","USA",38.89511000,-77.03637000], 
-      [27,"ASUS","stakeholder","Arctic Group","DNK",55.67594000,12.56553000], 
-      [32,"BAAMRGP","stakeholder","Canadian Arctic Council","CAN",45.41117000,-75.69812000], 
-      [28,"CONNECT","stakeholder","Advocates for a Sustainable Arctic","CAN",45.41117000,-75.69812000], 
-      [28,"CONNECT","stakeholder","Advocates for a Sustainable Arctic","RUS",55.75222000,37.61556000], 
-      [28,"CONNECT","stakeholder","Advocates for a Sustainable Arctic","USA",38.89511000,-77.03637000], 
-      [28,"CONNECT","stakeholder","Bering Sea Fisheries","JPN",35.68950000,139.69171000], 
-      [28,"CONNECT","stakeholder","Bering Sea Fisheries","RUS",55.75222000,37.61556000], 
-      [28,"CONNECT","stakeholder","Bering Sea Fisheries","USA",38.89511000,-77.03637000], 
-      [31,"ARCTIC-ERA","stakeholder","Institution for Scandinavia","FIN",60.16952000,24.93545000], 
-      [31,"ARCTIC-ERA","stakeholder","Institution for Scandinavia","NOR",59.91273000,10.74609000], 
-      [31,"ARCTIC-ERA","stakeholder","Institution for Scandinavia","SWE",59.33258000,18.06490000], 
-      [33,"COPERA","stakeholder","Partnership for LowCarbon and Economic Sustatiablity","USA",38.89511000,-77.03637000], 
-      [35,"Pan-Arctic Options","stakeholder","Government/Private Industry Partnership of Norway","NOR",59.91273000,10.74609000], 
-      [29,"RACArctic","stakeholder","RACArctic Alliance","RUS",55.75222000,37.61556000], 
-      [26,"TAMANI","stakeholder","Pan-Arctic Community Association","DNK",55.67594000,12.56553000], 
-      [26,"TAMANI","stakeholder","Pan-Arctic Community Association","GRL",64.18347000,-51.72157000]  
+     [26,"TAMANI","project","Designing an Improved Network of Long-Term Monitoring Sites for Arctic Vertebrates: Towards a Better Involvement of Local Communities through Participatory Science Programs"," "," "," "],
+[27,"ASUS","project","Arctic Sustainability: A Synthesis of Knowledge"," "," "," "],
+[28,"CONNECT","project","Global Connections and Changing Resource Use System in the Arctic"," "," "," "],
+[29,"RACArctic","project","Resilience and Adaptive Capacity of ARCTIC Marine Systems Under a Changing Climate"," "," "," "],
+[30,"AFV","project","Arctic Fog Variability in a Warming Arctic and its Impact on Maritime Human Activities"," "," "," "],
+[31,"ARCTIC-ERA","project","Arctic Climate Change and its Impact on Environment, Infrastructures, and Resource Availability"," "," "," "],
+[32,"BAAMRGP","project","Bio-Economic Analysis for Arctic Marine Resource Governance and Policy"," "," "," "],
+[33,"COPERA","project","C budget of Ecosystems, Cities and Villages on Permafrost in the Eastern Russian Arctic"," "," "," "],
+[34,"HIARC","project","Anthropogenic Heat Islands in the Arctic: Windows to the Future of the Regional Climates, Ecosystems, and Societies"," "," "," "],
+[35,"Pan-Arctic Options","project","Holistic Integration for Arctic Coastal-Marine Sustainability"," "," "," "],
+[29,"RACArctic","funder",10515,"LTU",54.68916000,25.27980000],
+[30,"AFV","funder",10196,"CHN",39.90750000,116.39723000],
+[33,"COPERA","funder",10239,"JPN",35.68950000,139.69171000],
+[33,"COPERA","funder",10237,"JPN",35.68950000,139.69171000],
+[33,"COPERA","funder",10236,"JPN",35.68950000,139.69171000],
+[34,"HIARC","funder",10220,"RUS",55.75222000,37.61556000],
+[27,"ASUS","funder",10235,"SWE",59.33258000,18.06490000],
+[26,"TAMANI","funder",10214,"FRA",48.85341000,2.34880000],
+[31,"ARCTIC-ERA","funder",10207,"FRA",48.85341000,2.34880000],
+[32,"BAAMRGP","funder",10213,"NOR",59.91273000,10.74609000],
+[30,"AFV","funder",10199,"ITA",41.89193000,12.51133000],
+[26,"TAMANI","funder",10217,"CAN",45.41117000,-75.69812000],
+[30,"AFV","funder",10259,"CAN",45.41117000,-75.69812000],
+[32,"BAAMRGP","funder",10211,"USA",38.89511000,-77.03637000],
+[27,"ASUS","researcher","Petrov, Andrey (University of Northern Iowa)","USA",38.89511000,-77.03637000],
+[27,"ASUS","researcher","Espiritu, Aileen (University of Tromsø)","NOR",59.91273000,10.74609000],
+[27,"ASUS","researcher","Klaus, Georg (Ilisimatusarfik)","GRL",64.18347000,-51.72157000],
+[31,"ARCTIC-ERA","researcher","Zolina, Olga (Laboratoire de Glaciologie et Géophysique de l'Environnement)","FRA",48.85341000,2.34880000],
+[31,"ARCTIC-ERA","researcher","Groisman, Pavel (George Washington University)","USA",38.89511000,-77.03637000],
+[31,"ARCTIC-ERA","researcher","Gulev, Sergey (Russian Academy of Sciences)","RUS",55.75222000,37.61556000],
+[31,"ARCTIC-ERA","researcher","Profiriev, Boris (Russian Academy of Sciences)","RUS",55.75222000,37.61556000],
+[31,"ARCTIC-ERA","researcher","Streletskiy, Dmitry (George Washington University)","USA",38.89511000,-77.03637000],
+[27,"ASUS","researcher","Larsen, Joan Nymand (University of Akureyri)","ISL",64.13548000,-21.89541000],
+[27,"ASUS","researcher","Rasmussen, Rasmus Ole (Nordregio)","SWE",59.33258000,18.06490000],
+[32,"BAAMRGP","researcher","Fernandez, Linda (Virginia Commonwealth University)","USA",38.89511000,-77.03637000],
+[32,"BAAMRGP","researcher","Kaiser, Brooks (University of Southern Denmark)","DNK",55.67594000,12.56553000],
+[32,"BAAMRGP","researcher","Sundet, Jan (Institute of Marine Research)","NOR",59.91273000,10.74609000],
+[32,"BAAMRGP","researcher","Vestergaard, Niels (University of Southern Denmark)","DNK",55.67594000,12.56553000],
+[26,"TAMANI","researcher","Gremillet, David (Centre d'Ecologie Fonctionnelle et Evolutive)","FRA",48.85341000,2.34880000],
+[26,"TAMANI","researcher","Berteaux, Dominique (Université du Québec à Rimouski)","CAN",45.41117000,-75.69812000],
+[26,"TAMANI","researcher","Furgal, Chris (Trent University)","CAN",45.41117000,-75.69812000],
+[26,"TAMANI","researcher","Parlee, Brenda (University of Alberta)","CAN",45.41117000,-75.69812000],
+[26,"TAMANI","researcher","Yoccoz, Nigel (University of Tromsø)","NOR",59.91273000,10.74609000],
+[29,"RACArctic","researcher","Saitoh, Sei-Ichi (Hokkaido University)","JPN",35.68950000,139.69171000],
+[29,"RACArctic","researcher","Chierici, Melissa (Institute of Marine Research)","NOR",59.91273000,10.74609000],
+[29,"RACArctic","researcher","Drinkwater, Kenneth (Institute of Marine Research)","NOR",59.91273000,10.74609000],
+[29,"RACArctic","researcher","EIde, Arne (University of Tromsø)","NOR",59.91273000,10.74609000],
+[29,"RACArctic","researcher","Harada, Naomi (Japan Agency for Marine Earth-Science and Technology)","JPN",35.68950000,139.69171000],
+[35,"Pan-Arctic Options","researcher","Berkman, Paul (University of California-Santa Barbara)","USA",38.89511000,-77.03637000],
+[35,"Pan-Arctic Options","researcher","Brigham, Lawson (University of Alaska-Fairbanks)","USA",38.89511000,-77.03637000],
+[35,"Pan-Arctic Options","researcher","Gascard, Jean-Claude (Université Pierre et Marie Curie)","FRA",48.85341000,2.34880000],
+[35,"Pan-Arctic Options","researcher","Halpern, Ben (University of California-Santa Barbara)","USA",38.89511000,-77.03637000],
+[35,"Pan-Arctic Options","researcher","Sun, Kai (Ocean University of China)","CHN",39.90750000,116.39723000],
+[33,"COPERA","researcher","Sugimoto, Atsuko (Hokkaido University)","JPN",35.68950000,139.69171000],
+[33,"COPERA","researcher","Ohta, Takeshi (Nagoya  University)","JPN",35.68950000,139.69171000],
+[33,"COPERA","researcher","Prisyazhny, Mikhael (North-Eastern Federal University)","RUS",55.75222000,37.61556000],
+[33,"COPERA","researcher","Suzuki, Rikie (Japan Agency for Marine-Earth Science and Technology)","JPN",35.68950000,139.69171000],
+[33,"COPERA","researcher","Yoshikawa, Kenji (University of Alaska-Fairbanks)","USA",38.89511000,-77.03637000],
+[30,"AFV","researcher","Chen, Xianyao (Ocean University of China)","CHN",39.90750000,116.39723000],
+[30,"AFV","researcher","Atkinson, David (University of Victoria)","CAN",45.41117000,-75.69812000],
+[30,"AFV","researcher","Guo, Peiqing (Ocean University of China)","CHN",39.90750000,116.39723000],
+[30,"AFV","researcher","Perrie, William (Bedford Institute of Oceanography)","CAN",45.41117000,-75.69812000],
+[30,"AFV","researcher","Tampieri, Francisco (Institute of Atmospheric Science and Climate)","ITA",41.89193000,12.51133000],
+[28,"CONNECT","researcher","Hausner, Vera Helene (University of Tromsø)","NOR",59.91273000,10.74609000],
+[28,"CONNECT","researcher","Broderstad, Else Grete (University of Tromsø)","NOR",59.91273000,10.74609000],
+[28,"CONNECT","researcher","Clark, Douglas (University of Saskatchewan)","CAN",45.41117000,-75.69812000],
+[28,"CONNECT","researcher","Ehrich, Dorothée (University of Tromsø)","NOR",59.91273000,10.74609000],
+[28,"CONNECT","researcher","Klokov, Konstantin (EthnoExpert, LLC)","RUS",55.75222000,37.61556000],
+[30,"AFV","researcher","Chen, Xianyao (Ocean University of China)","CHN",39.90750000,116.39723000],
+[30,"AFV","researcher","Chen, Xianyao (Ocean University of China)","CHN",39.90750000,116.39723000],
+[30,"AFV","researcher","Atkinson, David (University of Victoria)","CAN",45.41117000,-75.69812000],
+[30,"AFV","researcher","Guo, Peiqing (Ocean University of China)","CHN",39.90750000,116.39723000],
+[30,"AFV","researcher","Perrie, William (Bedford Institute of Oceanography)","CAN",45.41117000,-75.69812000],
+[30,"AFV","researcher","Tampieri, Francisco (Institute of Atmospheric Science and Climate)","ITA",41.89193000,12.51133000],
+[34,"HIARC","researcher","Esau, Igor (Nansen Environmental and Remote Sensing Center)","NOR",59.91273000,10.74609000],
+[34,"HIARC","researcher","Kurchatova, Anna (Russian Academy of Sciences)","RUS",55.75222000,37.61556000],
+[34,"HIARC","researcher","Laruelle, Marlene (George Washington University)","USA",38.89511000,-77.03637000],
+[34,"HIARC","researcher","Miles, Martin (George Washington University)","USA",38.89511000,-77.03637000],
+[33,"COPERA","researcher","Sugimoto, Atsuko (Hokkaido University)","JPN",35.68950000,139.69171000],
+[33,"COPERA","researcher","Ohta, Takeshi (Nagoya University)","JPN",35.68950000,139.69171000],
+[33,"COPERA","researcher","Prisyazhny, Mikhael (North-Eastern Federal University)","RUS",55.75222000,37.61556000],
+[33,"COPERA","researcher","Suzuki, Rikie (Japan Agency for Marine-Earth Science and Technology)","JPN",35.68950000,139.69171000],
+[33,"COPERA","researcher","Yoshikawa, Kenji (University of Alaska-Fairbanks)","JPN",35.68950000,139.69171000],
+[30,"AFV","researcher","Chen, Xianyao (Ocean University of China)","CHN",39.90750000,116.39723000],
+[30,"AFV","researcher","Atkinson, David (University of Victoria)","CAN",45.41117000,-75.69812000],
+[30,"AFV","researcher","Guo, Peiqing (Ocean University of China)","CHN",39.90750000,116.39723000],
+[30,"AFV","researcher","Perrie, William (Bedford Institute of Oceanography)","CAN",45.41117000,-75.69812000],
+[30,"AFV","researcher","Tampieri, Francisco (Institute of Atmospheric Science and Climate)","ITA",41.89193000,12.51133000],
+[31,"ARCTIC-ERA","researcher","Zolina, Olga (Laboratoire de Glaciologie et Géophysique de l'Environnement)","FRA",48.85341000,2.34880000],
+[31,"ARCTIC-ERA","researcher","Groisman, Pavel (Hydrology Science and Services, Inc.)","USA",38.89511000,-77.03637000],
+[31,"ARCTIC-ERA","researcher","Gulev, Sergey (Russian Academy of Sciences)","RUS",55.75222000,37.61556000],
+[31,"ARCTIC-ERA","researcher","Profiriev, Boris (Russian Academy of Sciences)","RUS",55.75222000,37.61556000],
+[31,"ARCTIC-ERA","researcher","Streletskiy, Dmitry (George Washington University)","USA",38.89511000,-77.03637000],
+[31,"ARCTIC-ERA","researcher","Zolina, Olga (Laboratoire de Glaciologie et Géophysique de l'Environnement)","FRA",48.85341000,2.34880000],
+[31,"ARCTIC-ERA","researcher","Gulev, Sergey (Russian Academy of Sciences)","RUS",55.75222000,37.61556000],
+[31,"ARCTIC-ERA","researcher","Profiriev, Boris (Russian Academy of Sciences)","RUS",55.75222000,37.61556000],
+[31,"ARCTIC-ERA","researcher","Groisman, Pavel (George Washington University)","USA",38.89511000,-77.03637000],
+[31,"ARCTIC-ERA","researcher","Streletskiy, Dmitry (George Washington University)","USA",38.89511000,-77.03637000],
+[31,"ARCTIC-ERA","researcher","Zolina, Olga (Laboratoire de Glaciologie et Géophysique de l'Environnement)","FRA",48.85341000,2.34880000],
+[31,"ARCTIC-ERA","researcher","Groisman, Pavel (Hydrology Science and Services, Inc.)","USA",38.89511000,-77.03637000],
+[31,"ARCTIC-ERA","researcher","Gulev, Sergey (Russian Academy of Sciences)","RUS",55.75222000,37.61556000],
+[31,"ARCTIC-ERA","researcher","Profiriev, Boris (Russian Academy of Sciences)","RUS",55.75222000,37.61556000],
+[27,"ASUS","researcher","Petrov, Audrey (University of Northern Iowa)","USA",38.89511000,-77.03637000],
+[27,"ASUS","researcher","Espiritu, AIleen (University of Tromsø)","NOR",59.91273000,10.74609000],
+[27,"ASUS","researcher","Hansen, Klaus Georg (Ilisimatusarfik)","GRL",64.18347000,-51.72157000],
+[27,"ASUS","researcher","Nymand Larsen, Joan (University of Akureyri)","ISL",64.13548000,-21.89541000],
+[27,"ASUS","researcher","Ole Rasmussen, Rasmus (Nordregio)","SWE",59.33258000,18.06490000],
+[27,"ASUS","researcher","Espiritu, AIleen (University of Tromsø)","NOR",59.91273000,10.74609000],
+[27,"ASUS","researcher","Hansen, Klaus Georg (Ilisimatusarfik)","GRL",64.18347000,-51.72157000],
+[27,"ASUS","researcher","Larsen, Joan (University of Akureyri)","ISL",64.13548000,-21.89541000],
+[27,"ASUS","researcher","Petrov, Audrey (University of Northern Iowa)","USA",38.89511000,-77.03637000],
+[27,"ASUS","researcher","Ole Rasmussen, Rasmus (Nodreigo)","SWE",59.33258000,18.06490000],
+[27,"ASUS","researcher","Espiritu, AIleen (University of Tromsø)","NOR",59.91273000,10.74609000],
+[27,"ASUS","researcher","Petrov, Audrey (University of Northern Iowa)","USA",38.89511000,-77.03637000],
+[27,"ASUS","researcher","Ole Rasmussen, Rasmus (Nordregio)","SWE",59.33258000,18.06490000],
+[27,"ASUS","researcher","Larsen, Joan (University of Akureyri)","ISL",64.13548000,-21.89541000],
+[27,"ASUS","researcher","Hansen, Klaus (Ilisimatusarfik)","GRL",64.18347000,-51.72157000],
+[32,"BAAMRGP","researcher","Fernandez, Linda (Virginia Commonwealth University)","USA",38.89511000,-77.03637000],
+[32,"BAAMRGP","researcher","Kaiser, Brooks (University of Southern Denmark)","DNK",55.67594000,12.56553000],
+[32,"BAAMRGP","researcher","Sundet, Jan (Institue of Marine Research)","NOR",59.91273000,10.74609000],
+[32,"BAAMRGP","researcher","Vestergaard, Niels (University of Southern Denmark)","DNK",55.67594000,12.56553000],
+[32,"BAAMRGP","researcher","Fernandez, Linda (Virginia Commonwealth University)","USA",38.89511000,-77.03637000],
+[32,"BAAMRGP","researcher","Kaiser, Brooks (University of Southern Denmark)","DNK",55.67594000,12.56553000],
+[32,"BAAMRGP","researcher","Vestergaard, Niels (University of Southern Denmark)","DNK",55.67594000,12.56553000],
+[32,"BAAMRGP","researcher","Sundet, Jan (Institue of Marine Research)","NOR",59.91273000,10.74609000],
+[32,"BAAMRGP","researcher","Fernandez, Linda (Virginia Commonwealth University)","USA",38.89511000,-77.03637000],
+[32,"BAAMRGP","researcher","Kaiser, Brooks (University of Southern Denmark)","DNK",55.67594000,12.56553000],
+[32,"BAAMRGP","researcher","Vestergaard, Niels (University of Southern Denmark)","DNK",55.67594000,12.56553000],
+[32,"BAAMRGP","researcher","Sundet, Jan (University of Tromsø)","NOR",59.91273000,10.74609000],
+[28,"CONNECT","researcher","Hausner, Vera (University of Tromsø)","NOR",59.91273000,10.74609000],
+[28,"CONNECT","researcher","Broderstad, Else Grete (University of Tromsø)","NOR",59.91273000,10.74609000],
+[28,"CONNECT","researcher","Clark, Douglas (University of Saskatchewan)","CAN",45.41117000,-75.69812000],
+[28,"CONNECT","researcher","Klokov, Konstantin (EthnoExpert, LLC)","RUS",55.75222000,37.61556000],
+[28,"CONNECT","researcher","Ehrlich, Dorothée (University of Tromsø)","NOR",59.91273000,10.74609000],
+[28,"CONNECT","researcher","Hausner, Vera (University of Tromsø)","NOR",59.91273000,10.74609000],
+[28,"CONNECT","researcher","Broderstad, Else Grete (University of Tromsø)","NOR",59.91273000,10.74609000],
+[28,"CONNECT","researcher","Clark, Douglas (University of Saskatchewan)","CAN",45.41117000,-75.69812000],
+[28,"CONNECT","researcher","Klokov, Konstantin (EthnoExpert, LLC)","RUS",55.75222000,37.61556000],
+[28,"CONNECT","researcher","Ehrlich, Dorothée (University of Tromsø)","NOR",59.91273000,10.74609000],
+[28,"CONNECT","researcher","Hausner, Vera (University of Tromsø)","NOR",59.91273000,10.74609000],
+[28,"CONNECT","researcher","Broderstad, Else (University of Tromsø)","NOR",59.91273000,10.74609000],
+[28,"CONNECT","researcher","Clark, Douglas (University of Saskatchewan)","CAN",45.41117000,-75.69812000],
+[28,"CONNECT","researcher","Klokov, Konstantin (University of Saskatchewan)","RUS",55.75222000,37.61556000],
+[28,"CONNECT","researcher","Ehrlich, Dorothée (University of Tromsø)","NOR",59.91273000,10.74609000],
+[33,"COPERA","researcher","Sugimoto, Atsuko (Hokkaido University)","JPN",35.68950000,139.69171000],
+[33,"COPERA","researcher","Prisyazhny, Mikhael (North-Eastern Federal University)","RUS",55.75222000,37.61556000],
+[33,"COPERA","researcher","Suzuki, Rikie (Japan Agency for Marine-Earth Science and Technology)","JPN",35.68950000,139.69171000],
+[33,"COPERA","researcher","Yoshikawa, Kenji (University of Alaska-Fairbanks)","USA",38.89511000,-77.03637000],
+[33,"COPERA","researcher","Ohta, Takeshi (Nagoya  University)","JPN",35.68950000,139.69171000],
+[33,"COPERA","researcher","Sugimoto, Atsuko (Hokkaido University)","JPN",35.68950000,139.69171000],
+[33,"COPERA","researcher","Ohta, Takeshi (Nagoya  University)","JPN",35.68950000,139.69171000],
+[33,"COPERA","researcher","Yoshikawa, Kenji (University of Alaska-Fairbanks)","USA",38.89511000,-77.03637000],
+[33,"COPERA","researcher","Suzuki, Rikie (Japan Agency for Marine-Earth Science and Technology)","JPN",35.68950000,139.69171000],
+[33,"COPERA","researcher","Prisyazhny, Mikhael (North-Eastern Federal University)","RUS",55.75222000,37.61556000],
+[34,"HIARC","researcher","Esau, Igor (Nansen Environmental and Remote Sensing Center)","NOR",59.91273000,10.74609000],
+[34,"HIARC","researcher","Kurchatova, Anna (Russian Academy of Sciences)","RUS",55.75222000,37.61556000],
+[34,"HIARC","researcher","Laruelle, Marlene (George Washington University)","USA",38.89511000,-77.03637000],
+[34,"HIARC","researcher","Miles, Martin (University of Colorado)","USA",38.89511000,-77.03637000],
+[34,"HIARC","researcher","Esau, Igor (Nansen Environmental and Remote Sensing Center)","NOR",59.91273000,10.74609000],
+[34,"HIARC","researcher","Kurchatova, Anna (Russian Academy of Sciences)","RUS",55.75222000,37.61556000],
+[34,"HIARC","researcher","Laruelle, Marlene (George Washington University)","USA",38.89511000,-77.03637000],
+[34,"HIARC","researcher","Miles, Martin (University of Colorado)","USA",38.89511000,-77.03637000],
+[34,"HIARC","researcher","Esau, Igor (Nansen Environmental and Remote Sensing Center)","NOR",59.91273000,10.74609000],
+[34,"HIARC","researcher","Kurchatova, Anna (Russian Academy of Sciences)","RUS",55.75222000,37.61556000],
+[34,"HIARC","researcher","Miles, Martin (University of Colorado)","USA",38.89511000,-77.03637000],
+[34,"HIARC","researcher","Laruelle, Marlene (George Washington University)","USA",38.89511000,-77.03637000],
+[35,"Pan-Arctic Options","researcher","Berkman, Paul (University of California-Santa Barbara)","USA",38.89511000,-77.03637000],
+[35,"Pan-Arctic Options","researcher","Brigham, Lawson (University of California-Santa Barbara)","USA",38.89511000,-77.03637000],
+[35,"Pan-Arctic Options","researcher","Gascard, Jean-Claude (Université Pierre et Marie Curie)","FRA",48.85341000,2.34880000],
+[35,"Pan-Arctic Options","researcher","Halpern, Ben (University of California-Santa Barbara)","USA",38.89511000,-77.03637000],
+[35,"Pan-Arctic Options","researcher","Sun, Kai (Ocean University of China)","CHN",39.90750000,116.39723000],
+[35,"Pan-Arctic Options","researcher","Berkman, Paul (University of California-Santa Barbara)","USA",38.89511000,-77.03637000],
+[35,"Pan-Arctic Options","researcher","Brigham, Lawson (University of Alaska-Fairbanks)","FRA",48.85341000,2.34880000],
+[35,"Pan-Arctic Options","researcher","Gascard, Jean-Claude (Université Pierre et Marie Curie)","FRA",48.85341000,2.34880000],
+[35,"Pan-Arctic Options","researcher","Halpern, Ben (University of California-Santa Barbara)","USA",38.89511000,-77.03637000],
+[35,"Pan-Arctic Options","researcher","Sun, Kai (Ocean University of China)","CHN",39.90750000,116.39723000],
+[35,"Pan-Arctic Options","researcher","Berkman, Paul (University of California-Santa Barbara)","USA",38.89511000,-77.03637000],
+[35,"Pan-Arctic Options","researcher","Gascard, Jean-Claude (University of California-Santa Barbara)","FRA",48.85341000,2.34880000],
+[35,"Pan-Arctic Options","researcher","Brigham, Lawson (University of Alaska-Fairbanks)","USA",38.89511000,-77.03637000],
+[35,"Pan-Arctic Options","researcher","Halpern, Ben (University of California-Santa Barbara)","USA",38.89511000,-77.03637000],
+[35,"Pan-Arctic Options","researcher","Sun, Kai (Ocean University of China)","CHN",39.90750000,116.39723000],
+[29,"RACArctic","researcher","Saitoh, Sei-Ichi (Hokkaido University)","JPN",35.68950000,139.69171000],
+[29,"RACArctic","researcher","Chierici, Melissa (Institute of Marine Research)","NOR",59.91273000,10.74609000],
+[29,"RACArctic","researcher","Drinkwater, Kenneth (Institute of Marine Research)","NOR",59.91273000,10.74609000],
+[29,"RACArctic","researcher","Eide, Arne (University of Tromsø)","NOR",59.91273000,10.74609000],
+[29,"RACArctic","researcher","Harada, Naomi (Japan Agency for Marine-Earth Science and Technology)","NOR",59.91273000,10.74609000],
+[29,"RACArctic","researcher","Saito, Sei-Ichi (Hokkaido University)","JPN",35.68950000,139.69171000],
+[29,"RACArctic","researcher","Chierici, Melissa (Institute of Marine Research)","NOR",59.91273000,10.74609000],
+[29,"RACArctic","researcher","Drinkwater, Kenneth (Institute of Marine Research)","NOR",59.91273000,10.74609000],
+[29,"RACArctic","researcher","Eide, Arne (University of Tromsø)","NOR",59.91273000,10.74609000],
+[29,"RACArctic","researcher","Harada, Naomi (Japan Agency for Marine-Earth Science and Technology)","JPN",35.68950000,139.69171000],
+[29,"RACArctic","researcher","Harada, Naomi (Japan Agency for Marine-Earth Science and Technology)","JPN",35.68950000,139.69171000],
+[29,"RACArctic","researcher","Eide, Arne (University of Tromsø)","NOR",59.91273000,10.74609000],
+[29,"RACArctic","researcher","Drinkwater, Kenneth (Institute for Marine Research)","NOR",59.91273000,10.74609000],
+[29,"RACArctic","researcher","Saitoh, Sei-Ichi (Hokkaido University)","JPN",35.68950000,139.69171000],
+[29,"RACArctic","researcher","Chierici, Melissa (Hokkaido University)","JPN",35.68950000,139.69171000],
+[26,"TAMANI","researcher","Berteaux, Dominique (Université du Québec à Rimouski)","CAN",45.41117000,-75.69812000],
+[26,"TAMANI","researcher","Gremillet, David (Centre d'Ecologie Fonctionnelle et Evolutive)","FRA",48.85341000,2.34880000],
+[26,"TAMANI","researcher","Furgal, Chris (Trent University)","CAN",45.41117000,-75.69812000],
+[26,"TAMANI","researcher","Gremillet, David (Centre d'Ecologie Fonctionnelle et Evolutive)","FRA",48.85341000,2.34880000],
+[26,"TAMANI","researcher","Yoccoz, Nigel (University of Tromsø)","NOR",59.91273000,10.74609000],
+[26,"TAMANI","researcher","Furgal, Chris (Trent University)","CAN",45.41117000,-75.69812000],
+[26,"TAMANI","researcher","Parlee, Brenda (University of Alberta)","CAN",45.41117000,-75.69812000],
+[26,"TAMANI","researcher","Berteaux, Dominique (Université du Québec à Rimouski)","FRA",48.85341000,2.34880000],
+[26,"TAMANI","researcher","Gremillet, David (Centre d'Ecologie Fonctionnelle et Evolutive)","FRA",48.85341000,2.34880000],
+[26,"TAMANI","researcher","Berteaux, Dominique (Université du Québec à Rimouski)","CAN",45.41117000,-75.69812000],
+[26,"TAMANI","researcher","Furgal, Chris (Trent University)","CAN",45.41117000,-75.69812000],
+[26,"TAMANI","researcher","Yoccoz, Nigel (University of Tromsø)","NOR",59.91273000,10.74609000],
+[26,"TAMANI","researcher","Parlee, Brenda (University of Alberta)","CAN",45.41117000,-75.69812000],
+[26,"TAMANI","researcher","Yoccoz, Nigel (University of Tromsø)","NOR",59.91273000,10.74609000],
+[26,"TAMANI","researcher","Parlee, Brenda (University of Alberta)","CAN",45.41117000,-75.69812000],
+[30,"AFV","researcher","Atkinson, David (University of Victoria)","CAN",45.41117000,-75.69812000],
+[30,"AFV","researcher","Guo, Peiqing (Ocean University of China)","CHN",39.90750000,116.39723000],
+[30,"AFV","researcher","Perrie, William (Bedford Institute of Oceanography)","CAN",45.41117000,-75.69812000],
+[30,"AFV","researcher","Tampieri, Francisco (Institute of Atmospheric Science and Climate)","ITA",41.89193000,12.51133000],
+[27,"ASUS","stakeholder","Arctic Group","DNK",55.67594000,12.56553000],
+[32,"BAAMRGP","stakeholder","Canadian Arctic Council","CAN",45.41117000,-75.69812000],
+[28,"CONNECT","stakeholder","Advocates for a Sustainable Arctic","CAN",45.41117000,-75.69812000],
+[28,"CONNECT","stakeholder","Advocates for a Sustainable Arctic","RUS",55.75222000,37.61556000],
+[28,"CONNECT","stakeholder","Advocates for a Sustainable Arctic","USA",38.89511000,-77.03637000],
+[28,"CONNECT","stakeholder","Bering Sea Fisheries","JPN",35.68950000,139.69171000],
+[28,"CONNECT","stakeholder","Bering Sea Fisheries","RUS",55.75222000,37.61556000],
+[28,"CONNECT","stakeholder","Bering Sea Fisheries","USA",38.89511000,-77.03637000],
+[31,"ARCTIC-ERA","stakeholder","Institution for Scandinavia","FIN",60.16952000,24.93545000],
+[31,"ARCTIC-ERA","stakeholder","Institution for Scandinavia","NOR",59.91273000,10.74609000],
+[31,"ARCTIC-ERA","stakeholder","Institution for Scandinavia","SWE",59.33258000,18.06490000],
+[33,"COPERA","stakeholder","Partnership for Low Carbon and Economic Sustatiablity","USA",38.89511000,-77.03637000],
+[35,"Pan-Arctic Options","stakeholder","Government/Private Industry Partnership of Norway","NOR",59.91273000,10.74609000],
+[29,"RACArctic","stakeholder","RACArctic Alliance","RUS",55.75222000,37.61556000],
+[26,"TAMANI","stakeholder","Pan-Arctic Community Association","DNK",55.67594000,12.56553000],
+[26,"TAMANI","stakeholder","Pan-Arctic Community Association","GRL",64.18347000,-51.72157000],
+[26,"TAMANI","stakeholder","Stockholm Community Association","SWE",59.33258000,18.06490000],
+[31,"ARCTIC-ERA","stakeholder","Helsinki Community Association","FIN",60.16952000,24.93545000],
+[31,"ARCTIC-ERA","stakeholder","Conservation International","FIN",60.16952000,24.93545000],
+[31,"ARCTIC-ERA","stakeholder","Conservation International","USA",38.89511000,-77.03637000],
+[26,"TAMANI","stakeholder","Swedish Society for Nature Conservation","SWE",59.33258000,18.06490000],
+[35,"Pan-Arctic Options","stakeholder","World Wildlife Fund","NOR",59.91273000,10.74609000],
+[35,"Pan-Arctic Options","stakeholder","World Wildlife Fund","USA",38.89511000,-77.03637000],
+[30,"AFV","stakeholder","Nuuk Conservation Society","GRL",64.18347000,-51.72157000],
+[30,"AFV","stakeholder","Greenland Development Foundation","GRL",64.18347000,-51.72157000],
+[30,"AFV","stakeholder","World Wildlife Fund","GRL",64.18347000,-51.72157000],
+[30,"AFV","stakeholder","World Wildlife Fund","USA",38.89511000,-77.03637000],
+[30,"AFV","stakeholder","Greenland Development Foundation","GRL",64.18347000,-51.72157000],
+[30,"AFV","stakeholder","Nuuk Conservation Society","GRL",64.18347000,-51.72157000],
+[30,"AFV","stakeholder","World Wildlife Fund","GRL",64.18347000,-51.72157000],
+[30,"AFV","stakeholder","World Wildlife Fund","USA",38.89511000,-77.03637000],
+[30,"AFV","stakeholder","Greenland Development Foundation","GRL",64.18347000,-51.72157000],
+[30,"AFV","stakeholder","Nuuk Conservation Society","GRL",64.18347000,-51.72157000],
+[30,"AFV","stakeholder","World Wildlife Fund","GRL",64.18347000,-51.72157000],
+[31,"ARCTIC-ERA","stakeholder","Conservation International","USA",38.89511000,-77.03637000],
+[31,"ARCTIC-ERA","stakeholder","Helsinki Community Association","FIN",60.16952000,24.93545000],
+[31,"ARCTIC-ERA","stakeholder","Institution for Scandanavia","FIN",60.16952000,24.93545000],
+[31,"ARCTIC-ERA","stakeholder","Institution for Scandanavia","NOR",59.91273000,10.74609000],
+[31,"ARCTIC-ERA","stakeholder","Institution for Scandanavia","SWE",59.33258000,18.06490000],
+[31,"ARCTIC-ERA","stakeholder","Conservation International","FIN",60.16952000,24.93545000],
+[31,"ARCTIC-ERA","stakeholder","Conservation International","USA",38.89511000,-77.03637000],
+[31,"ARCTIC-ERA","stakeholder","Helsinki Community Association","FIN",60.16952000,24.93545000],
+[31,"ARCTIC-ERA","stakeholder","Institution for Scandanavia","SWE",59.33258000,18.06490000],
+[31,"ARCTIC-ERA","stakeholder","Conservation International","NOR",59.91273000,10.74609000],
+[31,"ARCTIC-ERA","stakeholder","Conservation International","SWE",59.33258000,18.06490000],
+[31,"ARCTIC-ERA","stakeholder","Helsinki Community Association","FIN",60.16952000,24.93545000],
+[31,"ARCTIC-ERA","stakeholder","Institution for Scandanavia","FIN",60.16952000,24.93545000],
+[27,"ASUS","stakeholder","Inuit Tribe","GRL",64.18347000,-51.72157000],
+[27,"ASUS","stakeholder","Arctic Group","DNK",55.67594000,12.56553000],
+[27,"ASUS","stakeholder","Inuit Tribe","GRL",64.18347000,-51.72157000],
+[27,"ASUS","stakeholder","Arctic Group","GRL",64.18347000,-51.72157000],
+[27,"ASUS","stakeholder","Arctic Group","DNK",55.67594000,12.56553000],
+[27,"ASUS","stakeholder","Inuit Tribe","GRL",64.18347000,-51.72157000],
+[32,"BAAMRGP","stakeholder","Canadian Conservation Corps","CAN",45.41117000,-75.69812000],
+[32,"BAAMRGP","stakeholder","Canadian Conservation Corps","CAN",45.41117000,-75.69812000],
+[32,"BAAMRGP","stakeholder","Canadian Arctic Council","CAN",45.41117000,-75.69812000],
+[32,"BAAMRGP","stakeholder","Canadian Arctic Council","CAN",45.41117000,-75.69812000],
+[32,"BAAMRGP","stakeholder","Canadian Conservation Corps","CAN",45.41117000,-75.69812000],
+[32,"BAAMRGP","stakeholder","Canadian Conservation Corps","CAN",45.41117000,-75.69812000],
+[32,"BAAMRGP","stakeholder","Canadian Arctic Council","CAN",45.41117000,-75.69812000],
+[28,"CONNECT","stakeholder","Advocates for a Sustainable Arctic","CAN",45.41117000,-75.69812000],
+[28,"CONNECT","stakeholder","Advocates for a Sustainable Arctic","RUS",55.75222000,37.61556000],
+[28,"CONNECT","stakeholder","Advocates for a Sustainable Arctic","USA",38.89511000,-77.03637000],
+[28,"CONNECT","stakeholder","Bering Sea Fisheries","JPN",35.68950000,139.69171000],
+[28,"CONNECT","stakeholder","Bering Sea Fisheries","RUS",55.75222000,37.61556000],
+[28,"CONNECT","stakeholder","Bering Sea Fisheries","USA",38.89511000,-77.03637000],
+[28,"CONNECT","stakeholder","Advocates for a Sustainable Arctic","CAN",45.41117000,-75.69812000],
+[28,"CONNECT","stakeholder","Advocates for a Sustainable Arctic","RUS",55.75222000,37.61556000],
+[28,"CONNECT","stakeholder","Advocates for a Sustainable Arctic","USA",38.89511000,-77.03637000],
+[28,"CONNECT","stakeholder","Bering Sea Fisheries","JPN",35.68950000,139.69171000],
+[28,"CONNECT","stakeholder","Bering Sea Fisheries","RUS",55.75222000,37.61556000],
+[28,"CONNECT","stakeholder","Bering Sea Fisheries","USA",38.89511000,-77.03637000],
+[28,"CONNECT","stakeholder","Advocates for a Sustainable Arctic","CAN",45.41117000,-75.69812000],
+[28,"CONNECT","stakeholder","Advocates for a Sustainable Arctic","RUS",55.75222000,37.61556000],
+[28,"CONNECT","stakeholder","Advocates for a Sustainable Arctic","USA",38.89511000,-77.03637000],
+[28,"CONNECT","stakeholder","Bering Sea Fisheries","JPN",35.68950000,139.69171000],
+[28,"CONNECT","stakeholder","Bering Sea Fisheries","RUS",55.75222000,37.61556000],
+[28,"CONNECT","stakeholder","Bering Sea Fisheries","USA",38.89511000,-77.03637000],
+[33,"COPERA","stakeholder","Russia Conservation Society","RUS",55.75222000,37.61556000],
+[33,"COPERA","stakeholder","Partnership for Low Carbon and Economic Sustatiablity","UMI",13.31964870,164.93366530],
+[33,"COPERA","stakeholder","Russia Conservation Society","RUS",55.75222000,37.61556000],
+[33,"COPERA","stakeholder","Russia Conservation Society","RUS",55.75222000,37.61556000],
+[33,"COPERA","stakeholder","Partnership for Low Carbon and Economic Sustatiablity","USA",38.89511000,-77.03637000],
+[34,"HIARC","stakeholder","Swedish Society for Nature Conservation","SWE",59.33258000,18.06490000],
+[34,"HIARC","stakeholder","Conservation International","SWE",59.33258000,18.06490000],
+[34,"HIARC","stakeholder","Swedish Society for Nature Conservation","SWE",59.33258000,18.06490000],
+[34,"HIARC","stakeholder","Conservation International","SWE",59.33258000,18.06490000],
+[34,"HIARC","stakeholder","Swedish Society for Nature Conservation","SWE",59.33258000,18.06490000],
+[34,"HIARC","stakeholder","Conservation International","SWE",59.33258000,18.06490000],
+[34,"HIARC","stakeholder","Swedish Society for Nature Conservation","SWE",59.33258000,18.06490000],
+[34,"HIARC","stakeholder","Conservation International","FIN",60.16952000,24.93545000],
+[35,"Pan-Arctic Options","stakeholder","Government/Private Industry Partnership","NOR",59.91273000,10.74609000],
+[35,"Pan-Arctic Options","stakeholder","World Wildlife Fund","NOR",59.91273000,10.74609000],
+[35,"Pan-Arctic Options","stakeholder","Government/Private Industry Partnership","NOR",59.91273000,10.74609000],
+[35,"Pan-Arctic Options","stakeholder","World Wildlife Fund","NOR",59.91273000,10.74609000],
+[35,"Pan-Arctic Options","stakeholder","Government/Private Industry Partnership","NOR",59.91273000,10.74609000],
+[35,"Pan-Arctic Options","stakeholder","World Wildlife Fund","NOR",59.91273000,10.74609000],
+[35,"Pan-Arctic Options","stakeholder","World Wildlife Fund","USA",38.89511000,-77.03637000],
+[29,"RACArctic","stakeholder","Stockholm Community Association","SWE",59.33258000,18.06490000],
+[29,"RACArctic","stakeholder","RACArctic Alliance","RUS",55.75222000,37.61556000],
+[29,"RACArctic","stakeholder","Stockholm Community Association","SWE",59.33258000,18.06490000],
+[29,"RACArctic","stakeholder","RACArctic Alliance","RUS",55.75222000,37.61556000],
+[29,"RACArctic","stakeholder","Stockholm Community Association","SWE",59.33258000,18.06490000],
+[29,"RACArctic","stakeholder","RACArctic Alliance","RUS",55.75222000,37.61556000],
+[29,"RACArctic","stakeholder","Stockholm Community Association","SWE",59.33258000,18.06490000],
+[26,"TAMANI","stakeholder","Pan-Arctic Community Association","DNK",55.67594000,12.56553000],
+[26,"TAMANI","stakeholder","Pan-Arctic Community Association","GRL",64.18347000,-51.72157000],
+[26,"TAMANI","stakeholder","Stockholm Community Association","SWE",59.33258000,18.06490000],
+[26,"TAMANI","stakeholder","Swedish Society for Nature Conservation","SWE",59.33258000,18.06490000],
+[26,"TAMANI","stakeholder","Pan-Arctic Community Association","DNK",55.67594000,12.56553000],
+[26,"TAMANI","stakeholder","Pan-Arctic Community Association","GRL",64.18347000,-51.72157000],
+[26,"TAMANI","stakeholder","Stockholm Community Association","SWE",59.33258000,18.06490000],
+[26,"TAMANI","stakeholder","Swedish Society for Nature Conservation","SWE",59.33258000,18.06490000],
+[26,"TAMANI","stakeholder","Pan-Arctic Community Association","DNK",55.67594000,12.56553000],
+[26,"TAMANI","stakeholder","Pan-Arctic Community Association","GRL",64.18347000,-51.72157000],
+[26,"TAMANI","stakeholder","Stockholm Community Association","SWE",59.33258000,18.06490000],
+[26,"TAMANI","stakeholder","Swedish Society for Nature Conservation","SWE",59.33258000,18.06490000],
+[33,"COPERA","stakeholder","Partnership for Low Carbon and Economic Sustatiablity","USA",38.89511000,-77.03637000],
+[33,"COPERA","stakeholder","Russia Conservation Society","RUS",55.75222000,37.61556000]
     ];
+
+
     return dummydata;
 
 }
@@ -259,6 +500,18 @@ function entitylist(project, rawdata, entitytype) {
       if (rawdata[line][2] == entitytype) {
         //32,"BAAMRGP","funder","MINCyT","ARG",-34.61315000,-58.37723000],
         var entityline = [rawdata[line][3],rawdata[line][5],rawdata[line][6],rawdata[line][4]];
+        switch (entitytype) {
+          case "stakeholder" :
+            break;
+          case "researcher" :
+            entityline[1] -= 1;
+            entityline[2] -= 4;
+            break;
+          case "funder" :
+            entityline[1] += 1;
+            entityline[2] += 4;
+            break;            
+        }
         entities.push(entityline);
       };
     };
@@ -266,77 +519,7 @@ function entitylist(project, rawdata, entitytype) {
   return entities;
 }
 
-function researcherslist(project, rawdata) {
-  var researchers = [];
 
-  //THIS IS THE FUNDER QUERY
-  //IT SHOULD RETURN JUST THE PROJECT'S DATA
-  var dummydata = [
-    ["One","University of Cape Town",-33.9248685,18.4240553,
-"Arizona State University",33.4255104,-111.9400054,
-"Embrapa Satellite Monitoring",-22.9098833,-47.0625812],
-    ["Two","World Agroforestry Centre (ICRAF)",-1.2920659,36.8219462,
-"International Land Coalition",41.9027835,12.4963655,
-"ICRISAT",17.385044,78.486671],
-    ["Three","University of Wisconsin - Madison",43.0730517,-89.4012302,
-"ETH Zurich",47.3768866,8.541694,
-"Chinese Academy of Agricultural Sciences",39.9041999,116.4073963],
-    ["Four","University of Minnesota, Institute on the Environment",44.9537029,-93.0899578,
-"Scottish Food Security Alliance, University of Aberdeen",57.149717,-2.094278,
-"CDE, University of Bern",46.9479739,7.4474468],
-    ["Five","CIRAD UMR Tetis",-18.8791902,47.5079055,
-    "University of Cape Town",-33.9248685,18.4240553,
-"PRADAN",21.628933,85.5816847]
-    ];
-var queryresult = [];
-for (var i = 0; i<dummydata.length; i++) {
-  if (project == dummydata[i][0]) {
-    queryresult = dummydata[i];
-  }
-}
-
-  //ACTUAL FUNCTION RESUMES
-   for (var i = 1; i <queryresult.length; i++) {
-     researchers.push(queryresult[i]);
-  }
-  return researchers;
-}
-
-function stakeholderlist(project, rawdata) {
-  var stakeholders = [];
-
-  //THIS IS THE FUNDER QUERY
-  //IT SHOULD RETURN JUST THE PROJECT'S DATA
-  var dummydata = [
-    ["Two","University of Cape Town",-33.9248685,18.4240553,
-"Arizona State University",33.4255104,-111.9400054,
-"Embrapa Satellite Monitoring",-22.9098833,-47.0625812],
-    ["Three","World Agroforestry Centre (ICRAF)",-1.2920659,36.8219462,
-"International Land Coalition",41.9027835,12.4963655,
-"ICRISAT",17.385044,78.486671],
-    ["Four","University of Wisconsin - Madison",43.0730517,-89.4012302,
-"ETH Zurich",47.3768866,8.541694,
-"Chinese Academy of Agricultural Sciences",39.9041999,116.4073963],
-    ["Five","University of Minnesota, Institute on the Environment",44.9537029,-93.0899578,
-"Scottish Food Security Alliance, University of Aberdeen",57.149717,-2.094278,
-"CDE, University of Bern",46.9479739,7.4474468],
-    ["One","CIRAD UMR Tetis",-18.8791902,47.5079055,
-    "University of Cape Town",-33.9248685,18.4240553,
-"PRADAN",21.628933,85.5816847]
-    ];
-var queryresult = [];
-for (var i = 0; i<dummydata.length; i++) {
-  if (project == dummydata[i][0]) {
-    queryresult = dummydata[i];
-  }
-}
-
-  //ACTUAL FUNCTION RESUMES
-   for (var i = 1; i <queryresult.length; i++) {
-     stakeholders.push(queryresult[i]);
-  }
-  return stakeholders;
-}
 
 
 
@@ -396,19 +579,19 @@ for (var currentprojectnumber = 0; currentprojectnumber < projects.length; curre
   for (var entity = 0; entity < 3; entity++) {
     if (entity === 0) { 
       currentgroup = funders;
-      var currenticon = L.MakiMarkers.icon({icon: "circle", color: "#cbbd2c", size: "l"})
+      var currenticon = L.MakiMarkers.icon({icon: "embassy", color: "#cbbd2c", size: "l"})
 
       };
  
     if (entity === 1) { 
       currentgroup = researchers;
-      var currenticon = L.MakiMarkers.icon({icon: "circle", color: "#4bb5c5", size: "m"})
+      var currenticon = L.MakiMarkers.icon({icon: "college", color: "#4bb5c5", size: "m"})
 
       };
 
     if (entity === 2) { 
       currentgroup = stakeholders;
-      var currenticon = L.MakiMarkers.icon({icon: "circle", color: "#00ffA1", size: "s"})
+      var currenticon = L.MakiMarkers.icon({icon: "town-hall", color: "#00ffA1", size: "s"})
 
       };
 
@@ -417,11 +600,11 @@ for (var currentprojectnumber = 0; currentprojectnumber < projects.length; curre
     var mlong = "";
 
     for (var i = 0; i <currentgroup.length; i++) {
-      console.log("Loop Count: "+i + " Value: "+currentgroup[i]);
+     // console.log("Loop Count: "+i + " Value: "+currentgroup[i]);
       mname = currentgroup[i][0];
       mlat = currentgroup[i][1];
       mlong = currentgroup[i][2];
-      console.log("Name: "+mname+" Lat: "+mlat+" Long: "+mlong);
+    //  console.log("Name: "+mname+" Lat: "+mlat+" Long: "+mlong);
       var marker = L.marker([mlat, mlong],{
           zIndexOffset : entity_options[4],
           icon: currenticon
@@ -433,17 +616,22 @@ for (var currentprojectnumber = 0; currentprojectnumber < projects.length; curre
     for (var fundingstream = 0; fundingstream < funders.length; fundingstream++) {
       var member_location = new L.LatLng(funders[fundingstream][1],funders[fundingstream][2]);
       for (var recipient = 0; recipient < researchers.length; recipient++) {
-        var researcher_location = new L.LatLng(researchers[recipient][1],researchers[recipient][2]);
-        var markerline = L.geodesic([], {
-        weight: entity_options[0][1],
-        opacity: 1,
-        color: entity_options[0][0],
-        steps: entity_options[0][2],
-        dash: entity_options[0][3],
-        });
-        projectlayers[currentprojectnumber].addLayer(markerline);
-        markerline.setLatLngs([[member_location, researcher_location]]);
-      }
+        if (funders[fundingstream][3] == researchers[recipient][3]) {
+          var researcher_location = new L.LatLng(researchers[recipient][1],researchers[recipient][2]);
+          var markerline = L.geodesic([], {
+          weight: entity_options[0][1],
+          opacity: 1,
+          color: entity_options[0][0],
+          steps: entity_options[0][2],
+          dash: entity_options[0][3],
+          });
+          projectlayers[currentprojectnumber].addLayer(markerline);
+          markerline.setLatLngs([[member_location, researcher_location]]);
+          console.log("FUNDING STREAM DRAWN"+ funders[fundingstream][0] + " to " +researchers[recipient][0])
+        } else {
+          console.log("Fundingstream nation mismatch: " + funders[fundingstream][3] + " to " +researchers[recipient][3]);
+        };
+      };
     };
     for (var engagement = 0; engagement < researchers.length; engagement++) {
       var researcher_location = new L.LatLng(researchers[engagement][1],researchers[engagement][2]);
