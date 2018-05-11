@@ -1,4 +1,4 @@
- k_euro = 'K \u20AC';
+ k_euro = 'K\u20AC';
 
 var BF_members = [
 	"NSFC",
