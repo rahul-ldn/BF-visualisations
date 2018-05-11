@@ -1,4 +1,4 @@
-
+ k_euro = 'K \u20AC';
 
 var BF_members = [
 	"NSFC",
@@ -13,31 +13,44 @@ var BF_members = [
 	"DFG",
 	"MoES",
 	"MEXT",
-	"Formas",
 	"TUBITAK",
 	"MINCyT",
+	"Innoviris",
+	"Formas",
+
 	"MESRI",
 	"RFBR",
 	"EC",
-	"RCN",
+	"FRQ",
 	"Finland - Academy of Finland",
 	"CNR",
 	"ESRC",
-	"Innoviris",
-	"DLR"
+	
+	"DLR",
+	"AllEnvi",
+	"JST",
+
+	"RCL",
+	"RCN",
+	"JSPS",
 	];
 
-var BF_T2S_projects = [
+var BF_projects = {
+	T2S: [
 	"TAMANI",
-	"ASUS",
+	"",
 	"CONNECT",
 	"RACArctic",
 	"ARCTIC-ERA",
 	"BAAMRGP",
 	"COPERA",
 	"HIARC",
-	"Pan-Arctic Options"
-	];
+	"Pan-Arctic Options",
+	"",
+	"ASUS"
+	],
+};
+
 
 var BF_project_colours_light = [
 	"#BCAAA4",
@@ -209,7 +222,7 @@ function BF_entity_colour(acronym,shade) {
 		desired_colour = BF_member_colour(acronym,shade);
 		console.log(acronym+" determined to be a member; colour set to "+desired_colour);
 	} else {
-		desired_colour = BF_T2S_project_colour(acronym,shade);
+		desired_colour = BF_project_colour("T2S",acronym,shade);
 		console.log(acronym+" determined to be a project; colour set to "+desired_colour);
 	}
 	return desired_colour;
@@ -219,8 +232,18 @@ function BF_member_colour(acronym,shade) {
 	console.log(acronym+" colour seach for "+shade);
 	var BF_member_index = BF_find_index(acronym,BF_members);
 	if (BF_member_index == -1) {
-		return "#C0C0C0";
-	}
+		switch (shade) {
+		case "light":
+			return "#C0C0C0";
+			break;
+		case "medium":
+			return 	"#919191";	
+			break;
+		case "dark":
+			return "#484848";
+			break;
+		};
+	};
 	switch (shade) {
 		case "light":
 			return BF_member_colours_light[BF_member_index];
@@ -236,12 +259,22 @@ function BF_member_colour(acronym,shade) {
 };
 
 
-function BF_T2S_project_colour(acronym,shade) {
-	console.log(acronym+" colour seach for "+shade);
-	var BF_project_index = BF_find_index(acronym,BF_T2S_projects);
+function BF_project_colour(cra,acronym,shade) {
+	console.log(cra+": "+acronym+" colour seach for "+shade);
+	var BF_project_index = BF_find_index(acronym,BF_projects[cra]);
 	if (BF_project_index == -1) {
-		return "#C0C0C0";
-	}
+		switch (shade) {
+		case "light":
+			return "#C0C0C0";
+			break;
+		case "medium":
+			return 	"#919191";	
+			break;
+		case "dark":
+			return "#484848";
+			break;
+		};
+	};
 	switch (shade) {
 		case "light":
 			return BF_project_colours_light[BF_project_index];
