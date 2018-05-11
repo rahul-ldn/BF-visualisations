@@ -1,18 +1,18 @@
 <head>
   
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js">
+<script src="Chart.bundle.min.js">
 </script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.0/dist/Chart.min.js"></script>
-<script src="https://rahulsindc.github.io/BF-visualisations/belmont-forum.style.js"> </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+<script src="Chart.min.js"></script>
+<script src="belmont-forum.style.js"> </script>
+<script src="numeral.min.js"></script>
+  <script src="chartjs-plugin-datalabels"></script>
 
 </head>
 
 <body>
 
-  <div style='width: 90%; height: 90%'>
-  <canvas id="fundingorigins" height="300"></canvas>
+  <div style='width: 1400; height: 1400;'>
+  <canvas id="fundingorigins" ></canvas>
   </div>
   <script>
     
@@ -59,8 +59,9 @@
   }
 
   var funders = [];
-  var funder_light_colours = [];
+  var funder_medium_colours = [];
   var funder_dark_colours = [];
+  var funder_light_colours = [];
   var contribtotal = 0;
   var contributions = [];
   for (var i = 0; i < numfunders; i++){
@@ -68,10 +69,11 @@
     contribtotal += contributions[i];
     funders[i] = fundingdata[i][0];
     funder_dark_colours[i] = BF_member_colour(funders[i],"dark");
+    funder_medium_colours[i] = BF_member_colour(funders[i],"medium");
     funder_light_colours[i] = BF_member_colour(funders[i],"light");
 //    document.write(projects + " "+rdata[i]+ " "+tdata[i] + "<BR>");
   }    
-contribtotal = contribtotal+ ' K \u20AC';
+contribtotal = contribtotal+ ' K\u20AC';
     
      Chart.pluginService.register({
   beforeDraw: function(chart) {
@@ -101,23 +103,96 @@ var myChart = new Chart(ctx, {
     labels: funders,
     datasets: [{
       data: contributions,
-      backgroundColor: funder_light_colours,
+      backgroundColor: funder_medium_colours,
       borderColor: funder_dark_colours,
-      borderWidth: 1,
+      borderWidth: 3,
       datalabels: {
             formatter : function(value, context) {
-                var result = numeral(value).format('($0,0[.]]00 a)');
-                return context.chart.data.labels[context.dataIndex]+'\n'+result;
+                var result = numeral(value).format('(0,0[.]]00 a)') + k_euro;
+                return context.chart.data.labels[context.dataIndex]+': '+result;
 
             },
-            backgroundColor: function(context) {
-              return context.dataset.backgroundColor;
+            backgroundColor: funder_dark_colours,
+            //function(context) {
+            //  return context.dataset.backgroundColor;
+            //},
+            borderColor: funder_medium_colours,
+            borderRadius: 5,
+            borderWidth: 0,
+            anchor: 'end',
+            align: 'end', 
+            /*offset : function(context) {
+              var total_arc = 0;
+              var offset_variance = 10;
+              for (arc = 0; arc < context.dataset.data.length; arc++) {
+                total_arc += context.dataset.data[arc];
+              };
+              var pc_member_arc = context.dataset.data[context.dataIndex]/total_arc;
+              if (pc_member_arc < 0.04) {
+                var acronym = context.chart.data.labels[context.dataIndex];
+                switch (context.dataIndex % 4) {
+                  case 0 :
+                    offset_variance += 0.5 * 40 ;
+                    break;
+                  case 1 :
+                    offset_variance += -3.5 * 40 ;
+                    break;
+                  case 2 :
+                    offset_variance += 1.5 * 40 ;
+                    break;
+                  case 3 :
+                    offset_variance += -5.5 * 40 ;
+                    break;
+
+                }
+                
+                console.log(acronym+" Offset variance "+offset_variance);
+              }
+//              offset_variance = 20;
+              return offset_variance;
+
+            },*/
+            rotation : function(context) {
+              var acronym = context.chart.data.labels[context.dataIndex];
+              var constraint = 0;
+              var total_arc = 0;
+              var preceding_arc = 0;
+              for (arc = 0; arc < context.dataset.data.length; arc++) {
+                total_arc += context.dataset.data[arc];
+                if (acronym == context.chart.data.labels[arc]) {
+                  constraint = 1;
+                }
+                if (!(constraint)) {
+                  preceding_arc += context.dataset.data[arc];
+                }
+              };
+              console.log(context.chart.data.labels[context.dataIndex]+" Index Value: "+context.dataIndex+" Arc Values: "+preceding_arc+" / "+total_arc);
+              var pc_arc = 0.0 + ((preceding_arc + (context.dataset.data[context.dataIndex]/2)) *1000) / (total_arc *1000);
+              var degree_arc = pc_arc * 360;
+              console.log("Precentage of Arc: "+pc_arc+" Degree of Arc: "+degree_arc);
+              var degree_rotation = 0;
+              if ((degree_arc >= 0) && (degree_arc < 90)) {
+                  degree_rotation = 270 + degree_arc;
+                  console.log("Degree of Arc was "+degree_arc+"so Degree of Rotation is "+degree_rotation);
+                };
+              if ((degree_arc >=90) && (degree_arc < 180)) {
+                  degree_rotation = degree_arc - 90;
+                  console.log("Degree of Arc was "+degree_arc+"so Degree of Rotation is "+degree_rotation);
+                };
+              if ((degree_arc >=180)&&(degree_arc<270)) {
+                  degree_rotation = degree_arc + 90
+                  console.log("Degree of Arc was "+degree_arc+"so Degree of Rotation is "+degree_rotation);
+                };
+              if ((degree_arc >=270)&&(degree_arc<360)) {
+                  degree_rotation = degree_arc -270;
+                  console.log("Degree of Arc was "+degree_arc+"so Degree of Rotation is "+degree_rotation);
+                };                 
+              
+              console.log(degree_rotation);
+              return degree_rotation;
+
             },
-            borderColor: 'white',
-            borderRadius: 25,
-            borderWidth: 3,
-            anchor: 'center',
-            color: 'white',
+            color: funder_light_colours,
             font: {
               weight: 'bold'
             }
@@ -127,18 +202,26 @@ var myChart = new Chart(ctx, {
 },
       
 options: {
+  layout: {
+            padding: {
+                left: 100,
+                right: 100,
+                top: 100,
+                bottom: 100
+            }
+        },
     legend: {
     display: false,
 
   },
- /* tooltips: {
+/* tooltips: {
     callbacks: {
       label: function(tooltipItem, data) {
-                    return (data.datasets[tooltipItem.datasetIndex].labels + ": " + numeral(tooltipItem.yLabel).format('(0,0[.]]00 a)')+ 'K \u20AC')
+                    return (data.labels[tooltipItem.datasetIndex] + ": " + numeral(tooltipItem.data).format('(0,0[.]]00 a)')+ k_euro)
                 }
             }
-        }, */
-  cutoutPercentage: 55,
+        },*/
+  cutoutPercentage: 85,
   animateRotate: "true"
 
 }
