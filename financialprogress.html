@@ -6,11 +6,7 @@
 <script src="numeral.min.js"></script>
 
  <script src="jquery-2.1.1.min.js"></script>
- <script src="belmont-forum.style.js"> </script> 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.0/dist/Chart.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
- <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+     <script src="belmont-forum.style.js"> </script>
 
  <style>
    .financialprogressprojectlist {
@@ -172,7 +168,10 @@ function formatLabel(str, maxwidth){
         if(temp.length > 0)
         {
             var concat = temp + ' ' + item;
-
+            if (temp.endsWith("for")) {
+              sections.push(temp);
+                temp = "";
+            } else {
             if(concat.length > maxwidth){
                 sections.push(temp);
                 temp = "";
@@ -188,6 +187,7 @@ function formatLabel(str, maxwidth){
                     return;
                 }
             }
+          }
         }
 
         if(index == (words.length-1))
@@ -291,13 +291,13 @@ for (var current_data_line = (project_total +1); //skip the break line
   members_long[current_project].push(query_data[current_data_line][2]);
   member_commitments[current_project].push(query_data[current_data_line][3]);
   member_disbursals[current_project].push(query_data[current_data_line][4]);
-  var institutions_label = query_data[current_data_line][1] + " for " +query_data[current_data_line][5];
+  var institutions_label = query_data[current_data_line][1] + ' for ' +query_data[current_data_line][5];
   institutions_long[current_project].push(formatLabel(institutions_label,label_length_max));
   members_colour_medium[current_project].push(BF_member_colour(members_short[current_project][(members_short[current_project].length - 1)],"medium"));
   members_colour_dark[current_project].push(BF_member_colour(members_short[current_project][(members_short[current_project].length - 1)],"dark"));
   members_colour_light[current_project].push(BF_member_colour(members_short[current_project][(members_short[current_project].length - 1)],"light"));
   var undisbursed = (member_commitments[current_project][ (member_commitments[current_project].length - 1)] - member_disbursals[current_project][ (member_disbursals[current_project].length - 1)]);
-  console.log("At CDL "+current_data_line+" on project "+current_project+" calculated undisbursed value is "+undisbursed);
+  //console.log("At CDL "+current_data_line+" on project "+current_project+" calculated undisbursed value is "+undisbursed);
   if (undisbursed < 0 ) {
     undisbursed = Math.abs(undisbursed);
     member_undisbursed[current_project].push(0);
@@ -315,8 +315,8 @@ for (var current_project = 0; current_project < project_total; current_project++
   selectcontrol.appendChild(option);
 }
 
-console.log("Raw Labels: ");
-console.log(members_short);
+console.log("Raw Institutions: ");
+console.log(institutions_long);
 console.log("Raw Undisbursed: ");
 console.log(member_undisbursed)
 console.log("Raw Disbursed: ");
