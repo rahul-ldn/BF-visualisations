@@ -6,6 +6,7 @@
 <script src="belmont-forum.style.js"> </script>
 <script src="numeral.min.js"></script>
   <script src="chartjs-plugin-datalabels"></script>
+   <script src="jquery-2.1.1.min.js"></script>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js">
 
@@ -15,13 +16,71 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 
+ <style>
+   .fundingtypelist {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 15px;
+    width: 100%;
+}    .fundingtypelist select {
+        font-family: 'Arial';
+        display: inline-block;
+        width: 100%;
+        cursor: pointer;
+        padding: 10px 15px;
+        outline: 0;
+        border: 0px solid #808080;
+        border-radius: 0px;
+        background: #808080;
+        color: #FFFFFF;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+        .fundingtypelist select::-ms-expand {
+            display: none;
+        }
+        .fundingtypelist select:hover,
+        .fundingtypelist select:focus {
+            color: white;
+            background: #808080;
+        }
+        .fundingtypelist select:disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+.fundingtypelist_arrow {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    width: 0;
+    height: 0;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+.fundingtypelist select:hover ~ .fundingtypelist_arrow,
+.fundingtypelist select:focus ~ .sfundingtypelist_arrow {
+    border-top-color: #808080;
+}
+.fundingtypelist select:disabled ~ .fundingtypelist_arrow {
+    border-top-color: #808080;
+}
+ </style>
+
 </head>
 
 <body>
-
-  <div style='width: 1400; height: 1400;'>
-  <canvas id="fundingorigins" ></canvas>
-  </div>
+   
+  Funding Sources for this CRA<BR>
+  <div id="fundingtypelist" class="fundingtypelist" style="width: 300"><div class="fundingtypelist_arrow"></div></div><BR><BR>
+  <div style='width: 1100; height: 1100;'>
+  <div style='width: 900; height: 900;'>
+  <canvas id="fundingorigins" height="800" width="800"></canvas>
+  </div></div>
   <script>
     
     
@@ -29,27 +88,77 @@
     //This array should be populated from BFGO data
     function FunderData() {
       var funderinfo = [
-        ["BMBF",55],
-        ["CNR",146],
-        ["CSIRO", 257],
-        ["DFG", 239],
-        ["EC",  140],
-        ["FAPESP",  175],
-        ["Finland - Academy of Finland",50],
-        ["Formas",  50],
-        ["MESRI", 100],
-        ["MEXT",  100],
-        ["MINCyT",  20],
-        ["MINECO",  40],
-        ["MoES",  10],
-        ["NERC",  375],
-        ["NSERC", 299],
-        ["NSF", 374],
-        ["NSFC",  389],
-        ["NWO", 27],
-        ["RCN", 2],
-        ["RFBR",  19],
-        ["TUBITAK", 140]
+       ["FRQ","Research Fund of Quebec",20.0],
+["MESRI","Ministry of Higher Education, Research and Innovation",50.0],
+["MEXT","Ministry of Education, Culture, Sports, Science and Technology",155.0],
+["NSERC","The Natural Sciences and Engineering Research Council of Canada",102.0],
+["NSFC","National Natural Science Foundation of China",156.0],
+["AllEnvi","National Research Alliance for the Environment",150.0],
+["CNR","National Research Council",15.0],
+["JST","Japan Science and Technology Agency",144.0],
+["JSPS","Japan Society for the Promotion of Science",15.0],
+["RCN","Research Council of Norway",331.0],
+["RFBR","Russian Foundation for Basic Research",170.0],
+["Formas","The Swedish Research Council",44.0],
+["NSF","National Science Foundation",515.0],
+[" "," ",-1],
+[" ","Bedford Institute of Oceanography",44.0],
+[" ","Centre d'Ecologie Fonctionnelle et Evolutive",128.0],
+[" ","Centro Agronómico Tropical de Investigación y Enseñanza",51.0],
+[" ","Croatia Research Institute",72.0],
+[" ","EthnoExpert, LLC",42.0],
+[" ","George Washington University",102.0],
+[" ","Hokkaido University",66.0],
+[" ","Humboldt University of Berlin",43.0],
+[" ","Hydrology Science and Services, Inc.",37.0],
+[" ","Ilisimatusarfik",36.0],
+[" ","Institute for Marine Research",35.0],
+[" ","Institute of Atmospheric Science and Climate",33.0],
+[" ","International Food Policy Research Institute",101.0],
+[" ","Japan Agency for Marine-Earth Science and Technology",60.0],
+[" ","Japan Science and Technology Agency",65.0],
+[" ","Japan Society for the Promotion of Science",34.0],
+[" ","Laboratoire de Glaciologie et Géophysique de l'Environnement",40.0],
+[" ","Ministry of Education, Culture, Sports, Science and Technology",70.0],
+[" ","Ministry of Higher Education, Research and Innovation",39.0],
+[" ","Nagoya  University",37.0],
+[" ","Nansen Environmental and Remote Sensing Center",53.0],
+[" ","National Natural Science Foundation of China",109.0],
+[" ","National Research Alliance for the Environment",63.0],
+[" ","National Research Council",55.0],
+[" ","National Science Foundation",361.0],
+[" ","Nordregio",37.0],
+[" ","North-Eastern Federal University",35.0],
+[" ","Norwegian Foundation for the Conservation of Nature",13.0],
+[" ","Ocean University of China",132.0],
+[" ","Research Council of Norway",261.0],
+[" ","Research Fund of Quebec",81.0],
+[" ","Russian Academy of Sciences",70.0],
+[" ","Russian Foundation for Basic Research",184.0],
+[" ","Stockholm University",5.0],
+[" ","Sydney Foundation",59.0],
+[" ","The Natural Sciences and Engineering Research Council of Canada",85.0],
+[" ","The Swedish Research Council",56.0],
+[" ","Trent University",33.0],
+[" ","Unión de Industriales para Saneamiento Cuencas Matanza",41.0],
+[" ","Université du Québec à Rimouski",35.0],
+[" ","Université Pierre et Marie Curie",35.0],
+[" ","University of Akureyri",47.0],
+[" ","University of Alaska-Fairbanks",77.0],
+[" ","University of Alberta",36.0],
+[" ","University of California-Santa Barbara",40.0],
+[" ","University of Cologne",67.0],
+[" ","University of Colorado",34.0],
+[" ","University of Costa Rica",41.0],
+[" ","University of Greenland",55.0],
+[" ","University of Northern Iowa",35.0],
+[" ","University of Saskatchewan",42.0],
+[" ","University of Southern Denmark",50.0],
+[" ","University of Strasbourg",69.0],
+[" ","University of Tromsø",220.0],
+[" ","University of Victoria",76.0],
+[" ","Virginia Commonwealth University",47.0],
+[" ","Water Research Foundation",75.0]
       ];
       return funderinfo;
     }
@@ -57,31 +166,93 @@
 
   var fundingdata = FunderData();
 
+  var numfunders = fundingdata.length -1;
+  var numdirect = 0;
 
-// The number of projects in the CRA
-  var numfunders = fundingdata.length;
-
-   var funderlist = [];
-  for (var i = 1; i <numfunders; i++) {
-    funderlist.push(fundingdata[i][0]);
-  }
-
-  var funders = [];
-  var funder_medium_colours = [];
+   var funders_long = [];
+   var funders_short = [];
+     var funder_medium_colours = [];
   var funder_dark_colours = [];
   var funder_light_colours = [];
-  var contribtotal = 0;
+    var contribtotal = [0,0,0];
   var contributions = [];
-  for (var i = 0; i < numfunders; i++){
-    contributions[i] = fundingdata[i][1];
-    contribtotal += contributions[i];
-    funders[i] = fundingdata[i][0];
-    funder_dark_colours[i] = BF_member_colour(funders[i],"dark");
-    funder_medium_colours[i] = BF_member_colour(funders[i],"medium");
-    funder_light_colours[i] = BF_member_colour(funders[i],"light");
-//    document.write(projects + " "+rdata[i]+ " "+tdata[i] + "<BR>");
-  }    
-contribtotal = contribtotal+ k_euro;
+
+  var source_selecting = document.getElementById("fundingtypelist");
+  var select_control = document.createElement("select");
+  select_control.id = "fundingtypeselected";
+  source_selecting.appendChild(select_control);
+  var source_list = ["All Contributing Sources","Direct Funding", "In-Kind Contributions"];
+  for (var current_source = 0; current_source < source_list.length; current_source++) {
+    var option = document.createElement("option");
+    option.setAttribute("value", current_source);
+    option.text = source_list[current_source];
+    select_control.appendChild(option);
+    funders_long[current_source] = [];
+    funders_short[current_source] = [];
+    funder_medium_colours[current_source] = [];
+    funder_dark_colours[current_source] = [];
+    funder_light_colours[current_source] = [];
+    contributions[current_source] = [];
+  }
+  while (fundingdata[numdirect][2] != -1){
+    funders_short[0].push(fundingdata[numdirect][0]);
+    funders_short[1].push(fundingdata[numdirect][0]);
+    funders_long[0].push(fundingdata[numdirect][1]);
+    funders_long[1].push(fundingdata[numdirect][1]);
+    funder_dark_colours[0].push(BF_member_colour(funders_short[0][numdirect],"dark"));
+    funder_medium_colours[0].push(BF_member_colour(funders_short[0][numdirect],"medium"));
+    funder_light_colours[0].push(BF_member_colour(funders_short[0][numdirect],"light"));
+    contributions[0][numdirect] = fundingdata[numdirect][2];
+    funder_dark_colours[1].push(BF_member_colour(funders_short[0][numdirect],"dark"));
+    funder_medium_colours[1].push(BF_member_colour(funders_short[0][numdirect],"medium"));
+    funder_light_colours[1].push(BF_member_colour(funders_short[0][numdirect],"light"));
+    contributions[1][numdirect] = fundingdata[numdirect][2];
+    contribtotal[0] += contributions[0][numdirect];
+    contribtotal[1] += contributions[1][numdirect];
+    numdirect++;
+  };
+  var current_inkind = 0;
+  for (var current_data_line = (numdirect +1); current_data_line<fundingdata.length;current_data_line++) {
+    var acronym_search = -1;
+    for (var current_member = 0; current_member<funders_short[1].length;current_member++){
+      if (funders_long[1][current_member] == fundingdata[current_data_line][1]) {
+        acronym_search = current_member
+      };
+    };
+    if (!(acronym_search == -1)){
+      funders_short[0].push(funders_short[1][acronym_search]);
+      funders_short[2].push(funders_short[1][acronym_search]);
+    } else {
+      funders_short[0].push(funders_short[1][acronym_search]);
+      funders_short[2].push(funders_short[1][acronym_search]);
+    }
+    funders_long[0].push(fundingdata[current_data_line][1]);
+    funders_long[2].push(fundingdata[current_data_line][1]); 
+    funder_dark_colours[0].push(BF_member_colour(funders_short[0][current_data_line],"dark"));
+    funder_medium_colours[0].push(BF_member_colour(funders_short[0][current_data_line],"medium"));
+    funder_light_colours[0].push(BF_member_colour(funders_short[0][current_data_line],"light"));
+    contributions[0][current_data_line] = fundingdata[current_data_line][2];
+    funder_dark_colours[2].push(BF_member_colour(funders_short[0][current_data_line],"dark"));
+    funder_medium_colours[2].push(BF_member_colour(funders_short[0][current_data_line],"medium"));
+    funder_light_colours[2].push(BF_member_colour(funders_short[0][current_data_line],"light"));
+    contributions[2][current_inkind] = fundingdata[current_data_line][2];
+    contribtotal[0] += contributions[0][current_data_line];
+    contribtotal[2] += contributions[2][current_inkind];
+    current_inkind++;
+  };
+
+
+
+console.log(funder_light_colours);
+console.log(funder_medium_colours);
+console.log(funder_dark_colours);
+
+//    document.write(projects + " "+rdata[i]+ " "+tdata[i] + "<BR>");   
+contribtotal[0] = contribtotal[0]+ k_euro;
+contribtotal[1] = contribtotal[1]+ k_euro;
+contribtotal[2] = contribtotal[2]+ k_euro;
+
+current_source = 0;
     
      Chart.pluginService.register({
   beforeDraw: function(chart) {
@@ -94,7 +265,7 @@ contribtotal = contribtotal+ k_euro;
     ctx.font = fontSize + "em sans-serif";
     ctx.textBaseline = "middle";
 
-    var text = "T2S Total: "+contribtotal,
+    var text = "Total: "+contribtotal[current_source],
         textX = Math.round((width - ctx.measureText(text).width) / 2),
         textY = height / 2;
 
@@ -104,15 +275,15 @@ contribtotal = contribtotal+ k_euro;
 });
 
 var ctx = document.getElementById("fundingorigins");
-var myChart = new Chart(ctx, {
+var config = {
   type: 'doughnut',
 
   data: {
-    labels: funders,
+    labels: funders_long[0],
     datasets: [{
-      data: contributions,
-      backgroundColor: funder_medium_colours,
-      borderColor: funder_dark_colours,
+      data: contributions[0],
+      backgroundColor: funder_medium_colours[0],
+      borderColor: funder_dark_colours[0],
       borderWidth: 3,
       datalabels: {
             formatter : function(value, context) {
@@ -120,11 +291,11 @@ var myChart = new Chart(ctx, {
                 return context.chart.data.labels[context.dataIndex]+': '+result;
 
             },
-            backgroundColor: funder_dark_colours,
+            backgroundColor: funder_dark_colours[0],
             //function(context) {
             //  return context.dataset.backgroundColor;
             //},
-            borderColor: funder_medium_colours,
+            borderColor: funder_medium_colours[0],
             borderRadius: 5,
             borderWidth: 0,
             anchor: 'end',
@@ -200,7 +371,7 @@ var myChart = new Chart(ctx, {
               return degree_rotation;
 
             },
-            color: funder_light_colours,
+            color: funder_light_colours[0],
             font: {
               weight: 'bold'
             }
@@ -233,7 +404,23 @@ options: {
   animateRotate: "true"
 
 }
-}
-);
+};
+
+var fundingoriginchart = new Chart(ctx, config);
+$("#fundingtypelist").change(function() {
+    var selected_source = document.getElementById("fundingtypeselected");
+    current_source = selected_source.selectedIndex;
+    console.log("Select New Project: "+current_source);
+    var data = fundingoriginchart.config.data;
+    data.datasets[0].data = contributions[current_source];
+    data.datasets[0].backgroundColor = funder_medium_colours[current_source];
+    data.datasets[0].borderColor = funder_dark_colours[current_source];
+    data.labels = funders_long[current_source];
+        data.datasets[0].datalabels.backgroundColor = funder_dark_colours[current_source];
+    data.datasets[0].datalabels.borderColor = funder_medium_colours[current_source];
+    data.datasets[0].datalabels.color = funder_light_colours[current_source];
+    //institutions_long[current_project].push(formatLabel(query_data[current_data_line][5],label_length_max);
+    fundingoriginchart.update();
+});
   </script>
 </body>
