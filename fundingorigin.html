@@ -79,7 +79,7 @@
   <div id="fundingtypelist" class="fundingtypelist" style="width: 300"><div class="fundingtypelist_arrow"></div></div><BR><BR>
   <div style='width: 1100; height: 1100;'>
   <div style='width: 900; height: 900;'>
-  <canvas id="fundingorigins" height="800" width="800"></canvas>
+  <canvas id="fundingorigins" height="800" width="1000"></canvas>
   </div></div>
   <script>
     
@@ -248,9 +248,9 @@ console.log(funder_medium_colours);
 console.log(funder_dark_colours);
 
 //    document.write(projects + " "+rdata[i]+ " "+tdata[i] + "<BR>");   
-contribtotal[0] = contribtotal[0]+ k_euro;
-contribtotal[1] = contribtotal[1]+ k_euro;
-contribtotal[2] = contribtotal[2]+ k_euro;
+//contribtotal[0] = contribtotal[0]+ k_euro;
+//contribtotal[1] = contribtotal[1]+ k_euro;
+//contribtotal[2] = contribtotal[2]+ k_euro;
 
 current_source = 0;
     
@@ -265,7 +265,7 @@ current_source = 0;
     ctx.font = fontSize + "em sans-serif";
     ctx.textBaseline = "middle";
 
-    var text = "Total: "+contribtotal[current_source],
+    var text = "Total: "+numeral(contribtotal[current_source]).format('(0,0[.]]00)') + k_euro,
         textX = Math.round((width - ctx.measureText(text).width) / 2),
         textY = height / 2;
 
