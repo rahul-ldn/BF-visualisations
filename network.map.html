@@ -489,6 +489,7 @@ function projectlist(rawdata) {
       list.push(rawdata[line][1])
     }
   }
+  list.push("All CRA")
   return list;
 }
 
@@ -496,7 +497,7 @@ function projectlist(rawdata) {
 function entitylist(project, rawdata, entitytype) {
   var entities = [];
   for (var line = 0; line < rawdata.length; line++) {
-    if (rawdata[line][1] == project) {
+    if ((rawdata[line][1] == project) || (project == "All CRA")) {
       if (rawdata[line][2] == entitytype) {
         //32,"BAAMRGP","funder","MINCyT","ARG",-34.61315000,-58.37723000],
         var entityline = [rawdata[line][3],rawdata[line][5],rawdata[line][6],rawdata[line][4]];
@@ -633,6 +634,7 @@ for (var currentprojectnumber = 0; currentprojectnumber < projects.length; curre
         };
       };
     };
+    if (!(currentprojectnumber == (projects.length -1))){ 
     for (var engagement = 0; engagement < researchers.length; engagement++) {
       var researcher_location = new L.LatLng(researchers[engagement][1],researchers[engagement][2]);
       for (var stakeholder = 0; stakeholder < stakeholders.length; stakeholder++) {
@@ -648,6 +650,7 @@ for (var currentprojectnumber = 0; currentprojectnumber < projects.length; curre
         markerline.setLatLngs([[researcher_location, stakeholder_location]]);
       }
     };
+  };
   
 var projectlog = {
     "type": "FeatureCollection",
