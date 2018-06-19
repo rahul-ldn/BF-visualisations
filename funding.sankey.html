@@ -5,9 +5,11 @@
     <script src="belmont-forum.style.js"> </script>
 
     <style>
+  .hoverlayer {
+    display: none;
     
-    </style>
-
+  }
+</style>
 </head>
 
 <body>
@@ -103,7 +105,7 @@
            for (var current_member = 0; current_member < memberlist.length; current_member++) {
     //        console.log(member_short + " vs " +memberlist[current_member][0]);
             if ( member_short == memberlist[current_member][0] ) {
-              console.log(member_short+" Does Exist!");
+    //          console.log(member_short+" Does Exist!");
               return 1;
               break;
             }
@@ -115,7 +117,7 @@
         function member_lookup (memberlist, member_short) {
           for (var current_member = 0; current_member < memberlist.length; current_member++) {
             if (memberlist[current_member][0] == member_short) {
-              console.log(member_short+" converted to "+memberlist[current_member][1]);
+          //    console.log(member_short+" converted to "+memberlist[current_member][1]);
               return memberlist[current_member][1];
             }
           }
@@ -137,7 +139,7 @@
       
 
 
-        console.log("BEGINS");
+    //    console.log("BEGINS");
         while (query_data[project_total][0] != -1) {
 
           project_table[project_total]= [query_data[project_total][0],project_total];
@@ -145,19 +147,19 @@
           entities_long[project_total] = query_data[project_total][2];
           entities_colours[project_total] = BF_entity_colour(query_data[project_total][1], "medium");
           project_total++;
-          console.log("Current Project Total: "+project_total);
+    //      console.log("Current Project Total: "+project_total);
         }
         project_total++; //(skip the break line)
         for (var current_flow = project_total; current_flow < query_data.length; current_flow++) {
-          console.log("Flow Loop: Current Index "+ current_flow);
-          console.log("Current Funder Name: "+query_data[current_flow][2]);
-          console.log(all_members);
+     ///     console.log("Flow Loop: Current Index "+ current_flow);
+    ///      console.log("Current Funder Name: "+query_data[current_flow][2]);
+      //    console.log(all_members);
           if (!(member_exists(all_members, query_data[current_flow][1]))) {
             entities_short.push(query_data[current_flow][1]);
             entities_long.push(query_data[current_flow][2]);
             entities_colours.push(BF_entity_colour((query_data[current_flow][1]), "medium"));
             all_members.push([query_data[current_flow][1], (entities_short.length-1)]);
-            console.log(query_data[current_flow][1]+" is new, being added! "+(entities_short.length-1));
+    //        console.log(query_data[current_flow][1]+" is new, being added! "+(entities_short.length-1));
 
           };
           if ((query_data[current_flow][3] == " ") || (query_data[current_flow][3] == "")) {
@@ -182,7 +184,8 @@
             },
             'orientation': "h",
             'valueformat': ".0f",
-            'valuesuffix': " (k \u20AC)",
+            'valuesuffix': k_euro,
+                'hoverinfo' : "none",
             'arrangement': "fixed",
             'textfont'   : {
               'size': 12,
@@ -190,6 +193,7 @@
             'node': {
                 'pad': 5,
                 'thickness': 40,
+                'hoverinfo' : "none",
                 'line': {
                     'color': "black",
                     'width': 1
@@ -209,7 +213,8 @@
                 // Array of Values for flows
                   'color': flow_colours,
                 // Array of colours for each link
-                  'labelsrc': " "
+                  'hoverinfo' : "none",
+                 // 'labelsrc': " "
                 }
               
         }];
@@ -230,6 +235,7 @@
                 'size': 10,
                 'color': 'black'
             },
+                              'hoverinfo' : "skip",
 
         };
         console.log(data);
