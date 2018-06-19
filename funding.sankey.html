@@ -5,17 +5,42 @@
     <script src="belmont-forum.style.js"> </script>
 
     <style>
+  .visualisation-title {
+    font-size: 40;
+    text-align: center;
+  }
+
   .hoverlayer {
     display: none;
     
+  }
+
+  .boundingbox {
+    width:1000px; 
+    max-width: 1000px;
+
+  }
+
+  .Members {
+    float: left;
+    padding-left: 30px;
+    position: relative;
+    font-size: 20;
+  }
+
+  .Awardees {
+    float:right;
+    padding-right: 30px;
+    position: relative;
+    font-size: 20;
   }
 </style>
 </head>
 
 <body>
-
-
-    <div id="funding-sankey"></div>
+    <h2 class="visualisation-title">BF Member-Awardee Relationships</h2>
+    <div class="boundingbox"><div class="Members">Members</div><div class="Awardees">Awardees</div><BR>
+    <div id="funding-sankey"></div></div>
     <script>
         //This array should be populated from BFGO data
         function funding_data_query() {
@@ -221,7 +246,7 @@
 
 
         var layout = {
-            'title': "BF Funder-Project Relationships",
+            
             'width': 1000,
             'height': 1000,
             'margin' : {
