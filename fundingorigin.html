@@ -163,11 +163,20 @@
       return funderinfo;
     }
 
+  function fetch_sorted(data_to_sort, sorted_array, unsorted_array) {
+    var sorted_data_array = [];
+    for (var sort_pin = 0; sort_pin < sorted_array.length ; sort_pin++) {
+      sorted_data_array.push(data_to_sort[unsorted_array.indexOf(sorted_array[sort_pin])]);
+      
+    }
+    return sorted_data_array;
+  };
 
   var fundingdata = FunderData();
 
   var numfunders = fundingdata.length -1;
   var numdirect = 0;
+  var funding_origin_label_length = 40;
 
    var funders_long = [];
    var funders_short = [];
@@ -197,8 +206,12 @@
   while (fundingdata[numdirect][2] != -1){
     funders_short[0].push(fundingdata[numdirect][0]);
     funders_short[1].push(fundingdata[numdirect][0]);
-    funders_long[0].push(fundingdata[numdirect][1]);
-    funders_long[1].push(fundingdata[numdirect][1]);
+    var name_component = member_long_name = fundingdata[numdirect][0] + ": " + fundingdata[numdirect][1];
+    var member_long_name = formatLabel(name_component,funding_origin_label_length);
+    member_long_name = member_long_name.join("\n");
+    console.log(member_long_name);
+    funders_long[0].push(member_long_name);
+    funders_long[1].push(member_long_name);
     funder_dark_colours[0].push(BF_member_colour(funders_short[0][numdirect],"dark"));
     funder_medium_colours[0].push(BF_member_colour(funders_short[0][numdirect],"medium"));
     funder_light_colours[0].push(BF_member_colour(funders_short[0][numdirect],"light"));
@@ -211,7 +224,8 @@
     contribtotal[1] += contributions[1][numdirect];
     numdirect++;
   };
-  var current_inkind = 0;
+
+  var inkind_entry = -1;
   for (var current_data_line = (numdirect +1); current_data_line<fundingdata.length;current_data_line++) {
     var acronym_search = -1;
     for (var current_member = 0; current_member<funders_short[1].length;current_member++){
@@ -223,29 +237,80 @@
       funders_short[0].push(funders_short[1][acronym_search]);
       funders_short[2].push(funders_short[1][acronym_search]);
     } else {
-      funders_short[0].push(funders_short[1][acronym_search]);
+//      funders_short[0].push(funders_short[1][acronym_search]);
       funders_short[2].push(funders_short[1][acronym_search]);
     }
-    funders_long[0].push(fundingdata[current_data_line][1]);
-    funders_long[2].push(fundingdata[current_data_line][1]); 
-    funder_dark_colours[0].push(BF_member_colour(funders_short[0][current_data_line],"dark"));
-    funder_medium_colours[0].push(BF_member_colour(funders_short[0][current_data_line],"medium"));
-    funder_light_colours[0].push(BF_member_colour(funders_short[0][current_data_line],"light"));
-    contributions[0][current_data_line] = fundingdata[current_data_line][2];
+    if (inkind_entry == -1){
+      inkind_entry=current_data_line-1;
+      funders_short[0].push("INKIND");
+      funders_long[0].push("In-Kind Contributions");
+      contributions[0].push(0);
+      funder_dark_colours[0].push(inkind_colour_dark);
+      funder_medium_colours[0].push(inkind_colour_medium);
+      funder_light_colours[0].push(inkind_colour_light);
+    };
+  //  funders_long[0].push(fundingdata[current_data_line][1]);
+    var name_component = formatLabel(fundingdata[current_data_line][1],funding_origin_label_length);
+    name_component = name_component.join("\n");
+    funders_long[2].push(name_component); 
+  //  funder_dark_colours[0].push(BF_member_colour(funders_short[0][current_data_line],"dark"));
+  //  funder_medium_colours[0].push(BF_member_colour(funders_short[0][current_data_line],"medium"));
+ //   funder_light_colours[0].push(BF_member_colour(funders_short[0][current_data_line],"light"));
+    contributions[0][inkind_entry] += fundingdata[current_data_line][2];
     funder_dark_colours[2].push(BF_member_colour(funders_short[0][current_data_line],"dark"));
     funder_medium_colours[2].push(BF_member_colour(funders_short[0][current_data_line],"medium"));
     funder_light_colours[2].push(BF_member_colour(funders_short[0][current_data_line],"light"));
-    contributions[2][current_inkind] = fundingdata[current_data_line][2];
-    contribtotal[0] += contributions[0][current_data_line];
-    contribtotal[2] += contributions[2][current_inkind];
-    current_inkind++;
+    contributions[2].push(fundingdata[current_data_line][2]);
+
+    contribtotal[2] += fundingdata[current_data_line][2];
+
   };
 
+contribtotal[0] += contributions[0][inkind_entry];
+
+sorted_data_template = {
+  names          : [],
+  contributions  : [],
+  dark_colours   : [],
+  medium_colours : [],
+  light_colours  : [],
+  contrib_total  : 0,
+};
+
+sorted_data = [
+                JSON.parse(JSON.stringify(sorted_data_template)), 
+                JSON.parse(JSON.stringify(sorted_data_template)),
+                JSON.parse(JSON.stringify(sorted_data_template))
+              ];
+for (var current_view = 0; current_view < 3; current_view++){
+  funders_long_sorted = JSON.parse(JSON.stringify(funders_long[current_view]));
+  funders_long_sorted.sort();
+  if (current_view == 0) {
+    var inkind_entry = funders_long_sorted.indexOf("In-Kind Contributions");
+    if (inkind_entry !== -1) {
+      funders_long_sorted.splice(inkind_entry,1);
+    }
+  funders_long_sorted.push("In-Kind Contributions");
+  }
+  sorted_data[current_view].names=funders_long_sorted;
+  sorted_data[current_view].contributions = fetch_sorted(contributions[current_view],
+      funders_long_sorted, 
+      funders_long[current_view]);
+
+  sorted_data[current_view].dark_colours = fetch_sorted(funder_dark_colours[current_view],
+      funders_long_sorted, 
+      funders_long[current_view]);
+  sorted_data[current_view].medium_colours = fetch_sorted(funder_medium_colours[current_view],
+      funders_long_sorted, 
+      funders_long[current_view]);
+  sorted_data[current_view].light_colours = fetch_sorted(funder_light_colours[current_view],
+      funders_long_sorted, 
+      funders_long[current_view]);
+  sorted_data[current_view].contrib_total = contribtotal[current_view];
+}
 
 
-console.log(funder_light_colours);
-console.log(funder_medium_colours);
-console.log(funder_dark_colours);
+
 
 //    document.write(projects + " "+rdata[i]+ " "+tdata[i] + "<BR>");   
 //contribtotal[0] = contribtotal[0]+ k_euro;
@@ -279,27 +344,28 @@ var config = {
   type: 'doughnut',
 
   data: {
-    labels: funders_long[0],
+    labels: sorted_data[0].names,
     datasets: [{
-      data: contributions[0],
-      backgroundColor: funder_medium_colours[0],
-      borderColor: funder_dark_colours[0],
+      data: sorted_data[0].contributions,
+      backgroundColor: sorted_data[0].medium_colours,
+      borderColor: sorted_data[0].dark_colours,
       borderWidth: 3,
       datalabels: {
             formatter : function(value, context) {
-                var result = numeral(value).format('(0,0[.]]00 a)') + k_euro;
-                return context.chart.data.labels[context.dataIndex]+': '+result;
+                var result = numeral(value).format('(0,0[.]]00)') + k_euro;
+                return context.chart.data.labels[context.dataIndex]+': \n'+result;
 
             },
-            backgroundColor: funder_dark_colours[0],
+            //backgroundColor: funder_dark_colours[0],
             //function(context) {
             //  return context.dataset.backgroundColor;
             //},
-            borderColor: funder_medium_colours[0],
-            borderRadius: 5,
+            borderColor: sorted_data[0].medium_colours,
+            borderRadius: 0,
             borderWidth: 0,
             anchor: 'end',
             align: 'end', 
+            offset : 10,
             /*offset : function(context) {
               var total_arc = 0;
               var offset_variance = 10;
@@ -345,33 +411,33 @@ var config = {
                   preceding_arc += context.dataset.data[arc];
                 }
               };
-              console.log(context.chart.data.labels[context.dataIndex]+" Index Value: "+context.dataIndex+" Arc Values: "+preceding_arc+" / "+total_arc);
+          //    console.log(context.chart.data.labels[context.dataIndex]+" Index Value: "+context.dataIndex+" Arc Values: "+preceding_arc+" / "+total_arc);
               var pc_arc = 0.0 + ((preceding_arc + (context.dataset.data[context.dataIndex]/2)) *1000) / (total_arc *1000);
               var degree_arc = pc_arc * 360;
-              console.log("Precentage of Arc: "+pc_arc+" Degree of Arc: "+degree_arc);
+             // console.log("Precentage of Arc: "+pc_arc+" Degree of Arc: "+degree_arc);
               var degree_rotation = 0;
               if ((degree_arc >= 0) && (degree_arc < 90)) {
                   degree_rotation = 270 + degree_arc;
-                  console.log("Degree of Arc was "+degree_arc+"so Degree of Rotation is "+degree_rotation);
+                 // console.log("Degree of Arc was "+degree_arc+"so Degree of Rotation is "+degree_rotation);
                 };
               if ((degree_arc >=90) && (degree_arc < 180)) {
                   degree_rotation = degree_arc - 90;
-                  console.log("Degree of Arc was "+degree_arc+"so Degree of Rotation is "+degree_rotation);
+               //   console.log("Degree of Arc was "+degree_arc+"so Degree of Rotation is "+degree_rotation);
                 };
               if ((degree_arc >=180)&&(degree_arc<270)) {
                   degree_rotation = degree_arc + 90
-                  console.log("Degree of Arc was "+degree_arc+"so Degree of Rotation is "+degree_rotation);
+               //   console.log("Degree of Arc was "+degree_arc+"so Degree of Rotation is "+degree_rotation);
                 };
               if ((degree_arc >=270)&&(degree_arc<360)) {
                   degree_rotation = degree_arc -270;
-                  console.log("Degree of Arc was "+degree_arc+"so Degree of Rotation is "+degree_rotation);
+               //   console.log("Degree of Arc was "+degree_arc+"so Degree of Rotation is "+degree_rotation);
                 };                 
               
-              console.log(degree_rotation);
+            //  console.log(degree_rotation);
               return degree_rotation;
 
             },
-            color: funder_light_colours[0],
+            color: sorted_data[0].light_colours,
             font: {
               weight: 'bold'
             }
@@ -400,7 +466,7 @@ options: {
                 }
             }
         },*/
-  cutoutPercentage: 85,
+  cutoutPercentage: 55,
   animateRotate: "true"
 
 }
@@ -410,15 +476,15 @@ var fundingoriginchart = new Chart(ctx, config);
 $("#fundingtypelist").change(function() {
     var selected_source = document.getElementById("fundingtypeselected");
     current_source = selected_source.selectedIndex;
-    console.log("Select New Project: "+current_source);
+    console.log("Select New Source: "+current_source);
     var data = fundingoriginchart.config.data;
-    data.datasets[0].data = contributions[current_source];
-    data.datasets[0].backgroundColor = funder_medium_colours[current_source];
-    data.datasets[0].borderColor = funder_dark_colours[current_source];
-    data.labels = funders_long[current_source];
-        data.datasets[0].datalabels.backgroundColor = funder_dark_colours[current_source];
-    data.datasets[0].datalabels.borderColor = funder_medium_colours[current_source];
-    data.datasets[0].datalabels.color = funder_light_colours[current_source];
+    data.datasets[0].data = sorted_data[current_source].contributions;
+    data.datasets[0].backgroundColor = sorted_data[current_source].medium_colours;
+    data.datasets[0].borderColor = sorted_data[current_source].dark_colours;
+    data.labels = sorted_data[current_source].names;
+    //    data.datasets[0].datalabels.backgroundColor = funder_dark_colours[current_source];
+    //data.datasets[0].datalabels.borderColor = funder_medium_colours[current_source];
+    data.datasets[0].datalabels.color = sorted_data[current_source].light_colours;
     //institutions_long[current_project].push(formatLabel(query_data[current_data_line][5],label_length_max);
     fundingoriginchart.update();
 });
