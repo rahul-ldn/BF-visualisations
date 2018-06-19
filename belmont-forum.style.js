@@ -1,4 +1,7 @@
  k_euro = 'K\u20AC';
+ inkind_colour_dark = "#484848";
+ inkind_colour_medium = "#919191";
+ inkind_colour_light = "#C0C0C0";
 
 var BF_members = [
 	"NSFC",
@@ -290,8 +293,54 @@ function BF_project_colour(cra,acronym,shade) {
 };
 
 
+function formatLabel(str, maxwidth){
+    var sections = [];
+    var words = str.split(" ");
+    var temp = "";
 
+    words.forEach(function(item, index){
+        if(temp.length > 0)
+        {
+            var concat = temp + ' ' + item;
+            if (temp.endsWith("for")) {
+              sections.push(temp);
+                temp = "";
+            } else {
+            if(concat.length > maxwidth){
+                sections.push(temp);
+                temp = "";
+            }
+            else{
+                if(index == (words.length-1))
+                {
+                    sections.push(concat);
+                    return;
+                }
+                else{
+                    temp = concat;
+                    return;
+                }
+            }
+          }
+        }
 
+        if(index == (words.length-1))
+        {
+            sections.push(item);
+            return;
+        }
+
+        if(item.length < maxwidth) {
+            temp = item;
+        }
+        else {
+            sections.push(item);
+        }
+
+    });
+
+    return sections;
+};
 
 
 
