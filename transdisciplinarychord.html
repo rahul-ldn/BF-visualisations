@@ -37,7 +37,7 @@
   <body>
     
     <div id="tooltip"></div>
-<script src="https://fastcdn.org/D3.js/3.5.6/d3.min.js"></script>
+<script src="d3.js"></script>
 
     <script src="underscore.js"></script>
     <script src="mapper.js"></script>
@@ -140,7 +140,7 @@
         var w = 980, h = 800, r1 = h / 2, r0 = r1 - 110;
 
         var fill = d3.scale.ordinal()
-            .range(["#800200", "#803200", "#7f771c", "#2c6733", "#4a7f5a", "#075f69", "#317782", "#005568", "#691945"]);
+            .range(["#BE0300", "#BF4900", "#C0B32A", "#52C05F", "#70C088", "#0DADBF", "#48B0C0", "#009DC0", "#BF2E7E"]);
 
         var chord = d3.layout.chord()
             .padding(.02)
