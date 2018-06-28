@@ -8,6 +8,8 @@
   .visualisation-title {
     font-size: 40;
     text-align: center;
+    position: relative;
+    z-index: 2;
   }
 
   .hoverlayer {
@@ -26,7 +28,6 @@
     padding-left: 30px;
     position: relative;
     font-size: 20;
-    padding-top: 50px;
     z-index: 2;
   }
 
@@ -35,7 +36,6 @@
     padding-right: 30px;
     position: relative;
     font-size: 20;
-    padding-top: 50px;
     z-index: 2;
   }
 
@@ -48,8 +48,7 @@
 </head>
 
 <body>
-    <h2 class="visualisation-title">BF Member-Awardee Relationships</h2>
-    <div class="boundingbox"><div class="Members">Members</div><div class="Awardees">Awardees</div><BR>
+    <div class="boundingbox"><h2 class="visualisation-title">BF Member-Awardee Relationships</h2><div class="Members">Members</div><div class="Awardees">Awardees</div><BR>
     <div class="sankey-object" id="funding-sankey"></div></div>
     <script>
         //This array should be populated from BFGO data
