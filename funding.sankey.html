@@ -1,5 +1,5 @@
 <head>
-    <script src="plotly-latest.min.js"></script>
+    <script src="sankey-plotly.js"></script>
 
     <script src="numeral.min.js"></script>
     <script src="belmont-forum.style.js"> </script>
@@ -12,10 +12,7 @@
     z-index: 2;
   }
 
-  .hoverlayer {
-    display: none;
-    
-  }
+
 
   .boundingbox {
     width:1000px; 
@@ -219,7 +216,7 @@
             'orientation': "h",
             'valueformat': ".0f",
             'valuesuffix': k_euro,
-                'hoverinfo' : "none",
+          //      'hoverinfo' : "none",
             'arrangement': "fixed",
             'textfont'   : {
               'size': 12,
@@ -227,7 +224,7 @@
             'node': {
                 'pad': 5,
                 'thickness': 40,
-                'hoverinfo' : "none",
+              //  'hoverinfo' : "none",
                 'line': {
                     'color': "black",
                     'width': 1
@@ -247,7 +244,7 @@
                 // Array of Values for flows
                   'color': flow_colours,
                 // Array of colours for each link
-                  'hoverinfo' : "none",
+   //               'hoverinfo' : "none",
                  // 'labelsrc': " "
                 }
               
@@ -269,7 +266,7 @@
                 'size': 10,
                 'color': 'black'
             },
-                              'hoverinfo' : "skip",
+     //                         'hoverinfo' : "skip",
 
         };
         console.log(data);
